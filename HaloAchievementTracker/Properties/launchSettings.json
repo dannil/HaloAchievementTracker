@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "HaloAchievementTracker": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "NETCORE_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}
