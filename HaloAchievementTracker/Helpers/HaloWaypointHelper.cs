@@ -18,22 +18,28 @@ namespace HaloAchievementTracker.Helpers
 
         public ISet<HaloWaypointAchievement> GetAchievements()
         {
-            ISet<HaloWaypointAchievement> haloWaypointAchievements = new HashSet<HaloWaypointAchievement>();
-
             HtmlNode serviceRecordAchievementsNode = document.DocumentNode.SelectSingleNode($"//div[@class='{Constants.HALO_WAYPOINT_SERVICE_RECORDS_ACHIEVEMENT_DIV}']");
-            HtmlNodeCollection achievements = serviceRecordAchievementsNode.SelectNodes($"//div[@class='{Constants.HALO_WAYPOINT_SERVICE_RECORDS_ACHIEVEMENT_COLLECTION_DIV}']/ul/li");
+            HtmlNodeCollection achievementCollections = serviceRecordAchievementsNode.SelectNodes($"//div[@class='{Constants.HALO_WAYPOINT_SERVICE_RECORDS_ACHIEVEMENT_COLLECTION_DIV}']");
 
-            foreach (HtmlNode achievement in achievements)
+            ISet<HaloWaypointAchievement> haloWaypointAchievements = new HashSet<HaloWaypointAchievement>();
+            foreach (HtmlNode achievementCollection in achievementCollections)
             {
-                HaloWaypointAchievement model = new HaloWaypointAchievement();
+                HtmlNodeCollection achievements = achievementCollection.SelectNodes($".//ul[contains(@class,'{Constants.HALO_WAYPOINT_SERVICE_RECORDS_ACHIEVEMENT_LIST_CLASS}')]/li");
+                foreach (HtmlNode achievement in achievements)
+                {
+                    HaloWaypointAchievement haloWaypointAchievement = new HaloWaypointAchievement();
 
-                var achievementTitleNode = achievement.SelectSingleNode(".//p[@class='text--medium title']");
-                model.Name = HttpUtility.HtmlDecode(achievementTitleNode.InnerText);
+                    var titleNode = achievement.SelectSingleNode(".//p[@class='text--medium title']");
+                    haloWaypointAchievement.Name = HttpUtility.HtmlDecode(titleNode.InnerText);
 
-                bool isAchievementUnlocked = achievement.GetAttributeValue("class", string.Empty).Contains("unlocked");
-                model.IsUnlocked = isAchievementUnlocked;
+                    string gameId = achievementCollection.GetAttributeValue("data-game-id", string.Empty);
+                    haloWaypointAchievement.GameId = gameId;
 
-                haloWaypointAchievements.Add(model);
+                    bool isUnlocked = achievement.GetAttributeValue("class", string.Empty).Contains("unlocked");
+                    haloWaypointAchievement.IsUnlocked = isUnlocked;
+
+                    haloWaypointAchievements.Add(haloWaypointAchievement);
+                }
             }
             return haloWaypointAchievements;
         }
