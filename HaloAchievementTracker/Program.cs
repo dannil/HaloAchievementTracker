@@ -27,7 +27,7 @@ namespace HaloAchievementTracker
             var steamId = Convert.ToUInt64(configuration[Constants.CONFIGURATION_KEY_STEAM_ID]);
 
             var steamHelper = new SteamHelper(steamApiKey);
-            var steamAchievements = await steamHelper.GetAchievementsAsync(Constants.HALO_STEAM_APP_ID, steamId);
+            var steamAchievements = await steamHelper.GetAchievementsAsync(Constants.HALO_MCC_STEAM_APP_ID, steamId);
 
             var haloWaypointHelper = new HaloWaypointHelper(Constants.HALO_WAYPOINT_SITE_PATH);
             var haloWaypointAchievements = haloWaypointHelper.GetAchievements();
