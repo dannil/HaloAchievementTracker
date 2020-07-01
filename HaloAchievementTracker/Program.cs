@@ -2,7 +2,6 @@
 using HaloAchievementTracker.Helpers;
 using HaloAchievementTracker.Models;
 using Microsoft.Extensions.Configuration;
-using Steam.Models.SteamPlayer;
 using System;
 using System.Collections.Generic;
 using System.IO;

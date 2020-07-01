@@ -7,7 +7,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloAchievementTracker
+namespace HaloAchievementTracker.Helpers
 {
     public class SteamHelper
     {
