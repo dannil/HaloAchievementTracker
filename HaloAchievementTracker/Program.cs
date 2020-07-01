@@ -27,31 +27,27 @@ namespace HaloAchievementTracker
             var steamId = Convert.ToUInt64(configuration[Constants.CONFIGURATION_KEY_STEAM_ID]);
 
             var steamHelper = new SteamHelper(steamApiKey);
-            var steamAchievements = await steamHelper.GetAchievementsAsync(Constants.HALO_MCC_STEAM_APP_ID, steamId);
+            var steamAchievementsAsyncResult = await steamHelper.GetAchievementsAsync(Constants.HALO_MCC_STEAM_APP_ID, steamId);
+            var steamAchievements = steamAchievementsAsyncResult.Achievements;
 
             var haloWaypointHelper = new HaloWaypointHelper(Constants.HALO_WAYPOINT_SITE_PATH);
             var haloWaypointAchievements = haloWaypointHelper.GetAchievements();
 
-            List<MisalignedAchievement> misalignedAchievements = new List<MisalignedAchievement>();
-            foreach (var steamAchievement in steamAchievements.Achievements)
-            {
-                foreach (var haloWaypointAchievement in haloWaypointAchievements)
-                {
-                    bool isUnlockedOnSteam = Convert.ToBoolean(steamAchievement.Achieved);
-                    if (steamAchievement.Name == haloWaypointAchievement.Name && isUnlockedOnSteam != haloWaypointAchievement.IsUnlocked)
+            var misalignedAchievements = steamAchievements
+                .Join(
+                    haloWaypointAchievements,
+                    s => s.Name,
+                    h => h.Name,
+                    (s, h) => new MisalignedAchievement
                     {
-                        MisalignedAchievement misaligned = new MisalignedAchievement
-                        {
-                            Name = steamAchievement.Name,
-                            Description = steamAchievement.Description,
-                            IsUnlockedOnSteam = isUnlockedOnSteam,
-                            IsUnlockedOnHaloWaypoint = haloWaypointAchievement.IsUnlocked
-                        };
-                        misalignedAchievements.Add(misaligned);
-                    }
-                }
-            }
-            misalignedAchievements.Sort((x, y) => x.Name.CompareTo(y.Name));
+                        Name = s.Name,
+                        Description = s.Description,
+                        IsUnlockedOnSteam = Convert.ToBoolean(s.Achieved),
+                        IsUnlockedOnHaloWaypoint = h.IsUnlocked
+                    })
+                .Where(m => m.IsUnlockedOnSteam != m.IsUnlockedOnHaloWaypoint)
+                .OrderBy(m => m.Name)
+                .ToList();
 
             if (!misalignedAchievements.Any())
             {
