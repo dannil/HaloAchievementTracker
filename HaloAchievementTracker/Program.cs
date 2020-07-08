@@ -3,6 +3,7 @@ using HaloAchievementTracker.Helpers;
 using HaloAchievementTracker.Models;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Configuration;
+using SteamWebAPI2.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -32,7 +33,8 @@ namespace HaloAchievementTracker
             var steamApiKey = configuration[Constants.CONFIGURATION_KEY_STEAM_API_KEY];
             var steamId = Convert.ToUInt64(configuration[Constants.CONFIGURATION_KEY_STEAM_ID]);
 
-            var steamHelper = new SteamHelper(steamApiKey);
+            var webInterfaceFactory = new SteamWebInterfaceFactory(steamApiKey);
+            var steamHelper = new SteamHelper(webInterfaceFactory);
             var steamAchievements = (await steamHelper.GetAchievementsAsync(Constants.HALO_MCC_STEAM_APP_ID, steamId)).Achievements;
 
             var htmlDocument = new HtmlDocument();

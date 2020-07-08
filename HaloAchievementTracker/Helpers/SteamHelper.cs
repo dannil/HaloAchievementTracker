@@ -1,4 +1,5 @@
-﻿using Steam.Models.SteamPlayer;
+﻿using HaloAchievementTracker.Models;
+using Steam.Models.SteamPlayer;
 using SteamWebAPI2.Interfaces;
 using SteamWebAPI2.Utilities;
 using System;
@@ -11,16 +12,16 @@ namespace HaloAchievementTracker.Helpers
 {
     public class SteamHelper
     {
-        private readonly SteamWebInterfaceFactory webInterfaceFactory;
+        private readonly ISteamWebInterfaceFactory webInterfaceFactory;
 
-        public SteamHelper(string apiKey)
+        public SteamHelper(ISteamWebInterfaceFactory webInterfaceFactory)
         {
-            webInterfaceFactory = new SteamWebInterfaceFactory(apiKey);
+            this.webInterfaceFactory = webInterfaceFactory;
         }
 
         public async Task<PlayerAchievementResultModel> GetAchievementsAsync(uint appId, ulong steamId)
         {
-            var steamInterface = webInterfaceFactory.CreateSteamWebInterface<SteamUserStats>(new HttpClient());
+            var steamInterface = webInterfaceFactory.CreateSteamWebInterface<SteamUserStatsAdapter>(new HttpClient());
             var stats = await steamInterface.GetPlayerAchievementsAsync(appId, steamId);
             return stats.Data;
         }
