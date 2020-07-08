@@ -33,8 +33,7 @@ namespace HaloAchievementTracker
             var steamId = Convert.ToUInt64(configuration[Constants.CONFIGURATION_KEY_STEAM_ID]);
 
             var steamHelper = new SteamHelper(steamApiKey);
-            var steamAchievementsAsyncResult = await steamHelper.GetAchievementsAsync(Constants.HALO_MCC_STEAM_APP_ID, steamId);
-            var steamAchievements = steamAchievementsAsyncResult.Achievements;
+            var steamAchievements = (await steamHelper.GetAchievementsAsync(Constants.HALO_MCC_STEAM_APP_ID, steamId)).Achievements;
 
             var haloWaypointHelper = new HaloWaypointHelper(Constants.HALO_WAYPOINT_SITE_PATH);
             var haloWaypointAchievements = haloWaypointHelper.GetAchievements();
@@ -56,30 +55,33 @@ namespace HaloAchievementTracker
                 .OrderBy(m => m.Name)
                 .ToList();
 
-            int consoleColumnsWidth = GetConsoleColumnsWidth(misalignedAchievements).Sum();
-            Console.WindowWidth = consoleColumnsWidth;
-
-            if (!misalignedAchievements.Any())
+            if (misalignedAchievements.Any())
             {
-                Console.WriteLine("No achievements are misaligned!");
+                int[] consoleColumnsWidths = GetConsoleColumnsWidths(misalignedAchievements);
+                int consoleColumnsTotalWidth = consoleColumnsWidths.Sum();
+                string consoleColumnsFormatting = GetConsoleColumnsFormatting(consoleColumnsWidths);
+
+                Console.WindowWidth = consoleColumnsTotalWidth;
+
+                Console.WriteLine("Following achievements are misaligned:");
+                Console.WriteLine(new string('-', consoleColumnsTotalWidth - 1));
+                Console.WriteLine(consoleColumnsFormatting, CONSOLE_OUTPUT_NAME_COLUMN, CONSOLE_OUTPUT_GAME_COLUMN, CONSOLE_OUTPUT_DESCRIPTION_COLUMN,
+                    CONSOLE_OUTPUT_STEAM_COLUMN, CONSOLE_OUTPUT_HALOWAYPOINT_COLUMN);
+                Console.WriteLine(new string('-', consoleColumnsTotalWidth - 1));
+                foreach (MisalignedAchievement misaligned in misalignedAchievements)
+                {
+                    Console.WriteLine(consoleColumnsFormatting, misaligned.Name, misaligned.GameId, misaligned.Description,
+                        misaligned.IsUnlockedOnSteam.ToMarks(), misaligned.IsUnlockedOnHaloWaypoint.ToMarks());
+                }
+                Console.WriteLine(new string('-', consoleColumnsTotalWidth - 1));
             }
             else
             {
-                Console.WriteLine("Following achievements are misaligned:");
-                Console.WriteLine(new string('-', consoleColumnsWidth - 1));
-                Console.WriteLine(GetConsoleColumnsFormatting(misalignedAchievements), CONSOLE_OUTPUT_NAME_COLUMN, CONSOLE_OUTPUT_GAME_COLUMN, CONSOLE_OUTPUT_DESCRIPTION_COLUMN,
-                    CONSOLE_OUTPUT_STEAM_COLUMN, CONSOLE_OUTPUT_HALOWAYPOINT_COLUMN);
-                Console.WriteLine(new string('-', consoleColumnsWidth - 1));
-                foreach (MisalignedAchievement misaligned in misalignedAchievements)
-                {
-                    Console.WriteLine(GetConsoleColumnsFormatting(misalignedAchievements), misaligned.Name, misaligned.GameId, misaligned.Description, 
-                        misaligned.IsUnlockedOnSteam.ToMarks(), misaligned.IsUnlockedOnHaloWaypoint.ToMarks());
-                }
-                Console.WriteLine(new string('-', consoleColumnsWidth - 1));
+                Console.WriteLine("No achievements are misaligned!");
             }
         }
 
-        private static int[] GetConsoleColumnsWidth(IEnumerable<MisalignedAchievement> misalignedAchievements)
+        private static int[] GetConsoleColumnsWidths(IEnumerable<MisalignedAchievement> misalignedAchievements)
         {
             int nameLength = Math.Max(misalignedAchievements.Max(m => m.Name.Length), CONSOLE_OUTPUT_NAME_COLUMN.Length) + 4;
             int gameLength = Math.Max(misalignedAchievements.Max(m => m.GameId.Length), CONSOLE_OUTPUT_GAME_COLUMN.Length) + 4;
@@ -90,10 +92,9 @@ namespace HaloAchievementTracker
             return new int[] { nameLength, gameLength, descriptionLength, steamLength, haloWaypointLength };
         }
 
-        private static string GetConsoleColumnsFormatting(IEnumerable<MisalignedAchievement> misalignedAchievements)
+        private static string GetConsoleColumnsFormatting(int[] widths)
         {
             StringBuilder builder = new StringBuilder();
-            int[] widths = GetConsoleColumnsWidth(misalignedAchievements);
             for (int i = 0; i < widths.Length; i++)
             {
                 builder.Append("{" + i + ",-" + widths[i] + "}");
