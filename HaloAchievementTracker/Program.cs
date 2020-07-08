@@ -1,6 +1,7 @@
 ﻿using HaloAchievementTracker.Extensions;
 using HaloAchievementTracker.Helpers;
 using HaloAchievementTracker.Models;
+using HtmlAgilityPack;
 using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
@@ -35,7 +36,9 @@ namespace HaloAchievementTracker
             var steamHelper = new SteamHelper(steamApiKey);
             var steamAchievements = (await steamHelper.GetAchievementsAsync(Constants.HALO_MCC_STEAM_APP_ID, steamId)).Achievements;
 
-            var haloWaypointHelper = new HaloWaypointHelper(Constants.HALO_WAYPOINT_SITE_PATH);
+            var htmlDocument = new HtmlDocument();
+            htmlDocument.Load(Constants.HALO_WAYPOINT_SITE_PATH);
+            var haloWaypointHelper = new HaloWaypointHelper(htmlDocument);
             var haloWaypointAchievements = haloWaypointHelper.GetAchievements();
 
             var misalignedAchievements = steamAchievements
