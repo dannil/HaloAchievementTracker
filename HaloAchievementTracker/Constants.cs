@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Text;
 
 namespace HaloAchievementTracker
@@ -11,7 +12,7 @@ namespace HaloAchievementTracker
 
         public const uint HALO_MCC_STEAM_APP_ID = 976730;
 
-        public const string HALO_WAYPOINT_SITE_PATH = @"Resources\site.html";
+        public static readonly string HALO_WAYPOINT_SITE_PATH = $"Resources{Path.DirectorySeparatorChar}site.html";
         public const string HALO_WAYPOINT_SERVICE_RECORDS_ACHIEVEMENT_DIV = "service-record-achievements--halomasterchiefcollection";
         public const string HALO_WAYPOINT_SERVICE_RECORDS_ACHIEVEMENT_COLLECTION_DIV = "achievement-collection";
         public const string HALO_WAYPOINT_SERVICE_RECORDS_ACHIEVEMENT_LIST_CLASS = "achievement--list";

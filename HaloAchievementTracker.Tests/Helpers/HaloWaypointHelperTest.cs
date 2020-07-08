@@ -4,6 +4,7 @@ using Moq;
 using NUnit.Framework;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 
@@ -17,8 +18,8 @@ namespace HaloAchievementTracker.Tests.Helpers
         public void SetUp()
         {
             var htmlDocument = new HtmlDocument();
-            htmlDocument.Load(Constants.HALO_WAYPOINT_SITE_PATH);
-
+            var path = Path.Combine(Environment.CurrentDirectory, Constants.HALO_WAYPOINT_SITE_PATH);
+            htmlDocument.Load(path);
             helper = new HaloWaypointHelper(htmlDocument);
         }
 

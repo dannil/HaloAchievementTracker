@@ -37,7 +37,8 @@ namespace HaloAchievementTracker
             var steamAchievements = (await steamHelper.GetAchievementsAsync(Constants.HALO_MCC_STEAM_APP_ID, steamId)).Achievements;
 
             var htmlDocument = new HtmlDocument();
-            htmlDocument.Load(Constants.HALO_WAYPOINT_SITE_PATH);
+            var path = Path.Combine(Environment.CurrentDirectory, Constants.HALO_WAYPOINT_SITE_PATH);
+            htmlDocument.Load(path);
             var haloWaypointHelper = new HaloWaypointHelper(htmlDocument);
             var haloWaypointAchievements = haloWaypointHelper.GetAchievements();
 
