@@ -1,6 +1,6 @@
 ﻿language: csharp
 os: linux
-dist: bionic
+dist: xenial
 mono: none
 dotnet: 3.1
 install:
