@@ -15,7 +15,6 @@ namespace HaloAchievementTracker
 {
     public class Program
     {
-        private static readonly int windowWidth = 206;
         private static readonly int windowHeight = 30;
 
         private static readonly string CONSOLE_OUTPUT_NAME_COLUMN = "Name";
