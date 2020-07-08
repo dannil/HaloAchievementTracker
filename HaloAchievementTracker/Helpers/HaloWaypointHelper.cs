@@ -10,10 +10,9 @@ namespace HaloAchievementTracker.Helpers
     {
         private readonly HtmlDocument document;
 
-        public HaloWaypointHelper(string fileLocation)
+        public HaloWaypointHelper(HtmlDocument document)
         {
-            document = new HtmlDocument();
-            document.Load(fileLocation);
+            this.document = document;
         }
 
         public ISet<HaloWaypointAchievement> GetAchievements()

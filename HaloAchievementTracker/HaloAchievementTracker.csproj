@@ -11,7 +11,7 @@
     <PackageReference Include="SteamWebAPI2" Version="4.2.4" />
   </ItemGroup>
   <ItemGroup>
-    <None Update="Local Resources\site.html">
+    <None Update="Resources\site.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
