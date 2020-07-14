@@ -1,4 +1,5 @@
-﻿using HaloAchievementTracker.Helpers;
+﻿using HaloAchievementTracker.Adapters;
+using HaloAchievementTracker.Helpers;
 using HaloAchievementTracker.Models;
 using Moq;
 using NUnit.Framework;
@@ -15,8 +16,6 @@ namespace HaloAchievementTracker.Tests.Helpers
 {
     public class SteamHelperTest
     {
-        // private Mock<ISteamWebInterfaceFactory> steamWebInterfaceFactoryMock;
-
         private SteamHelper helper;
 
         [SetUp]

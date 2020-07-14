@@ -1,4 +1,5 @@
-﻿using HaloAchievementTracker.Models;
+﻿using HaloAchievementTracker.Adapters;
+using HaloAchievementTracker.Models;
 using Steam.Models.SteamPlayer;
 using SteamWebAPI2.Interfaces;
 using SteamWebAPI2.Utilities;
