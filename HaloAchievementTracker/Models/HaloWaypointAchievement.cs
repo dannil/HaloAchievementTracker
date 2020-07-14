@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HaloAchievementTracker
+namespace HaloAchievementTracker.Models
 {
     public class HaloWaypointAchievement
     {

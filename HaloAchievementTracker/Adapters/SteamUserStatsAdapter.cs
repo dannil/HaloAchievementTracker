@@ -9,11 +9,11 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloAchievementTracker.Models
+namespace HaloAchievementTracker.Adapters
 {
     public class SteamUserStatsAdapter
     {
-        readonly SteamUserStats steamUserStats;
+        private readonly SteamUserStats steamUserStats;
 
         public SteamUserStatsAdapter()
         {
