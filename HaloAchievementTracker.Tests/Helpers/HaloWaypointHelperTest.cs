@@ -18,7 +18,7 @@ namespace HaloAchievementTracker.Tests.Helpers
         public void SetUp()
         {
             var htmlDocument = new HtmlDocument();
-            var path = Path.Combine(Environment.CurrentDirectory, Constants.HALO_WAYPOINT_SITE_PATH);
+            var path = Path.Combine(Environment.CurrentDirectory, Constants.HALO_WAYPOINT_SERVICE_RECORD_PATH);
             htmlDocument.Load(path);
             helper = new HaloWaypointHelper(htmlDocument);
         }

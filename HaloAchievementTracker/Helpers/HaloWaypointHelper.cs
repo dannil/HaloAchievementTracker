@@ -18,8 +18,7 @@ namespace HaloAchievementTracker.Helpers
 
         public ISet<HaloWaypointAchievement> GetAchievements()
         {
-            HtmlNode serviceRecordAchievementsNode = document.DocumentNode.SelectSingleNode($"//div[@class='{Constants.HALO_WAYPOINT_SERVICE_RECORDS_ACHIEVEMENT_DIV}']");
-            HtmlNodeCollection achievementCollections = serviceRecordAchievementsNode.SelectNodes($"//div[@class='{Constants.HALO_WAYPOINT_SERVICE_RECORDS_ACHIEVEMENT_COLLECTION_DIV}']");
+            HtmlNodeCollection achievementCollections = document.DocumentNode.SelectNodes($"//div[@class='{Constants.HALO_WAYPOINT_SERVICE_RECORDS_ACHIEVEMENT_COLLECTION_DIV}']");
 
             ISet<HaloWaypointAchievement> haloWaypointAchievements = new HashSet<HaloWaypointAchievement>();
             foreach (HtmlNode achievementCollection in achievementCollections)
