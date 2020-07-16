@@ -37,22 +37,23 @@ namespace HaloAchievementTracker.Tests.Helpers
                 ("Halo4", 81, 0),
             };
 
-            int compoundAmountTotalAchievements = gameData.Sum(g => g.AmountTotalAchievements);
-            int compoundAmountUnlockedAchievements = gameData.Sum(g => g.AmountUnlockedAchievements);
+            int sumAmountTotalAchievements = gameData.Sum(g => g.AmountTotalAchievements);
+            int sumAmountUnlockedAchievements = gameData.Sum(g => g.AmountUnlockedAchievements);
 
             var achievements = helper.GetAchievements();
-            var locked = achievements.Where(a => !a.IsUnlocked).ToList();
-            var unlocked = achievements.Except(locked).ToList();
+            var locked = achievements.Where(a => !a.IsUnlocked);
+            var unlocked = achievements.Except(locked);
 
             foreach (var (Name, AmountTotalAchievements, AmountUnlockedAchievements) in gameData)
             {
-                Assert.AreEqual(AmountTotalAchievements, achievements.Where(a => a.GameId.Equals(Name)).ToList().Count);
-                Assert.AreEqual(AmountUnlockedAchievements, achievements.Where(a => a.GameId.Equals(Name) && a.IsUnlocked).ToList().Count);
+                var gameAchievements = achievements.Where(a => a.GameId.Equals(Name));
+                Assert.AreEqual(AmountTotalAchievements, gameAchievements.Count());
+                Assert.AreEqual(AmountUnlockedAchievements, gameAchievements.Count(a => a.IsUnlocked));
             }
 
-            Assert.AreEqual(compoundAmountTotalAchievements, locked.Count() + unlocked.Count());
-            Assert.AreEqual(compoundAmountTotalAchievements - compoundAmountUnlockedAchievements, locked.Count());
-            Assert.AreEqual(compoundAmountUnlockedAchievements, unlocked.Count());
+            Assert.AreEqual(sumAmountTotalAchievements, locked.Count() + unlocked.Count());
+            Assert.AreEqual(sumAmountTotalAchievements - sumAmountUnlockedAchievements, locked.Count());
+            Assert.AreEqual(sumAmountUnlockedAchievements, unlocked.Count());
         }
 
     }
