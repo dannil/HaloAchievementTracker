@@ -12,3 +12,5 @@ HaloAchievementTracker.exe <steamApiKey> <steamId64>
 ```
 
 Example output:
+
+![Example output](HaloAchievementTracker/Resources/Examples/example_output.png?raw=true "Title")
