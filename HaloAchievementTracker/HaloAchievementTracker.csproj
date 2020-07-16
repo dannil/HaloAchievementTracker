@@ -5,6 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UserSecretsId>ed119b76-e3dc-4949-a76c-51418e29d8fc</UserSecretsId>
     <Authors>Daniel Nilsson</Authors>
+    <Version>1.0.0</Version>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="HtmlAgilityPack" Version="1.11.24" />
