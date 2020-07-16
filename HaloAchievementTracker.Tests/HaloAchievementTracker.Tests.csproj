@@ -4,6 +4,8 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
 
     <IsPackable>false</IsPackable>
+
+    <Authors>Daniel Nilsson</Authors>
   </PropertyGroup>
 
   <ItemGroup>

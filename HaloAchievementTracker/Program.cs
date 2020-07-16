@@ -26,8 +26,6 @@ namespace HaloAchievementTracker
 
         public static async Task Main(string[] args)
         {
-            Console.WindowHeight = windowHeight;
-
             var configuration = GetConfiguration(args);
 
             var steamApiKey = configuration[Constants.CONFIGURATION_KEY_STEAM_API_KEY];
@@ -66,6 +64,7 @@ namespace HaloAchievementTracker
                 int consoleColumnsTotalWidth = consoleColumnsWidths.Sum();
                 string consoleColumnsFormatting = GetConsoleColumnsFormatting(consoleColumnsWidths);
 
+                Console.WindowHeight = windowHeight;
                 Console.WindowWidth = consoleColumnsTotalWidth;
 
                 Console.WriteLine("Following achievements are misaligned:");
