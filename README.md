@@ -7,7 +7,7 @@ you actually have unlocked on each platform.
 
 ## Usage
 
-Save the Halo Waypoint MCC service record page as an HTML file and put it in folder ```Resources\HaloWaypointData``` relative to the executable, 
+Save the Halo Waypoint MCC service record page as a HTML file named ```site.html``` and put it in folder ```Resources\HaloWaypointData``` relative to the executable, 
 then run the below command.
 
 ```
