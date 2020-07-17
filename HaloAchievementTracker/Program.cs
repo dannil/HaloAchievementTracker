@@ -1,6 +1,7 @@
 ﻿using HaloAchievementTracker.Extensions;
 using HaloAchievementTracker.Helpers;
 using HaloAchievementTracker.Models;
+using HaloAchievementTracker.Services;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Configuration;
 using SteamWebAPI2.Utilities;
@@ -16,8 +17,6 @@ namespace HaloAchievementTracker
 {
     public class Program
     {
-        private static readonly int windowHeight = 30;
-
         private static readonly string CONSOLE_OUTPUT_NAME_COLUMN = "Name";
         private static readonly string CONSOLE_OUTPUT_GAME_COLUMN = "Game";
         private static readonly string CONSOLE_OUTPUT_DESCRIPTION_COLUMN = "Description";
@@ -32,52 +31,35 @@ namespace HaloAchievementTracker
             var steamId = Convert.ToUInt64(configuration[Constants.CONFIGURATION_KEY_STEAM_ID]);
 
             var webInterfaceFactory = new SteamWebInterfaceFactory(steamApiKey);
-            var steamHelper = new SteamHelper(webInterfaceFactory);
+            var steamHelper = new SteamService(webInterfaceFactory);
             var steamAchievements = (await steamHelper.GetAchievementsAsync(Constants.HALO_MCC_STEAM_APP_ID, steamId)).Achievements;
 
             var htmlDocument = new HtmlDocument();
             var path = Path.Combine(Environment.CurrentDirectory, Constants.HALO_WAYPOINT_SERVICE_RECORD_PATH);
             htmlDocument.Load(path);
-            var haloWaypointHelper = new HaloWaypointHelper(htmlDocument);
+            var haloWaypointHelper = new HaloWaypointService(htmlDocument);
             var haloWaypointAchievements = haloWaypointHelper.GetAchievements();
 
-            var misalignedAchievements = steamAchievements
-                .Join(
-                    haloWaypointAchievements,
-                    s => s.Name,
-                    h => h.Name,
-                    (s, h) => new MisalignedAchievement
-                    {
-                        Name = s.Name,
-                        GameId = h.GameId,
-                        Description = s.Description,
-                        IsUnlockedOnSteam = Convert.ToBoolean(s.Achieved),
-                        IsUnlockedOnHaloWaypoint = h.IsUnlocked
-                    })
-                .Where(m => m.IsUnlockedOnSteam != m.IsUnlockedOnHaloWaypoint)
-                .OrderBy(m => m.Name)
-                .ToList();
+            var misalignedAchievements = AchievementHelper.GetMisalignedAchievements(steamAchievements, haloWaypointAchievements);
 
             if (misalignedAchievements.Any())
             {
                 int[] consoleColumnsWidths = GetConsoleColumnsWidths(misalignedAchievements);
                 int consoleColumnsTotalWidth = consoleColumnsWidths.Sum();
                 string consoleColumnsFormatting = GetConsoleColumnsFormatting(consoleColumnsWidths);
-
-                Console.WindowHeight = windowHeight;
-                Console.WindowWidth = consoleColumnsTotalWidth;
+                string rowSeparator = new string('-', consoleColumnsTotalWidth - 1);
 
                 Console.WriteLine("Following achievements are misaligned:");
-                Console.WriteLine(new string('-', consoleColumnsTotalWidth - 1));
+                Console.WriteLine(rowSeparator);
                 Console.WriteLine(consoleColumnsFormatting, CONSOLE_OUTPUT_NAME_COLUMN, CONSOLE_OUTPUT_GAME_COLUMN, CONSOLE_OUTPUT_DESCRIPTION_COLUMN,
                     CONSOLE_OUTPUT_STEAM_COLUMN, CONSOLE_OUTPUT_HALOWAYPOINT_COLUMN);
-                Console.WriteLine(new string('-', consoleColumnsTotalWidth - 1));
+                Console.WriteLine(rowSeparator);
                 foreach (MisalignedAchievement misaligned in misalignedAchievements)
                 {
                     Console.WriteLine(consoleColumnsFormatting, misaligned.Name, misaligned.GameId, misaligned.Description,
                         misaligned.IsUnlockedOnSteam.ToMarks(), misaligned.IsUnlockedOnHaloWaypoint.ToMarks());
                 }
-                Console.WriteLine(new string('-', consoleColumnsTotalWidth - 1));
+                Console.WriteLine(rowSeparator);
             }
             else
             {

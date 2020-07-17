@@ -1,4 +1,4 @@
-﻿using HaloAchievementTracker.Helpers;
+﻿using HaloAchievementTracker.Services;
 using HtmlAgilityPack;
 using Moq;
 using NUnit.Framework;
@@ -8,11 +8,11 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace HaloAchievementTracker.Tests.Helpers
+namespace HaloAchievementTracker.Tests.Services
 {
-    public class HaloWaypointHelperTest
+    public class HaloWaypointServiceTest
     {
-        private HaloWaypointHelper helper;
+        private HaloWaypointService service;
 
         [SetUp]
         public void SetUp()
@@ -20,7 +20,7 @@ namespace HaloAchievementTracker.Tests.Helpers
             var htmlDocument = new HtmlDocument();
             var path = Path.Combine(Environment.CurrentDirectory, Constants.HALO_WAYPOINT_SERVICE_RECORD_PATH);
             htmlDocument.Load(path);
-            helper = new HaloWaypointHelper(htmlDocument);
+            service = new HaloWaypointService(htmlDocument);
         }
 
         [Test]
@@ -40,7 +40,7 @@ namespace HaloAchievementTracker.Tests.Helpers
             int sumAmountTotalAchievements = gameData.Sum(g => g.AmountTotalAchievements);
             int sumAmountUnlockedAchievements = gameData.Sum(g => g.AmountUnlockedAchievements);
 
-            var achievements = helper.GetAchievements();
+            var achievements = service.GetAchievements();
             var locked = achievements.Where(a => !a.IsUnlocked);
             var unlocked = achievements.Except(locked);
 

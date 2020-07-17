@@ -5,13 +5,13 @@ using System.Collections.Generic;
 using System.Text;
 using System.Web;
 
-namespace HaloAchievementTracker.Helpers
+namespace HaloAchievementTracker.Services
 {
-    public class HaloWaypointHelper
+    public class HaloWaypointService
     {
         private readonly HtmlDocument document;
 
-        public HaloWaypointHelper(HtmlDocument document)
+        public HaloWaypointService(HtmlDocument document)
         {
             this.document = document;
         }

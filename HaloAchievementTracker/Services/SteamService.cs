@@ -9,13 +9,13 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloAchievementTracker.Helpers
+namespace HaloAchievementTracker.Services
 {
-    public class SteamHelper
+    public class SteamService
     {
         private readonly ISteamWebInterfaceFactory webInterfaceFactory;
 
-        public SteamHelper(ISteamWebInterfaceFactory webInterfaceFactory)
+        public SteamService(ISteamWebInterfaceFactory webInterfaceFactory)
         {
             this.webInterfaceFactory = webInterfaceFactory;
         }

@@ -21,9 +21,6 @@ namespace HaloAchievementTracker.Models
         }
 
         public override int GetHashCode()
-        {
-            int prime = 31;
-            return Name.GetHashCode() * prime + GameId.GetHashCode() * prime + IsUnlocked.GetHashCode() * prime;
-        }
+            => HashCode.Combine(Name, GameId, IsUnlocked);
     }
 }

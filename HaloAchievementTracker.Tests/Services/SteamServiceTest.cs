@@ -1,6 +1,6 @@
 ﻿using HaloAchievementTracker.Adapters;
-using HaloAchievementTracker.Helpers;
 using HaloAchievementTracker.Models;
+using HaloAchievementTracker.Services;
 using Moq;
 using NUnit.Framework;
 using Steam.Models.SteamPlayer;
@@ -12,11 +12,11 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloAchievementTracker.Tests.Helpers
+namespace HaloAchievementTracker.Tests.Services
 {
-    public class SteamHelperTest
+    public class SteamServiceTest
     {
-        private SteamHelper helper;
+        private SteamService service;
 
         [SetUp]
         public void SetUp()
@@ -53,13 +53,13 @@ namespace HaloAchievementTracker.Tests.Helpers
             var steamWebInterfaceFactoryMock = new Mock<ISteamWebInterfaceFactory>();
             steamWebInterfaceFactoryMock.Setup(m => m.CreateSteamWebInterface<SteamUserStatsAdapter>(It.IsAny<HttpClient>())).Returns(steamUserStatsMock.Object);
 
-            helper = new SteamHelper(steamWebInterfaceFactoryMock.Object);
+            service = new SteamService(steamWebInterfaceFactoryMock.Object);
         }
 
         [Test]
         public async Task GetAchievements()
         {
-            var achievements = (await helper.GetAchievementsAsync(uint.MaxValue, ulong.MaxValue)).Achievements;
+            var achievements = (await service.GetAchievementsAsync(uint.MaxValue, ulong.MaxValue)).Achievements;
 
             Assert.AreEqual(2, achievements.Count);
         }
