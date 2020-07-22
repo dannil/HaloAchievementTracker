@@ -10,7 +10,7 @@ namespace HaloAchievementTracker.Models
         public string GameId { get; set; }
         public string Description { get; set; }
         public bool IsUnlockedOnSteam { get; set; }
-        public bool IsUnlockedOnHaloWaypoint { get; set; }
+        public bool IsUnlockedOnXboxLive { get; set; }
 
         public override bool Equals(object obj)
         {
@@ -20,10 +20,10 @@ namespace HaloAchievementTracker.Models
             }
             var other =(MisalignedAchievement)obj;
             return Name.Equals(other.Name) && GameId.Equals(other.GameId) && Description.Equals(other.Description) 
-                && IsUnlockedOnSteam.Equals(other.IsUnlockedOnSteam) && IsUnlockedOnHaloWaypoint.Equals(other.IsUnlockedOnHaloWaypoint);
+                && IsUnlockedOnSteam.Equals(other.IsUnlockedOnSteam) && IsUnlockedOnXboxLive.Equals(other.IsUnlockedOnXboxLive);
         }
 
         public override int GetHashCode()
-            => HashCode.Combine(Name, GameId, Description, IsUnlockedOnSteam, IsUnlockedOnHaloWaypoint);
+            => HashCode.Combine(Name, GameId, Description, IsUnlockedOnSteam, IsUnlockedOnXboxLive);
     }
 }

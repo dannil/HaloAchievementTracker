@@ -16,31 +16,31 @@ namespace HaloAchievementTracker.Services
             this.document = document;
         }
 
-        public ISet<HaloWaypointAchievement> GetAchievements()
+        public ISet<XboxLiveAchievement> GetAchievements()
         {
-            HtmlNodeCollection achievementCollections = document.DocumentNode.SelectNodes($"//div[@class='{Constants.HALO_WAYPOINT_SERVICE_RECORDS_ACHIEVEMENT_COLLECTION_DIV}']");
+            HtmlNodeCollection achievementCollectionNodes = document.DocumentNode.SelectNodes($"//div[@class='{Constants.HALO_WAYPOINT_SERVICE_RECORDS_ACHIEVEMENT_COLLECTION_DIV}']");
 
-            ISet<HaloWaypointAchievement> haloWaypointAchievements = new HashSet<HaloWaypointAchievement>();
-            foreach (HtmlNode achievementCollection in achievementCollections)
+            ISet<XboxLiveAchievement> achievements = new HashSet<XboxLiveAchievement>();
+            foreach (HtmlNode achievementCollectionNode in achievementCollectionNodes)
             {
-                HtmlNodeCollection achievements = achievementCollection.SelectNodes($".//ul[contains(@class,'{Constants.HALO_WAYPOINT_SERVICE_RECORDS_ACHIEVEMENT_LIST_CLASS}')]/li");
-                foreach (HtmlNode achievement in achievements)
+                HtmlNodeCollection achievementNodes = achievementCollectionNode.SelectNodes($".//ul[contains(@class,'{Constants.HALO_WAYPOINT_SERVICE_RECORDS_ACHIEVEMENT_LIST_CLASS}')]/li");
+                foreach (HtmlNode achievementNode in achievementNodes)
                 {
-                    HaloWaypointAchievement haloWaypointAchievement = new HaloWaypointAchievement();
+                    XboxLiveAchievement xboxLiveAchievement = new XboxLiveAchievement();
 
-                    var titleNode = achievement.SelectSingleNode(".//p[@class='text--medium title']");
-                    haloWaypointAchievement.Name = HttpUtility.HtmlDecode(titleNode.InnerText);
+                    var titleNode = achievementNode.SelectSingleNode(".//p[@class='text--medium title']");
+                    xboxLiveAchievement.Name = HttpUtility.HtmlDecode(titleNode.InnerText);
 
-                    string gameId = achievementCollection.GetAttributeValue("data-game-id", string.Empty);
-                    haloWaypointAchievement.GameId = gameId;
+                    string gameId = achievementCollectionNode.GetAttributeValue("data-game-id", string.Empty);
+                    xboxLiveAchievement.GameId = gameId;
 
-                    bool isUnlocked = achievement.GetAttributeValue("class", string.Empty).Contains("unlocked");
-                    haloWaypointAchievement.IsUnlocked = isUnlocked;
+                    bool isUnlocked = achievementNode.GetAttributeValue("class", string.Empty).Contains("unlocked");
+                    xboxLiveAchievement.IsUnlocked = isUnlocked;
 
-                    haloWaypointAchievements.Add(haloWaypointAchievement);
+                    achievements.Add(xboxLiveAchievement);
                 }
             }
-            return haloWaypointAchievements;
+            return achievements;
         }
 
     }

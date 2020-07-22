@@ -11,11 +11,11 @@ namespace HaloAchievementTracker.Helpers
     {
         public static IEnumerable<MisalignedAchievement> GetMisalignedAchievements(
             IEnumerable<PlayerAchievementModel> steamAchievements, 
-            IEnumerable<HaloWaypointAchievement> haloWaypointAchievements)
+            IEnumerable<XboxLiveAchievement> xboxLiveAchievements)
         {
             return steamAchievements
                 .Join(
-                    haloWaypointAchievements,
+                    xboxLiveAchievements,
                     s => s.Name,
                     h => h.Name,
                     (s, h) => new MisalignedAchievement
@@ -24,9 +24,9 @@ namespace HaloAchievementTracker.Helpers
                         GameId = h.GameId,
                         Description = s.Description,
                         IsUnlockedOnSteam = Convert.ToBoolean(s.Achieved),
-                        IsUnlockedOnHaloWaypoint = h.IsUnlocked
+                        IsUnlockedOnXboxLive = h.IsUnlocked
                     })
-                .Where(m => m.IsUnlockedOnSteam != m.IsUnlockedOnHaloWaypoint)
+                .Where(m => m.IsUnlockedOnSteam != m.IsUnlockedOnXboxLive)
                 .OrderBy(m => m.Name);
         }
     }

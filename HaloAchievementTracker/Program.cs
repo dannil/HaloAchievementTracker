@@ -21,7 +21,7 @@ namespace HaloAchievementTracker
         private static readonly string CONSOLE_OUTPUT_GAME_COLUMN = "Game";
         private static readonly string CONSOLE_OUTPUT_DESCRIPTION_COLUMN = "Description";
         private static readonly string CONSOLE_OUTPUT_STEAM_COLUMN = "Unlocked on Steam";
-        private static readonly string CONSOLE_OUTPUT_HALOWAYPOINT_COLUMN = "Unlocked on Halo Waypoint";
+        private static readonly string CONSOLE_OUTPUT_XBOXLIVE_COLUMN = "Unlocked on Xbox Live";
 
         public static async Task Main(string[] args)
         {
@@ -38,9 +38,9 @@ namespace HaloAchievementTracker
             var path = Path.Combine(Environment.CurrentDirectory, Constants.HALO_WAYPOINT_SERVICE_RECORD_PATH);
             htmlDocument.Load(path);
             var haloWaypointHelper = new HaloWaypointService(htmlDocument);
-            var haloWaypointAchievements = haloWaypointHelper.GetAchievements();
+            var xboxLiveAchievements = haloWaypointHelper.GetAchievements();
 
-            var misalignedAchievements = AchievementHelper.GetMisalignedAchievements(steamAchievements, haloWaypointAchievements);
+            var misalignedAchievements = AchievementHelper.GetMisalignedAchievements(steamAchievements, xboxLiveAchievements);
 
             if (misalignedAchievements.Any())
             {
@@ -52,12 +52,12 @@ namespace HaloAchievementTracker
                 Console.WriteLine("Following achievements are misaligned:");
                 Console.WriteLine(rowSeparator);
                 Console.WriteLine(consoleColumnsFormatting, CONSOLE_OUTPUT_NAME_COLUMN, CONSOLE_OUTPUT_GAME_COLUMN, CONSOLE_OUTPUT_DESCRIPTION_COLUMN,
-                    CONSOLE_OUTPUT_STEAM_COLUMN, CONSOLE_OUTPUT_HALOWAYPOINT_COLUMN);
+                    CONSOLE_OUTPUT_STEAM_COLUMN, CONSOLE_OUTPUT_XBOXLIVE_COLUMN);
                 Console.WriteLine(rowSeparator);
                 foreach (MisalignedAchievement misaligned in misalignedAchievements)
                 {
                     Console.WriteLine(consoleColumnsFormatting, misaligned.Name, misaligned.GameId, misaligned.Description,
-                        misaligned.IsUnlockedOnSteam.ToMarks(), misaligned.IsUnlockedOnHaloWaypoint.ToMarks());
+                        misaligned.IsUnlockedOnSteam.ToMarks(), misaligned.IsUnlockedOnXboxLive.ToMarks());
                 }
                 Console.WriteLine(rowSeparator);
             }
@@ -73,7 +73,7 @@ namespace HaloAchievementTracker
             int gameLength = Math.Max(misalignedAchievements.Max(m => m.GameId.Length), CONSOLE_OUTPUT_GAME_COLUMN.Length) + 4;
             int descriptionLength = Math.Max(misalignedAchievements.Max(m => m.Description.Length), CONSOLE_OUTPUT_DESCRIPTION_COLUMN.Length) + 4;
             int steamLength = Math.Max(misalignedAchievements.Max(m => m.IsUnlockedOnSteam.ToString().Length), CONSOLE_OUTPUT_STEAM_COLUMN.Length) + 4;
-            int haloWaypointLength = Math.Max(misalignedAchievements.Max(m => m.IsUnlockedOnHaloWaypoint.ToString().Length), CONSOLE_OUTPUT_HALOWAYPOINT_COLUMN.Length) + 4;
+            int haloWaypointLength = Math.Max(misalignedAchievements.Max(m => m.IsUnlockedOnXboxLive.ToString().Length), CONSOLE_OUTPUT_XBOXLIVE_COLUMN.Length) + 4;
 
             return new int[] { nameLength, gameLength, descriptionLength, steamLength, haloWaypointLength };
         }

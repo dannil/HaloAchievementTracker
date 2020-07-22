@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HaloAchievementTracker.Models
 {
-    public class HaloWaypointAchievement
+    public class XboxLiveAchievement
     {
         public string Name { get; set; }
         public string GameId { get; set; }
@@ -16,7 +16,7 @@ namespace HaloAchievementTracker.Models
             {
                 return false;
             }
-            var other = (HaloWaypointAchievement)obj;
+            var other = (XboxLiveAchievement)obj;
             return Name.Equals(other.Name) && GameId.Equals(other.GameId) && IsUnlocked.Equals(other.IsUnlocked);
         }
 
