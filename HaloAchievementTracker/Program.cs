@@ -27,15 +27,10 @@ namespace HaloAchievementTracker
         {
             var configuration = GetConfiguration(args);
 
-            // var steamApiKey = configuration[Constants.CONFIGURATION_KEY_STEAM_API_KEY];
             var steamId = Convert.ToUInt64(configuration[Constants.CONFIGURATION_KEY_STEAM_ID]);
 
-            //var webInterfaceFactory = new SteamWebInterfaceFactory(steamApiKey);
-            //var steamHelper = new SteamService(webInterfaceFactory);
             var steamService = new SteamService();
-
-            //var steamAchievements = (await steamHelper.GetAchievementsAsync(Constants.HALO_MCC_STEAM_APP_ID, steamId)).Achievements;
-            var steamAchievements = await steamService.GetAchievements(Constants.HALO_MCC_STEAM_APP_ID, steamId);
+            var steamAchievements = await steamService.GetAchievementsByScrapingAsync(Constants.HALO_MCC_STEAM_APP_ID, steamId);
 
             var htmlDocument = new HtmlDocument();
             var path = Path.Combine(Environment.CurrentDirectory, Constants.HALO_WAYPOINT_SERVICE_RECORD_PATH);

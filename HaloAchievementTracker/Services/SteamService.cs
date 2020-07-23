@@ -1,6 +1,8 @@
 ﻿//using HaloAchievementTracker.Adapters;
+using HaloAchievementTracker.Adapters;
 using HaloAchievementTracker.Models;
 using HtmlAgilityPack;
+using SteamWebAPI2.Utilities;
 //using Steam.Models.SteamPlayer;
 //using SteamWebAPI2.Interfaces;
 //using SteamWebAPI2.Utilities;
@@ -15,21 +17,26 @@ namespace HaloAchievementTracker.Services
 {
     public class SteamService
     {
-        // private readonly ISteamWebInterfaceFactory webInterfaceFactory;
-
-        public SteamService(/*ISteamWebInterfaceFactory webInterfaceFactory*/)
+        public SteamService()
         {
-            // this.webInterfaceFactory = webInterfaceFactory;
         }
 
-        //public async Task<PlayerAchievementResultModel> GetAchievementsAsync(uint appId, ulong steamId)
-        //{
-        //    var steamInterface = webInterfaceFactory.CreateSteamWebInterface<SteamUserStatsAdapter>(new HttpClient());
-        //    var stats = await steamInterface.GetPlayerAchievementsAsync(appId, steamId);
-        //    return stats.Data;
-        //}
+        public async Task<ISet<SteamAchievement>> GetAchievementsByApiAsync(ISteamWebInterfaceFactory webInterfaceFactory, uint appId, ulong steamId)
+        {
+            var steamInterface = webInterfaceFactory.CreateSteamWebInterface<SteamUserStatsAdapter>(new HttpClient());
+            var stats = await steamInterface.GetPlayerAchievementsAsync(appId, steamId);
+            return stats.Data.Achievements
+                .Select(a =>
+                    new SteamAchievement
+                    {
+                        Name = a.Name,
+                        Description = a.Description,
+                        IsUnlocked = Convert.ToBoolean(a.Achieved)
+                    })
+                .ToHashSet();
+        }
 
-        public async Task<ISet<SteamAchievement>> GetAchievements(uint appId, ulong steamId)
+        public async Task<ISet<SteamAchievement>> GetAchievementsByScrapingAsync(uint appId, ulong steamId)
         {
             var url = $"https://steamcommunity.com/profiles/{steamId}/stats/appid/{appId}/achievements";
             var httpClient = new HttpClient();
@@ -40,14 +47,14 @@ namespace HaloAchievementTracker.Services
             var document = new HtmlDocument();
             document.LoadHtml(responseBody);
 
-            HtmlNodeCollection achieveRowsNodes = document.DocumentNode.SelectNodes($"//div[@class='achieveRow']");
+            HtmlNodeCollection achieveRowsNodes = document.DocumentNode.SelectNodes($"//div[@class='{Constants.STEAM_ACHIEVE_ROW_DIV}']");
 
-            ISet<SteamAchievement> achievements = new HashSet<SteamAchievement>();
+            ISet <SteamAchievement> achievements = new HashSet<SteamAchievement>();
             foreach (HtmlNode achieveRowsNode in achieveRowsNodes)
             {
                 SteamAchievement steamAchievement = new SteamAchievement();
 
-                var achieveTxtNode = achieveRowsNode.SelectSingleNode($".//div[@class='achieveTxt']");
+                var achieveTxtNode = achieveRowsNode.SelectSingleNode($".//div[@class='{Constants.STEAM_ACHIEVE_TXT_DIV}']");
 
                 steamAchievement.Name = achieveTxtNode.SelectSingleNode($".//h3").InnerText;
                 steamAchievement.Description = achieveTxtNode.SelectSingleNode($".//h5").InnerText;
