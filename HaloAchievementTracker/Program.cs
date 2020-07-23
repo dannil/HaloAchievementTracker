@@ -96,13 +96,11 @@ namespace HaloAchievementTracker
                 var builder = new ConfigurationBuilder();
                 builder.AddUserSecrets<Program>();
                 var configurationRoot = builder.Build();
-                configuration[Constants.CONFIGURATION_KEY_STEAM_API_KEY] = configurationRoot[Constants.CONFIGURATION_KEY_STEAM_API_KEY];
                 configuration[Constants.CONFIGURATION_KEY_STEAM_ID] = configurationRoot[Constants.CONFIGURATION_KEY_STEAM_ID];
             }
             else
             {
-                configuration[Constants.CONFIGURATION_KEY_STEAM_API_KEY] = args[0];
-                configuration[Constants.CONFIGURATION_KEY_STEAM_ID] = args[1];
+                configuration[Constants.CONFIGURATION_KEY_STEAM_ID] = args[0];
             }
             return configuration;
         }
