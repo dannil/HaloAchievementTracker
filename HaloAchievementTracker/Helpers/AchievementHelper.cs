@@ -1,5 +1,5 @@
 ﻿using HaloAchievementTracker.Models;
-using Steam.Models.SteamPlayer;
+//using Steam.Models.SteamPlayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +10,7 @@ namespace HaloAchievementTracker.Helpers
     public class AchievementHelper
     {
         public static IEnumerable<MisalignedAchievement> GetMisalignedAchievements(
-            IEnumerable<PlayerAchievementModel> steamAchievements, 
+            IEnumerable<SteamAchievement> steamAchievements, 
             IEnumerable<XboxLiveAchievement> xboxLiveAchievements)
         {
             return steamAchievements
@@ -23,7 +23,7 @@ namespace HaloAchievementTracker.Helpers
                         Name = s.Name,
                         GameId = h.GameId,
                         Description = s.Description,
-                        IsUnlockedOnSteam = Convert.ToBoolean(s.Achieved),
+                        IsUnlockedOnSteam = s.IsUnlocked,
                         IsUnlockedOnXboxLive = h.IsUnlocked
                     })
                 .Where(m => m.IsUnlockedOnSteam != m.IsUnlockedOnXboxLive)

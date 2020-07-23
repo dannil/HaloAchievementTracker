@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HaloAchievementTracker.Models
 {
-    public class XboxLiveAchievement
+    public class XboxLiveAchievement : IAchievement
     {
         public string Name { get; set; }
         public string GameId { get; set; }
