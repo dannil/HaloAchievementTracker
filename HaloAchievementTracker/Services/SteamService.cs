@@ -1,11 +1,7 @@
-﻿//using HaloAchievementTracker.Adapters;
-using HaloAchievementTracker.Adapters;
+﻿using HaloAchievementTracker.Adapters;
 using HaloAchievementTracker.Models;
 using HtmlAgilityPack;
 using SteamWebAPI2.Utilities;
-//using Steam.Models.SteamPlayer;
-//using SteamWebAPI2.Interfaces;
-//using SteamWebAPI2.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;

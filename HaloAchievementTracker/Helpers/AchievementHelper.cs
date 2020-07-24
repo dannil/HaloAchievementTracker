@@ -1,5 +1,4 @@
 ﻿using HaloAchievementTracker.Models;
-//using Steam.Models.SteamPlayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
