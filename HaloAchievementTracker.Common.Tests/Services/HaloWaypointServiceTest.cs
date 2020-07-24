@@ -1,4 +1,5 @@
-﻿using HaloAchievementTracker.Services;
+﻿using HaloAchievementTracker.Common;
+using HaloAchievementTracker.Common.Services;
 using HtmlAgilityPack;
 using Moq;
 using NUnit.Framework;

@@ -1,10 +1,10 @@
-﻿using HaloAchievementTracker.Extensions;
-using HaloAchievementTracker.Helpers;
-using HaloAchievementTracker.Models;
-using HaloAchievementTracker.Services;
+﻿using HaloAchievementTracker.Common;
+using HaloAchievementTracker.Common.Extensions;
+using HaloAchievementTracker.Common.Helpers;
+using HaloAchievementTracker.Common.Models;
+using HaloAchievementTracker.Common.Services;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Configuration;
-//using SteamWebAPI2.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;

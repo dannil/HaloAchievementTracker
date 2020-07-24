@@ -1,10 +1,10 @@
-﻿using HaloAchievementTracker.Models;
+﻿using HaloAchievementTracker.Common.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace HaloAchievementTracker.Helpers
+namespace HaloAchievementTracker.Common.Helpers
 {
     public class AchievementHelper
     {

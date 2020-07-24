@@ -1,11 +1,11 @@
-﻿using HaloAchievementTracker.Models;
+﻿using HaloAchievementTracker.Common.Models;
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Web;
 
-namespace HaloAchievementTracker.Services
+namespace HaloAchievementTracker.Common.Services
 {
     public class HaloWaypointService
     {
@@ -16,7 +16,7 @@ namespace HaloAchievementTracker.Services
             this.document = document;
         }
 
-        public virtual ISet<XboxLiveAchievement> GetAchievements()
+        public virtual IEnumerable<XboxLiveAchievement> GetAchievements()
         {
             HtmlNodeCollection achievementCollectionNodes = document.DocumentNode.SelectNodes($"//div[@class='{Constants.HALO_WAYPOINT_SERVICE_RECORDS_ACHIEVEMENT_COLLECTION_DIV}']");
 

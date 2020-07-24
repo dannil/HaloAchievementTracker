@@ -1,5 +1,5 @@
-﻿using HaloAchievementTracker.Adapters;
-using HaloAchievementTracker.Models;
+﻿using HaloAchievementTracker.Common.Adapters;
+using HaloAchievementTracker.Common.Models;
 using HtmlAgilityPack;
 using SteamWebAPI2.Utilities;
 using System;
@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloAchievementTracker.Services
+namespace HaloAchievementTracker.Common.Services
 {
     public class SteamService
     {
@@ -17,7 +17,7 @@ namespace HaloAchievementTracker.Services
         {
         }
 
-        public virtual async Task<ISet<SteamAchievement>> GetAchievementsByApiAsync(ISteamWebInterfaceFactory webInterfaceFactory, uint appId, ulong steamId)
+        public virtual async Task<IEnumerable<SteamAchievement>> GetAchievementsByApiAsync(ISteamWebInterfaceFactory webInterfaceFactory, uint appId, ulong steamId)
         {
             var steamInterface = webInterfaceFactory.CreateSteamWebInterface<SteamUserStatsAdapter>(new HttpClient());
             var stats = await steamInterface.GetPlayerAchievementsAsync(appId, steamId);
@@ -28,11 +28,10 @@ namespace HaloAchievementTracker.Services
                         Name = a.Name,
                         Description = a.Description,
                         IsUnlocked = Convert.ToBoolean(a.Achieved)
-                    })
-                .ToHashSet();
+                    });
         }
 
-        public virtual async Task<ISet<SteamAchievement>> GetAchievementsByScrapingAsync(uint appId, ulong steamId)
+        public virtual async Task<IEnumerable<SteamAchievement>> GetAchievementsByScrapingAsync(uint appId, ulong steamId)
         {
             var url = $"https://steamcommunity.com/profiles/{steamId}/stats/appid/{appId}/achievements";
             var httpClient = new HttpClient();

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 
-namespace HaloAchievementTracker
+namespace HaloAchievementTracker.Common
 {
     public static class Constants
     {

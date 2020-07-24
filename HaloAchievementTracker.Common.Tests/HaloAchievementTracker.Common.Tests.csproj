@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\HaloAchievementTracker\HaloAchievementTracker.csproj" />
+    <ProjectReference Include="..\HaloAchievementTracker.Common\HaloAchievementTracker.Common.csproj" />
   </ItemGroup>
 
   <ItemGroup>

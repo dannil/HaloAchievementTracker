@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HaloAchievementTracker.Models
+namespace HaloAchievementTracker.Common.Models
 {
     public class MisalignedAchievement
     {

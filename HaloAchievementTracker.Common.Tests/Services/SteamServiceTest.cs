@@ -1,6 +1,6 @@
-﻿using HaloAchievementTracker.Adapters;
-using HaloAchievementTracker.Models;
-using HaloAchievementTracker.Services;
+﻿using HaloAchievementTracker.Common.Adapters;
+using HaloAchievementTracker.Common.Models;
+using HaloAchievementTracker.Common.Services;
 using Moq;
 using NUnit.Framework;
 using Steam.Models.SteamPlayer;
@@ -59,7 +59,7 @@ namespace HaloAchievementTracker.Tests.Services
             steamWebInterfaceFactoryMock = new Mock<ISteamWebInterfaceFactory>();
             steamWebInterfaceFactoryMock.Setup(m => m.CreateSteamWebInterface<SteamUserStatsAdapter>(It.IsAny<HttpClient>())).Returns(steamUserStatsMock.Object);
 
-            ISet<SteamAchievement> steamAchievements = new HashSet<SteamAchievement>
+            IEnumerable<SteamAchievement> steamAchievements = new HashSet<SteamAchievement>
             {
                 new SteamAchievement()
                 {
@@ -90,7 +90,7 @@ namespace HaloAchievementTracker.Tests.Services
         {
             var achievements = await service.GetAchievementsByApiAsync(steamWebInterfaceFactoryMock.Object, uint.MaxValue, ulong.MaxValue);
 
-            Assert.AreEqual(2, achievements.Count);
+            Assert.AreEqual(2, achievements.Count());
         }
 
         [Test]
@@ -98,7 +98,7 @@ namespace HaloAchievementTracker.Tests.Services
         {
             var achievements = await serviceMock.Object.GetAchievementsByScrapingAsync(uint.MaxValue, ulong.MaxValue);
 
-            Assert.AreEqual(3, achievements.Count);
+            Assert.AreEqual(3, achievements.Count());
             Assert.That(achievements.Count(a => a.Name.Equals("Going Bananas")), Is.EqualTo(1));
             Assert.That(achievements.Count(a => a.Name.Equals("Where Am I?")), Is.EqualTo(1));
             Assert.That(achievements.Count(a => a.Name.Equals("Tempered Blade")), Is.EqualTo(1));
