@@ -32,7 +32,7 @@ namespace HaloAchievementTracker.Adapters
         public virtual Task<ISteamWebResponse<uint>> GetNumberOfCurrentPlayersForGameAsync(uint appId)
             => steamUserStats.GetNumberOfCurrentPlayersForGameAsync(appId);
 
-        public virtual Task<ISteamWebResponse<PlayerAchievementResultModel>> GetPlayerAchievementsAsync(uint appId, ulong steamId, string language = "en_us") 
+        public virtual Task<ISteamWebResponse<PlayerAchievementResultModel>> GetPlayerAchievementsAsync(uint appId, ulong steamId, string language = "en_us")
             => steamUserStats.GetPlayerAchievementsAsync(appId, steamId, language);
 
         public virtual Task<ISteamWebResponse<SchemaForGameResultModel>> GetSchemaForGameAsync(uint appId, string language = "")

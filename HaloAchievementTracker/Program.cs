@@ -4,7 +4,7 @@ using HaloAchievementTracker.Models;
 using HaloAchievementTracker.Services;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Configuration;
-using SteamWebAPI2.Utilities;
+//using SteamWebAPI2.Utilities;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -27,18 +27,16 @@ namespace HaloAchievementTracker
         {
             var configuration = GetConfiguration(args);
 
-            var steamApiKey = configuration[Constants.CONFIGURATION_KEY_STEAM_API_KEY];
             var steamId = Convert.ToUInt64(configuration[Constants.CONFIGURATION_KEY_STEAM_ID]);
 
-            var webInterfaceFactory = new SteamWebInterfaceFactory(steamApiKey);
-            var steamHelper = new SteamService(webInterfaceFactory);
-            var steamAchievements = (await steamHelper.GetAchievementsAsync(Constants.HALO_MCC_STEAM_APP_ID, steamId)).Achievements;
+            var steamService = new SteamService();
+            var steamAchievements = await steamService.GetAchievementsByScrapingAsync(Constants.HALO_MCC_STEAM_APP_ID, steamId);
 
             var htmlDocument = new HtmlDocument();
             var path = Path.Combine(Environment.CurrentDirectory, Constants.HALO_WAYPOINT_SERVICE_RECORD_PATH);
             htmlDocument.Load(path);
-            var haloWaypointHelper = new HaloWaypointService(htmlDocument);
-            var xboxLiveAchievements = haloWaypointHelper.GetAchievements();
+            var haloWaypointService = new HaloWaypointService(htmlDocument);
+            var xboxLiveAchievements = haloWaypointService.GetAchievements();
 
             var misalignedAchievements = AchievementHelper.GetMisalignedAchievements(steamAchievements, xboxLiveAchievements);
 
@@ -98,13 +96,11 @@ namespace HaloAchievementTracker
                 var builder = new ConfigurationBuilder();
                 builder.AddUserSecrets<Program>();
                 var configurationRoot = builder.Build();
-                configuration[Constants.CONFIGURATION_KEY_STEAM_API_KEY] = configurationRoot[Constants.CONFIGURATION_KEY_STEAM_API_KEY];
                 configuration[Constants.CONFIGURATION_KEY_STEAM_ID] = configurationRoot[Constants.CONFIGURATION_KEY_STEAM_ID];
             }
             else
             {
-                configuration[Constants.CONFIGURATION_KEY_STEAM_API_KEY] = args[0];
-                configuration[Constants.CONFIGURATION_KEY_STEAM_ID] = args[1];
+                configuration[Constants.CONFIGURATION_KEY_STEAM_ID] = args[0];
             }
             return configuration;
         }

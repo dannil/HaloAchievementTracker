@@ -16,7 +16,7 @@ namespace HaloAchievementTracker.Services
             this.document = document;
         }
 
-        public ISet<XboxLiveAchievement> GetAchievements()
+        public virtual ISet<XboxLiveAchievement> GetAchievements()
         {
             HtmlNodeCollection achievementCollectionNodes = document.DocumentNode.SelectNodes($"//div[@class='{Constants.HALO_WAYPOINT_SERVICE_RECORDS_ACHIEVEMENT_COLLECTION_DIV}']");
 

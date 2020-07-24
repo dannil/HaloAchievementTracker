@@ -7,11 +7,13 @@ you actually have unlocked on each platform.
 
 ## Usage
 
+Note that your Steam profile needs to be set to public in order to be able to read the achievements.
+
 Save the Halo Waypoint MCC service record page as a HTML file named ```service-record.html``` and put it in folder ```Resources\HaloWaypointData``` relative to the executable, 
 then run the command below.
 
 ```
-HaloAchievementTracker.exe <steamApiKey> <steamId64>
+HaloAchievementTracker.exe <steamId64>
 ```
 
 ## Example output
