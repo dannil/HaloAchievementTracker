@@ -8,8 +8,7 @@ namespace HaloAchievementTracker.Common.Models
     {
         string Name { get; set; }
         string GameId { get; set; }
+        string Description { get; set; }
         bool IsUnlocked { get; set; }
-
-
     }
 }

@@ -23,7 +23,7 @@ namespace HaloAchievementTracker
         private static readonly string CONSOLE_OUTPUT_STEAM_COLUMN = "Unlocked on Steam";
         private static readonly string CONSOLE_OUTPUT_XBOXLIVE_COLUMN = "Unlocked on Xbox Live";
 
-        public static async Task Main(string[] args)
+        public static async Task Main2(string[] args)
         {
             var configuration = GetConfiguration(args);
 
