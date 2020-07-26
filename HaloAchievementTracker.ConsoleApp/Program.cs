@@ -13,7 +13,7 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloAchievementTracker
+namespace HaloAchievementTracker.ConsoleApp
 {
     public class Program
     {
