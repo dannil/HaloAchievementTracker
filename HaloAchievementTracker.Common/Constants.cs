@@ -12,6 +12,7 @@ namespace HaloAchievementTracker.Common
         public const string CONFIGURATION_KEY_OPENXBL_API_KEY = "OpenXBL:ApiKey";
 
         public const uint HALO_MCC_STEAM_APP_ID = 976730;
+        public const uint HALO_MCC_XBOX_LIVE_APP_ID = 1144039928;
 
         private static readonly string HALO_WAYPOINT_SERVICE_RECORD_FOLDER = $"Resources{Path.DirectorySeparatorChar}HaloWaypointData";
         private const string HALO_WAYPOINT_SERVICE_RECORD_FILENAME = "service-record.html";

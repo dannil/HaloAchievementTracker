@@ -37,8 +37,11 @@ namespace HaloAchievementTracker.WebApp.Controllers
         [HttpGet]
         public async Task<IEnumerable<MisalignedAchievement>> GetQuery([FromQuery] MisalignedAchievementQuery query)
         {
+            var friendsByGamertag = await _openXBLService.GetFriendsByGamertagAsync(query.XboxLiveGamerTag);
+            var xboxLiveXuid = friendsByGamertag.ProfileUsers[0].Id;
+
             var steamAchievements = await _steamService.GetAchievementsByScrapingAsync(Constants.HALO_MCC_STEAM_APP_ID, query.SteamId64);
-            var xboxLiveAchievements = await _openXBLService.GetAchievementsAsync(query.XboxLiveGamerTag, "1144039928");
+            var xboxLiveAchievements = await _openXBLService.GetAchievementsAsync(xboxLiveXuid, Constants.HALO_MCC_XBOX_LIVE_APP_ID);
 
             var misalignedAchievements = AchievementHelper.GetMisalignedAchievements(steamAchievements, xboxLiveAchievements.Achievements);
 

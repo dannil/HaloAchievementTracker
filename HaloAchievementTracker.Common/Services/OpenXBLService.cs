@@ -38,7 +38,7 @@ namespace HaloAchievementTracker.Common.Services
             return JsonConvert.DeserializeObject<OpenXBLFriendsSearchResponse>(responseBody);
         }
 
-        public async Task<OpenXBLAnotherPlayersAchievementsResponse> GetAchievementsAsync(string xuid, string titleId)
+        public async Task<OpenXBLAnotherPlayersAchievementsResponse> GetAchievementsAsync(string xuid, uint titleId)
         {
             //var settings = new JsonSerializerSettings();
             //settings.Converters.Add(new OpenXBLProgressStateConverter());
@@ -56,6 +56,6 @@ namespace HaloAchievementTracker.Common.Services
     {
         Task<OpenXBLFriendsSearchResponse> GetFriendsByGamertagAsync(string gamerTag);
 
-        Task<OpenXBLAnotherPlayersAchievementsResponse> GetAchievementsAsync(string xuid, string titleId);
+        Task<OpenXBLAnotherPlayersAchievementsResponse> GetAchievementsAsync(string xuid, uint titleId);
     }
 }
