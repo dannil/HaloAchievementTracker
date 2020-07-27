@@ -1,4 +1,5 @@
 ﻿using HaloAchievementTracker.Common.Adapters;
+using HaloAchievementTracker.Common.Helpers;
 using HaloAchievementTracker.Common.Models;
 using HtmlAgilityPack;
 using SteamWebAPI2.Utilities;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace HaloAchievementTracker.Common.Services
 {
-    public class SteamService
+    public class SteamService : ISteamService
     {
         public SteamService()
         {
@@ -53,6 +54,7 @@ namespace HaloAchievementTracker.Common.Services
 
                 steamAchievement.Name = achieveTxtNode.SelectSingleNode($".//h3").InnerText;
                 steamAchievement.Description = achieveTxtNode.SelectSingleNode($".//h5").InnerText;
+                steamAchievement.GameId = AchievementHelper.GetGameIdFromDescription(steamAchievement.Description);
                 steamAchievement.IsUnlocked = achieveTxtNode.Descendants("div").Any(d => d.GetAttributeValue("class", string.Empty).Equals("achieveUnlockTime"));
 
                 achievements.Add(steamAchievement);
@@ -60,5 +62,12 @@ namespace HaloAchievementTracker.Common.Services
             return achievements;
         }
 
+    }
+
+    public interface ISteamService
+    {
+        Task<IEnumerable<SteamAchievement>> GetAchievementsByApiAsync(ISteamWebInterfaceFactory webInterfaceFactory, uint appId, ulong steamId);
+
+        Task<IEnumerable<SteamAchievement>> GetAchievementsByScrapingAsync(uint appId, ulong steamId);
     }
 }

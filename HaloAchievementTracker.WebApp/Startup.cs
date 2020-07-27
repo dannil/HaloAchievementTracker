@@ -1,3 +1,5 @@
+using HaloAchievementTracker.Common;
+using HaloAchievementTracker.Common.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -26,6 +28,9 @@ namespace HaloAchievementTracker.WebApp
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddScoped<ISteamService, SteamService>();
+            services.AddScoped<IOpenXBLService>(s => new OpenXBLService(Configuration[Constants.CONFIGURATION_KEY_OPENXBL_API_KEY]));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

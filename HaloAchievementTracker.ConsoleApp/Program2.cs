@@ -8,19 +8,19 @@ namespace HaloAchievementTracker.ConsoleApp
 {
     public class Program2
     {
-        public static async Task Main(string[] args)
+        public static async Task Main2(string[] args)
         {
-            OpenXBLService service = new OpenXBLService("8cgo0k0c0wo484ok0gwwckw4w4kg0so8gko");
+            //OpenXBLService service = new OpenXBLService("<<key>>");
 
-            var res = await service.GetFriendsByGamertagAsync("PolyPropGod");
+            //var res = await service.GetFriendsByGamertagAsync("PolyPropGod");
 
-            string id = res.ProfileUsers[0].Id;
+            //string id = res.ProfileUsers[0].Id;
 
-            var res2 = await service.GetAchievementsAsync(id, "1144039928");
+            //var res2 = await service.GetAchievementsAsync(id, "1144039928");
 
-            int a = 2;
+            ////int a = 2;
 
-            Console.WriteLine(res2.Achievements[13].IsUnlocked);
+            //Console.WriteLine(res2.Achievements[13].IsUnlocked);
         }
 
     }

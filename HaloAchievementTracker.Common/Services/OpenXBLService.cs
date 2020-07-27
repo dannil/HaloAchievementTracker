@@ -10,22 +10,23 @@ using System.Threading.Tasks;
 
 namespace HaloAchievementTracker.Common.Services
 {
-    public class OpenXBLService
+    public class OpenXBLService : IOpenXBLService
     {
         private readonly string hostname;
 
         private readonly HttpClient httpClient;
 
-        public OpenXBLService()
+        private OpenXBLService()
         {
             hostname = "https://xbl.io/api/v2";
+
+            httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
         }
 
         public OpenXBLService(string apiKey) : this()
         {
-            httpClient = new HttpClient();
             httpClient.DefaultRequestHeaders.Add("X-Authorization", apiKey);
-            httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
         }
 
         public async Task<OpenXBLFriendsSearchResponse> GetFriendsByGamertagAsync(string gamerTag)
@@ -49,5 +50,12 @@ namespace HaloAchievementTracker.Common.Services
             return JsonConvert.DeserializeObject<OpenXBLAnotherPlayersAchievementsResponse>(responseBody/*, settings*/);
         }
 
+    }
+
+    public interface IOpenXBLService
+    {
+        Task<OpenXBLFriendsSearchResponse> GetFriendsByGamertagAsync(string gamerTag);
+
+        Task<OpenXBLAnotherPlayersAchievementsResponse> GetAchievementsAsync(string xuid, string titleId);
     }
 }

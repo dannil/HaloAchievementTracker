@@ -9,6 +9,7 @@ namespace HaloAchievementTracker.Common
     {
         public const string CONFIGURATION_KEY_STEAM_API_KEY = "Steam:ApiKey";
         public const string CONFIGURATION_KEY_STEAM_ID = "Steam:Id";
+        public const string CONFIGURATION_KEY_OPENXBL_API_KEY = "OpenXBL:ApiKey";
 
         public const uint HALO_MCC_STEAM_APP_ID = 976730;
 
