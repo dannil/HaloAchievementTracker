@@ -5,6 +5,10 @@ mono: none
 dotnet: 3.1
 install:
   - dotnet restore
+before_script:
+  - npm install -g @angular/cli
 script:
   - dotnet build
   - dotnet test
+  - ng lint
+  - ng build
