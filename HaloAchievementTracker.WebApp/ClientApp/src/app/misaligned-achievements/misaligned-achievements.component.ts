@@ -13,7 +13,7 @@ export class MisalignedAchievementsComponent {
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, route: ActivatedRoute) {
     const url = `${baseUrl}api/misalignedachievements`;
 
-    let params = new HttpParams()
+    const params = new HttpParams()
       .set('xboxLiveGamerTag', route.snapshot.queryParamMap.get('xboxLiveGamerTag'))
       .set('steamId64', route.snapshot.queryParamMap.get('steamId64'));
 
