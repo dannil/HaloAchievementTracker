@@ -6,9 +6,11 @@ dotnet: 3.1
 install:
   - dotnet restore
 before_script:
+  - nvm install 12.18.3
+  - nvm use 12.18.3
   - npm install -g @angular/cli
 script:
   - dotnet build
   - dotnet test
   - ng lint
-  - ng build
+  - pushd HaloAchievementTracker.WebApp/ClientApp && ng build && popd
