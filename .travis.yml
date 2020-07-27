@@ -12,5 +12,5 @@ before_script:
 script:
   - dotnet build
   - dotnet test
-  - ng lint
+  - pushd HaloAchievementTracker.WebApp/ClientApp && ng lint && popd
   - pushd HaloAchievementTracker.WebApp/ClientApp && ng build && popd
