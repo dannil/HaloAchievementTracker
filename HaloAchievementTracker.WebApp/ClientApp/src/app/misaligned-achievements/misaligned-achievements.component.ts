@@ -1,6 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
+import { FormControl, FormGroup } from '@angular/forms';
+import { MatProgressSpinner } from '@angular/material/progress-spinner'
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-misaligned-achievements-component',
@@ -8,18 +11,32 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class MisalignedAchievementsComponent {
 
-  public misalignedAchievements: MisalignedAchievement[];
+  private misalignedAchievementsForm: FormGroup;
+  private xboxLiveGamerTagForm: FormControl;
+  private steamId64Form: FormControl;
+
+  private misalignedAchievements$: Observable<MisalignedAchievement[]>;
 
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, route: ActivatedRoute) {
     const url = `${baseUrl}api/misalignedachievements`;
 
-    const params = new HttpParams()
-      .set('xboxLiveGamerTag', route.snapshot.queryParamMap.get('xboxLiveGamerTag'))
-      .set('steamId64', route.snapshot.queryParamMap.get('steamId64'));
+    const xboxLiveGamerTagParam = route.snapshot.queryParamMap.get('xboxLiveGamerTag');
+    const steamId64Param = route.snapshot.queryParamMap.get('steamId64');
 
-    http.get<MisalignedAchievement[]>(url, { params: params }).subscribe(result => {
-      this.misalignedAchievements = result;
-    }, error => console.error(error));
+    this.misalignedAchievementsForm = new FormGroup({
+      xboxLiveGamerTagForm: new FormControl(xboxLiveGamerTagParam),
+      steamId64Form: new FormControl(steamId64Param)
+    });
+
+    const params = new HttpParams()
+      .set('xboxLiveGamerTag', xboxLiveGamerTagParam)
+      .set('steamId64', steamId64Param);
+
+    this.misalignedAchievements$ = http.get<MisalignedAchievement[]>(url, { params: params });
+
+    //http.get<MisalignedAchievement[]>(url, { params: params }).subscribe(result => {
+    //  //this.misalignedAchievements = result;
+    //}, error => console.error(error));
   }
 
 }

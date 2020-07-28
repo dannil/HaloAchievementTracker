@@ -22,7 +22,7 @@ namespace HaloAchievementTracker.Common.Helpers
                     (s, x) => new MisalignedAchievement
                     {
                         Name = s.Name,
-                        GameId = GetGameIdFromDescription(s.Description),
+                        GameId = s.Description,
                         Description = s.Description,
                         IsUnlockedOnSteam = s.IsUnlocked,
                         IsUnlockedOnXboxLive = x.IsUnlocked
@@ -31,7 +31,7 @@ namespace HaloAchievementTracker.Common.Helpers
                 .OrderBy(m => m.Name);
         }
 
-        public static string GetGameIdFromDescription(string description)
+        public static string GetGameFromDescription(string description)
         {
             //var games = new HashSet<string> { "Halo CE", "Halo: CE", "Halo 2", "Halo 2 MP", "Halo 2A MP", "Halo 3", "H3: ODST", "Halo: Reach", "Halo 4" };
             //if (games.Any(g => description.StartsWith(g))) {

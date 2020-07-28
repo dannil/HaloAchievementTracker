@@ -29,9 +29,9 @@ namespace HaloAchievementTracker.Common.Services
             httpClient.DefaultRequestHeaders.Add("X-Authorization", apiKey);
         }
 
-        public async Task<OpenXBLFriendsSearchResponse> GetFriendsByGamertagAsync(string gamerTag)
+        public async Task<OpenXBLFriendsSearchResponse> GetFriendsByGamertagAsync(string gamertag)
         {
-            var endpoint = $"{hostname}/friends/search?gt={gamerTag}";
+            var endpoint = $"{hostname}/friends/search?gt={gamertag}";
             var response = await httpClient.GetAsync(endpoint);
             response.EnsureSuccessStatusCode();
             string responseBody = await response.Content.ReadAsStringAsync();
@@ -54,7 +54,7 @@ namespace HaloAchievementTracker.Common.Services
 
     public interface IOpenXBLService
     {
-        Task<OpenXBLFriendsSearchResponse> GetFriendsByGamertagAsync(string gamerTag);
+        Task<OpenXBLFriendsSearchResponse> GetFriendsByGamertagAsync(string gamertag);
 
         Task<OpenXBLAnotherPlayersAchievementsResponse> GetAchievementsAsync(string xuid, uint titleId);
     }
