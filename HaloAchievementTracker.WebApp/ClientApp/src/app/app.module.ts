@@ -8,7 +8,7 @@ import { AppComponent } from './app.component';
 import { NavMenuComponent } from './nav-menu/nav-menu.component';
 import { HomeComponent } from './home/home.component';
 import { MisalignedAchievementsComponent } from './misaligned-achievements/misaligned-achievements.component';
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { AngularMaterialModule } from './angular-material.module';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    MatProgressSpinnerModule,
+    AngularMaterialModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent, pathMatch: 'full' },
       { path: 'misaligned-achievements', component: MisalignedAchievementsComponent }

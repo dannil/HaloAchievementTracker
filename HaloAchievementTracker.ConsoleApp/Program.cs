@@ -5,10 +5,12 @@ using HaloAchievementTracker.Common.Models;
 using HaloAchievementTracker.Common.Services;
 using HtmlAgilityPack;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
@@ -17,93 +19,35 @@ namespace HaloAchievementTracker.ConsoleApp
 {
     public class Program
     {
-        private static readonly string CONSOLE_OUTPUT_NAME_COLUMN = "Name";
-        private static readonly string CONSOLE_OUTPUT_GAME_COLUMN = "Game";
-        private static readonly string CONSOLE_OUTPUT_DESCRIPTION_COLUMN = "Description";
-        private static readonly string CONSOLE_OUTPUT_STEAM_COLUMN = "Unlocked on Steam";
-        private static readonly string CONSOLE_OUTPUT_XBOXLIVE_COLUMN = "Unlocked on Xbox Live";
-
-        public static async Task Main(string[] args)
+        public static void Main(string[] args)
         {
-            var configuration = GetConfiguration(args);
+            // Create service collection and configure our services
+            var services = ConfigureServices();
 
-            var steamId = Convert.ToUInt64(configuration[Constants.CONFIGURATION_KEY_STEAM_ID]);
+            // Generate a provider
+            var serviceProvider = services.BuildServiceProvider();
 
-            var steamService = new SteamService();
-            var steamAchievements = await steamService.GetAchievementsByScrapingAsync(Constants.HALO_MCC_STEAM_APP_ID, steamId);
-
-            var htmlDocument = new HtmlDocument();
-            var path = Path.Combine(Environment.CurrentDirectory, Constants.HALO_WAYPOINT_SERVICE_RECORD_PATH);
-            htmlDocument.Load(path);
-            var haloWaypointService = new HaloWaypointService(htmlDocument);
-            var xboxLiveAchievements = haloWaypointService.GetAchievements();
-
-            var misalignedAchievements = AchievementHelper.GetMisalignedAchievements(steamAchievements, xboxLiveAchievements);
-
-            if (misalignedAchievements.Any())
-            {
-                int[] consoleColumnsWidths = GetConsoleColumnsWidths(misalignedAchievements);
-                int consoleColumnsTotalWidth = consoleColumnsWidths.Sum();
-                string consoleColumnsFormatting = GetConsoleColumnsFormatting(consoleColumnsWidths);
-                string rowSeparator = new string('-', consoleColumnsTotalWidth - 1);
-
-                Console.WriteLine("Following achievements are misaligned:");
-                Console.WriteLine(rowSeparator);
-                Console.WriteLine(consoleColumnsFormatting, CONSOLE_OUTPUT_NAME_COLUMN, CONSOLE_OUTPUT_GAME_COLUMN, CONSOLE_OUTPUT_DESCRIPTION_COLUMN,
-                    CONSOLE_OUTPUT_STEAM_COLUMN, CONSOLE_OUTPUT_XBOXLIVE_COLUMN);
-                Console.WriteLine(rowSeparator);
-                foreach (MisalignedAchievement misaligned in misalignedAchievements)
-                {
-                    Console.WriteLine(consoleColumnsFormatting, misaligned.Name, misaligned.GameId, misaligned.Description,
-                        misaligned.IsUnlockedOnSteam.ToMarks(), misaligned.IsUnlockedOnXboxLive.ToMarks());
-                }
-                Console.WriteLine(rowSeparator);
-            }
-            else
-            {
-                Console.WriteLine("No achievements are misaligned!");
-            }
+            // Kick off our actual code
+            var run = serviceProvider.GetService<ConsoleApplication>();
+            run.Run(args).Wait();
         }
 
-        private static int[] GetConsoleColumnsWidths(IEnumerable<MisalignedAchievement> misalignedAchievements)
+        private static IServiceCollection ConfigureServices()
         {
-            int nameLength = Math.Max(misalignedAchievements.Max(m => m.Name.Length), CONSOLE_OUTPUT_NAME_COLUMN.Length) + 4;
-            int gameLength = Math.Max(misalignedAchievements.Max(m => m.GameId.Length), CONSOLE_OUTPUT_GAME_COLUMN.Length) + 4;
-            int descriptionLength = Math.Max(misalignedAchievements.Max(m => m.Description.Length), CONSOLE_OUTPUT_DESCRIPTION_COLUMN.Length) + 4;
-            int steamLength = Math.Max(misalignedAchievements.Max(m => m.IsUnlockedOnSteam.ToString().Length), CONSOLE_OUTPUT_STEAM_COLUMN.Length) + 4;
-            int haloWaypointLength = Math.Max(misalignedAchievements.Max(m => m.IsUnlockedOnXboxLive.ToString().Length), CONSOLE_OUTPUT_XBOXLIVE_COLUMN.Length) + 4;
+            IServiceCollection services = new ServiceCollection();
 
-            return new int[] { nameLength, gameLength, descriptionLength, steamLength, haloWaypointLength };
+            services.AddHttpClient<ISteamService, SteamService>(typeof(SteamService).Name, client =>
+            {
+                client.BaseAddress = new Uri("https://steamcommunity.com/profiles/");
+            });
+
+            // IMPORTANT! Register our application entry point
+            services.AddTransient<ConsoleApplication>(); 
+            
+            return services;
         }
 
-        private static string GetConsoleColumnsFormatting(int[] widths)
-        {
-            StringBuilder builder = new StringBuilder();
-            for (int i = 0; i < widths.Length; i++)
-            {
-                builder.Append("{" + i + ",-" + widths[i] + "}");
-            }
-            return builder.ToString();
-        }
 
-        private static Dictionary<string, string> GetConfiguration(string[] args)
-        {
-            var configuration = new Dictionary<string, string>();
-            string env = Environment.GetEnvironmentVariable("NETCORE_ENVIRONMENT");
-            if ("Development".Equals(env))
-            {
-                // If in dev, overwrite with values from secret store
-                var builder = new ConfigurationBuilder();
-                builder.AddUserSecrets<Program>();
-                var configurationRoot = builder.Build();
-                configuration[Constants.CONFIGURATION_KEY_STEAM_ID] = configurationRoot[Constants.CONFIGURATION_KEY_STEAM_ID];
-            }
-            else
-            {
-                configuration[Constants.CONFIGURATION_KEY_STEAM_ID] = args[0];
-            }
-            return configuration;
-        }
 
     }
 }

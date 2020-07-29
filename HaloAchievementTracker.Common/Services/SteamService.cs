@@ -14,8 +14,11 @@ namespace HaloAchievementTracker.Common.Services
 {
     public class SteamService : ISteamService
     {
-        public SteamService()
+        private readonly HttpClient _httpClient;
+
+        public SteamService(HttpClient httpClient)
         {
+            _httpClient = httpClient;
         }
 
         public virtual async Task<IEnumerable<SteamAchievement>> GetAchievementsByApiAsync(ISteamWebInterfaceFactory webInterfaceFactory, uint appId, ulong steamId)
@@ -35,32 +38,36 @@ namespace HaloAchievementTracker.Common.Services
 
         public virtual async Task<IEnumerable<SteamAchievement>> GetAchievementsByScrapingAsync(uint appId, ulong steamId)
         {
-            var url = $"https://steamcommunity.com/profiles/{steamId}/stats/appid/{appId}/achievements";
-            var httpClient = new HttpClient();
-            var response = await httpClient.GetAsync(url);
-            response.EnsureSuccessStatusCode();
-            string responseBody = await response.Content.ReadAsStringAsync();
-
-            var document = new HtmlDocument();
-            document.LoadHtml(responseBody);
-
-            HtmlNodeCollection achieveRowsNodes = document.DocumentNode.SelectNodes($"//div[@class='{Constants.STEAM_ACHIEVE_ROW_DIV}']");
-
-            ISet <SteamAchievement> achievements = new HashSet<SteamAchievement>();
-            foreach (HtmlNode achieveRowsNode in achieveRowsNodes)
+            //var url = $"https://steamcommunity.com/profiles/{steamId}/stats/appid/{appId}/achievements";
+            //var httpClient = new HttpClient();
+            var endpoint = $"{steamId}/stats/appid/{appId}/achievements";
+            var response = await _httpClient.GetAsync(endpoint);
+            if (response.IsSuccessStatusCode)
             {
-                SteamAchievement steamAchievement = new SteamAchievement();
+                string responseBody = await response.Content.ReadAsStringAsync();
 
-                var achieveTxtNode = achieveRowsNode.SelectSingleNode($".//div[@class='{Constants.STEAM_ACHIEVE_TXT_DIV}']");
+                var document = new HtmlDocument();
+                document.LoadHtml(responseBody);
 
-                steamAchievement.Name = achieveTxtNode.SelectSingleNode($".//h3").InnerText;
-                steamAchievement.Description = achieveTxtNode.SelectSingleNode($".//h5").InnerText;
-                steamAchievement.GameId = AchievementHelper.GetGameFromDescription(steamAchievement.Description);
-                steamAchievement.IsUnlocked = achieveTxtNode.Descendants("div").Any(d => d.GetAttributeValue("class", string.Empty).Equals("achieveUnlockTime"));
+                HtmlNodeCollection achieveRowsNodes = document.DocumentNode.SelectNodes($"//div[@class='{Constants.STEAM_ACHIEVE_ROW_DIV}']");
 
-                achievements.Add(steamAchievement);
+                ISet<SteamAchievement> achievements = new HashSet<SteamAchievement>();
+                foreach (HtmlNode achieveRowsNode in achieveRowsNodes)
+                {
+                    SteamAchievement steamAchievement = new SteamAchievement();
+
+                    var achieveTxtNode = achieveRowsNode.SelectSingleNode($".//div[@class='{Constants.STEAM_ACHIEVE_TXT_DIV}']");
+
+                    steamAchievement.Name = achieveTxtNode.SelectSingleNode($".//h3").InnerText;
+                    steamAchievement.Description = achieveTxtNode.SelectSingleNode($".//h5").InnerText;
+                    steamAchievement.GameId = AchievementHelper.GetGameFromDescription(steamAchievement.Description);
+                    steamAchievement.IsUnlocked = achieveTxtNode.Descendants("div").Any(d => d.GetAttributeValue("class", string.Empty).Equals("achieveUnlockTime"));
+
+                    achievements.Add(steamAchievement);
+                }
+                return achievements;
             }
-            return achievements;
+            throw new HttpRequestException();
         }
 
     }

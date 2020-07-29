@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.SpaServices.AngularCli;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 
 namespace HaloAchievementTracker.WebApp
 {
@@ -30,7 +31,14 @@ namespace HaloAchievementTracker.WebApp
             });
 
             services.AddScoped<ISteamService, SteamService>();
-            services.AddScoped<IOpenXBLService>(s => new OpenXBLService(Configuration[Constants.CONFIGURATION_KEY_OPENXBL_API_KEY]));
+            //services.AddScoped<IOpenXBLService>(s => new OpenXBLService();
+
+            services.AddHttpClient<IOpenXBLService, OpenXBLService>(typeof(OpenXBLService).Name, client =>
+            {
+                client.BaseAddress = new Uri("https://xbl.io/api/v2/");
+                client.DefaultRequestHeaders.Add("X-Authorization", Configuration[Constants.CONFIGURATION_KEY_OPENXBL_API_KEY]);
+                client.DefaultRequestHeaders.Add("Accept", "application/json");
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
