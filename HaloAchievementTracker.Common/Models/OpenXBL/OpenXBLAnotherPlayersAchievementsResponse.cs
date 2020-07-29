@@ -18,7 +18,7 @@ namespace HaloAchievementTracker.Common.Models.OpenXBL
 
         public string Name { get; set; }
 
-        public string GameId { get; set; }
+        public Game Game { get; set; }
 
         public string Description { get; set; }
 
@@ -28,7 +28,7 @@ namespace HaloAchievementTracker.Common.Models.OpenXBL
         [JsonConstructor]
         public OpenXBLAchievement(string description)
         {
-            GameId = AchievementHelper.GetGameFromDescription(description);
+            Game = AchievementHelper.GetGameFromDescription(description);
         }
     }
 

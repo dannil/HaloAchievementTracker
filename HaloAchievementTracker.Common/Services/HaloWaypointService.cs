@@ -32,7 +32,7 @@ namespace HaloAchievementTracker.Common.Services
                     xboxLiveAchievement.Name = HttpUtility.HtmlDecode(titleNode.InnerText);
 
                     string gameId = achievementCollectionNode.GetAttributeValue("data-game-id", string.Empty);
-                    xboxLiveAchievement.GameId = gameId;
+                    xboxLiveAchievement.Game = GameFactory.Get(gameId);
 
                     bool isUnlocked = achievementNode.GetAttributeValue("class", string.Empty).Contains("unlocked");
                     xboxLiveAchievement.IsUnlocked = isUnlocked;

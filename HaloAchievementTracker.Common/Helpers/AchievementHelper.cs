@@ -22,7 +22,7 @@ namespace HaloAchievementTracker.Common.Helpers
                     (s, x) => new MisalignedAchievement
                     {
                         Name = s.Name,
-                        GameId = s.Description,
+                        Game = s.Game,
                         Description = s.Description,
                         IsUnlockedOnSteam = s.IsUnlocked,
                         IsUnlockedOnXboxLive = x.IsUnlocked
@@ -31,7 +31,7 @@ namespace HaloAchievementTracker.Common.Helpers
                 .OrderBy(m => m.Name);
         }
 
-        public static string GetGameFromDescription(string description)
+        public static Game GetGameFromDescription(string description)
         {
             //var games = new HashSet<string> { "Halo CE", "Halo: CE", "Halo 2", "Halo 2 MP", "Halo 2A MP", "Halo 3", "H3: ODST", "Halo: Reach", "Halo 4" };
             //if (games.Any(g => description.StartsWith(g))) {
@@ -39,11 +39,21 @@ namespace HaloAchievementTracker.Common.Helpers
             //}
             Regex r = new Regex(@"^H(?:alo(?:: (?:Reach|CE)| (?:2A? MP|CE|2|[34]))|3: ODST)");
             Match m = r.Match(description);
-            if (m.Success)
+            var value = m.Value;
+            if (string.IsNullOrEmpty(value))
             {
-                return m.Value;
+                value = "Cross Game";
             }
-            return "Cross Game";
+            if (!GameFactory.ContainsKey(value))
+            {
+                throw new ArgumentException();
+            }
+            return GameFactory.Get(value);
+            //if (m.Success)
+            //{
+            //    return Game.GetGame(m.Value);
+            //}
+            //return Game.GetGame("Cross Game");
         }
     }
 }

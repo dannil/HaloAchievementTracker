@@ -7,7 +7,7 @@ namespace HaloAchievementTracker.Common.Models
     public interface IAchievement
     {
         string Name { get; set; }
-        string GameId { get; set; }
+        Game Game { get; set; }
         string Description { get; set; }
         bool IsUnlocked { get; set; }
     }

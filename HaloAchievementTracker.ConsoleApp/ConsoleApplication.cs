@@ -56,7 +56,7 @@ namespace HaloAchievementTracker.ConsoleApp
                 Console.WriteLine(rowSeparator);
                 foreach (MisalignedAchievement misaligned in misalignedAchievements)
                 {
-                    Console.WriteLine(consoleColumnsFormatting, misaligned.Name, misaligned.GameId, misaligned.Description,
+                    Console.WriteLine(consoleColumnsFormatting, misaligned.Name, misaligned.Game.Name, misaligned.Description,
                         misaligned.IsUnlockedOnSteam.ToMarks(), misaligned.IsUnlockedOnXboxLive.ToMarks());
                 }
                 Console.WriteLine(rowSeparator);
@@ -70,7 +70,7 @@ namespace HaloAchievementTracker.ConsoleApp
         private int[] GetConsoleColumnsWidths(IEnumerable<MisalignedAchievement> misalignedAchievements)
         {
             int nameLength = Math.Max(misalignedAchievements.Max(m => m.Name.Length), CONSOLE_OUTPUT_NAME_COLUMN.Length) + 4;
-            int gameLength = Math.Max(misalignedAchievements.Max(m => m.GameId.Length), CONSOLE_OUTPUT_GAME_COLUMN.Length) + 4;
+            int gameLength = Math.Max(misalignedAchievements.Max(m => m.Game.Name.Length), CONSOLE_OUTPUT_GAME_COLUMN.Length) + 4;
             int descriptionLength = Math.Max(misalignedAchievements.Max(m => m.Description.Length), CONSOLE_OUTPUT_DESCRIPTION_COLUMN.Length) + 4;
             int steamLength = Math.Max(misalignedAchievements.Max(m => m.IsUnlockedOnSteam.ToString().Length), CONSOLE_OUTPUT_STEAM_COLUMN.Length) + 4;
             int haloWaypointLength = Math.Max(misalignedAchievements.Max(m => m.IsUnlockedOnXboxLive.ToString().Length), CONSOLE_OUTPUT_XBOXLIVE_COLUMN.Length) + 4;

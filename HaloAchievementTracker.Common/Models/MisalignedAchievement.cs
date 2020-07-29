@@ -7,7 +7,7 @@ namespace HaloAchievementTracker.Common.Models
     public class MisalignedAchievement
     {
         public string Name { get; set; }
-        public string GameId { get; set; }
+        public Game Game { get; set; }
         public string Description { get; set; }
         public bool IsUnlockedOnSteam { get; set; }
         public bool IsUnlockedOnXboxLive { get; set; }
@@ -19,11 +19,11 @@ namespace HaloAchievementTracker.Common.Models
                 return false;
             }
             var other =(MisalignedAchievement)obj;
-            return Name.Equals(other.Name) && GameId.Equals(other.GameId) && Description.Equals(other.Description) 
+            return Name.Equals(other.Name) && Game.Equals(other.Game) && Description.Equals(other.Description) 
                 && IsUnlockedOnSteam.Equals(other.IsUnlockedOnSteam) && IsUnlockedOnXboxLive.Equals(other.IsUnlockedOnXboxLive);
         }
 
         public override int GetHashCode()
-            => HashCode.Combine(Name, GameId, Description, IsUnlockedOnSteam, IsUnlockedOnXboxLive);
+            => HashCode.Combine(Name, Game, Description, IsUnlockedOnSteam, IsUnlockedOnXboxLive);
     }
 }
