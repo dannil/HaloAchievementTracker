@@ -14,19 +14,6 @@ namespace HaloAchievementTracker.Common.Services
     {
         private readonly HttpClient _httpClient;
 
-        //private OpenXBLService()
-        //{
-        //    hostname = "https://xbl.io/api/v2";
-
-        //    httpClient = new HttpClient();
-        //    httpClient.DefaultRequestHeaders.Add("Accept", "application/json");
-        //}
-
-        //public OpenXBLService(string apiKey) : this()
-        //{
-        //    httpClient.DefaultRequestHeaders.Add("X-Authorization", apiKey);
-        //}
-
         public OpenXBLService(HttpClient httpClient)
         {
             _httpClient = httpClient;
@@ -58,7 +45,6 @@ namespace HaloAchievementTracker.Common.Services
             }
             throw new HttpRequestException();
         }
-
     }
 
     public interface IOpenXBLService

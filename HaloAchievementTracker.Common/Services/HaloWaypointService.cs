@@ -7,7 +7,7 @@ using System.Web;
 
 namespace HaloAchievementTracker.Common.Services
 {
-    public class HaloWaypointService
+    public class HaloWaypointService : IHaloWaypointService
     {
         private readonly HtmlDocument document;
 
@@ -43,5 +43,10 @@ namespace HaloAchievementTracker.Common.Services
             return achievements;
         }
 
+    }
+
+    public interface IHaloWaypointService
+    {
+        IEnumerable<XboxLiveAchievement> GetAchievements();
     }
 }

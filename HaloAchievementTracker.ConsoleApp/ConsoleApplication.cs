@@ -23,10 +23,12 @@ namespace HaloAchievementTracker.ConsoleApp
         private readonly string CONSOLE_OUTPUT_XBOXLIVE_COLUMN = "Unlocked on Xbox Live";
 
         private readonly ISteamService _steamService;
+        private readonly IHaloWaypointService _haloWaypointService;
 
-        public ConsoleApplication(ISteamService steamService)
+        public ConsoleApplication(ISteamService steamService, IHaloWaypointService haloWaypointService)
         {
             _steamService = steamService;
+            _haloWaypointService = haloWaypointService;
         }
 
         public async Task Run(string[] args)
@@ -36,12 +38,7 @@ namespace HaloAchievementTracker.ConsoleApp
             var steamId = Convert.ToUInt64(configuration[Constants.CONFIGURATION_KEY_STEAM_ID]);
 
             var steamAchievements = await _steamService.GetAchievementsByScrapingAsync(Constants.HALO_MCC_STEAM_APP_ID, steamId);
-
-            var htmlDocument = new HtmlDocument();
-            var path = Path.Combine(Environment.CurrentDirectory, Constants.HALO_WAYPOINT_SERVICE_RECORD_PATH);
-            htmlDocument.Load(path);
-            var haloWaypointService = new HaloWaypointService(htmlDocument);
-            var xboxLiveAchievements = haloWaypointService.GetAchievements();
+            var xboxLiveAchievements = _haloWaypointService.GetAchievements();
 
             var misalignedAchievements = AchievementHelper.GetMisalignedAchievements(steamAchievements, xboxLiveAchievements);
 

@@ -13,12 +13,12 @@ namespace HaloAchievementTracker.WebApp
 {
     public class Startup
     {
+        public IConfiguration Configuration { get; }
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
         }
-
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -30,8 +30,10 @@ namespace HaloAchievementTracker.WebApp
                 configuration.RootPath = "ClientApp/dist";
             });
 
-            services.AddScoped<ISteamService, SteamService>();
-            //services.AddScoped<IOpenXBLService>(s => new OpenXBLService();
+            services.AddHttpClient<ISteamService, SteamService>(typeof(SteamService).Name, client =>
+            {
+                client.BaseAddress = new Uri("https://steamcommunity.com/profiles/");
+            });
 
             services.AddHttpClient<IOpenXBLService, OpenXBLService>(typeof(OpenXBLService).Name, client =>
             {

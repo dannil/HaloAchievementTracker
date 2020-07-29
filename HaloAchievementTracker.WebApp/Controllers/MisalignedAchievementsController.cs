@@ -19,7 +19,6 @@ namespace HaloAchievementTracker.WebApp.Controllers
     [ApiController]
     public class MisalignedAchievementsController : ControllerBase
     {
-        //private readonly IConfiguration _configuration;
         private readonly ILogger<MisalignedAchievementsController> _logger;
 
         private readonly ISteamService _steamService;
@@ -30,7 +29,6 @@ namespace HaloAchievementTracker.WebApp.Controllers
             _steamService = steamService;
             _openXBLService = openXBLService;
 
-            //_configuration = configuration;
             _logger = logger;
         }
 

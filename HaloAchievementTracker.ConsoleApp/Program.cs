@@ -41,13 +41,18 @@ namespace HaloAchievementTracker.ConsoleApp
                 client.BaseAddress = new Uri("https://steamcommunity.com/profiles/");
             });
 
+            services.AddSingleton<IHaloWaypointService>(s =>
+            {
+                var htmlDocument = new HtmlDocument();
+                var path = Path.Combine(Environment.CurrentDirectory, Constants.HALO_WAYPOINT_SERVICE_RECORD_PATH);
+                htmlDocument.Load(path);
+                return new HaloWaypointService(htmlDocument);
+            });
+
             // IMPORTANT! Register our application entry point
             services.AddTransient<ConsoleApplication>(); 
             
             return services;
         }
-
-
-
     }
 }
