@@ -44,10 +44,6 @@ namespace HaloAchievementTracker.Common.Helpers
             {
                 value = "Cross Game";
             }
-            if (!GameFactory.ContainsKey(value))
-            {
-                throw new ArgumentException();
-            }
             return GameFactory.Get(value);
             //if (m.Success)
             //{

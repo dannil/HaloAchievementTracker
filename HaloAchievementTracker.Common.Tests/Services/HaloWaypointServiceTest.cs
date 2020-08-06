@@ -47,7 +47,7 @@ namespace HaloAchievementTracker.Tests.Services
 
             foreach (var (Name, AmountTotalAchievements, AmountUnlockedAchievements) in gameData)
             {
-                var gameAchievements = achievements.Where(a => a.GameId.Equals(Name));
+                var gameAchievements = achievements.Where(a => a.Game.Equals(Name));
                 Assert.AreEqual(AmountTotalAchievements, gameAchievements.Count());
                 Assert.AreEqual(AmountUnlockedAchievements, gameAchievements.Count(a => a.IsUnlocked));
             }

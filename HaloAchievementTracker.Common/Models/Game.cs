@@ -22,16 +22,16 @@ namespace HaloAchievementTracker.Common.Models
     public class GameFactory
     {
         private static readonly Game CrossGame = new Game("Cross Game");
-        private static Game HaloReach = new Game("Halo: Reach");
-        private static Game HaloCE = new Game("Halo: CE");
-        private static Game Halo2 = new Game("Halo 2");
-        private static Game Halo3 = new Game("Halo 3");
-        private static Game Halo3ODST = new Game("Halo 3: ODST");
-        private static Game Halo4 = new Game("Halo 4");
+        private static readonly Game HaloReach = new Game("Halo: Reach");
+        private static readonly Game HaloCE = new Game("Halo CE");
+        private static readonly Game Halo2 = new Game("Halo 2");
+        private static readonly Game Halo3 = new Game("Halo 3");
+        private static readonly Game Halo3ODST = new Game("Halo 3: ODST");
+        private static readonly Game Halo4 = new Game("Halo 4");
 
         private static readonly Dictionary<string, Game> gameMappings = new Dictionary<string, Game>
         {
-            { "CrossGame", new Game("Cross Game") },
+            { "CrossGame", CrossGame },
             { "Cross Game", CrossGame },
             { "HaloReach", HaloReach },
             { "Halo: Reach", HaloReach },
@@ -52,12 +52,11 @@ namespace HaloAchievementTracker.Common.Models
 
         public static Game Get(string name)
         {
+            if (!gameMappings.ContainsKey(name))
+            {
+                throw new ArgumentException();
+            }
             return gameMappings[name];
-        }
-
-        public static bool ContainsKey(string key)
-        {
-            return gameMappings.ContainsKey(key);
         }
     }
 }
