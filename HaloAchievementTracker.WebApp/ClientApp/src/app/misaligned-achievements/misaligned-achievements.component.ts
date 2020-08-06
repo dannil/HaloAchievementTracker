@@ -20,7 +20,7 @@ export class MisalignedAchievementsComponent {
   constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, route: ActivatedRoute) {
     const url = `${baseUrl}api/misalignedachievements`;
 
-    const xboxLiveGamerTagParam = route.snapshot.queryParamMap.get('xboxLiveGamerTag');
+    const xboxLiveGamerTagParam = route.snapshot.queryParamMap.get('xboxLiveGamertag');
     const steamId64Param = route.snapshot.queryParamMap.get('steamId64');
 
     this.misalignedAchievementsForm = new FormGroup({
