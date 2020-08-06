@@ -45,6 +45,7 @@ namespace HaloAchievementTracker.Common.Models
             { "Halo3", Halo3 },
             { "Halo 3", Halo3 },
             { "Halo3Odst", Halo3ODST },
+            { "Halo 3: ODST", Halo3ODST },
             { "H3: ODST", Halo3ODST },
             { "Halo4", Halo4 },
             { "Halo 4", Halo4 },

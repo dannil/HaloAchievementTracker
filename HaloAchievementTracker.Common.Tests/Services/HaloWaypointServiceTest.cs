@@ -1,4 +1,5 @@
 ﻿using HaloAchievementTracker.Common;
+using HaloAchievementTracker.Common.Models;
 using HaloAchievementTracker.Common.Services;
 using HtmlAgilityPack;
 using Moq;
@@ -9,7 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace HaloAchievementTracker.Tests.Services
+namespace HaloAchievementTracker.Common.Tests.Services
 {
     public class HaloWaypointServiceTest
     {
@@ -27,15 +28,15 @@ namespace HaloAchievementTracker.Tests.Services
         [Test]
         public void GetAchievements()
         {
-            var gameData = new List<(string Name, int AmountTotalAchievements, int AmountUnlockedAchievements)>
+            var gameData = new List<(Game Game, int AmountTotalAchievements, int AmountUnlockedAchievements)>
             {
-                ("CrossGame", 80, 19),
-                ("HaloReach", 100, 29),
-                ("HaloCombatEvolved", 95, 31),
-                ("Halo2", 157, 34),
-                ("Halo3", 89, 26),
-                ("Halo3Odst", 98, 0),
-                ("Halo4", 81, 0),
+                (GameFactory.Get("Cross Game"), 80, 19),
+                (GameFactory.Get("Halo: Reach"), 100, 29),
+                (GameFactory.Get("Halo CE"), 95, 31),
+                (GameFactory.Get("Halo 2"), 157, 34),
+                (GameFactory.Get("Halo 3"), 89, 26),
+                (GameFactory.Get("Halo 3: ODST"), 98, 0),
+                (GameFactory.Get("Halo 4"), 81, 0),
             };
 
             int sumAmountTotalAchievements = gameData.Sum(g => g.AmountTotalAchievements);
@@ -45,9 +46,9 @@ namespace HaloAchievementTracker.Tests.Services
             var locked = achievements.Where(a => !a.IsUnlocked);
             var unlocked = achievements.Except(locked);
 
-            foreach (var (Name, AmountTotalAchievements, AmountUnlockedAchievements) in gameData)
+            foreach (var (Game, AmountTotalAchievements, AmountUnlockedAchievements) in gameData)
             {
-                var gameAchievements = achievements.Where(a => a.Game.Equals(Name));
+                var gameAchievements = achievements.Where(a => a.Game.Equals(Game));
                 Assert.AreEqual(AmountTotalAchievements, gameAchievements.Count());
                 Assert.AreEqual(AmountUnlockedAchievements, gameAchievements.Count(a => a.IsUnlocked));
             }

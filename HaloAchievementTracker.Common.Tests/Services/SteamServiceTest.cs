@@ -13,7 +13,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloAchievementTracker.Tests.Services
+namespace HaloAchievementTracker.Common.Tests.Services
 {
     public class SteamServiceTest
     {
