@@ -18,4 +18,4 @@ HaloAchievementTracker.exe <steamId64>
 
 ## Example output
 
-![Example output](HaloAchievementTracker/Resources/Examples/example_output.png?raw=true "Title")
+![Example output](HaloAchievementTracker.ConsoleApp/Resources/Examples/example_output.png?raw=true "Title")
