@@ -25,6 +25,7 @@ namespace HaloAchievementTracker.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors();
             services.AddControllersWithViews();
             services.AddMemoryCache();
 
@@ -50,6 +51,14 @@ namespace HaloAchievementTracker.WebApp
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime, IOpenXBLService openXBLService)
         {
+            app.UseCors(options =>
+            {
+                //var clientUrl = Configuration["ClientAppUrl"];
+                options.AllowAnyOrigin()
+                       .AllowAnyMethod()
+                       .AllowAnyHeader();
+            });
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -86,7 +95,8 @@ namespace HaloAchievementTracker.WebApp
 
                 if (env.IsDevelopment())
                 {
-                    spa.UseAngularCliServer(npmScript: "start");
+                    //spa.UseAngularCliServer(npmScript: "start");
+                    spa.UseProxyToSpaDevelopmentServer(Configuration["ClientAppUrl"]);
                 }
             });
 
