@@ -2,7 +2,6 @@ import { Component, Inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
-import { MatProgressSpinner } from '@angular/material/progress-spinner'
 import { Observable, of } from 'rxjs';
 
 @Component({
