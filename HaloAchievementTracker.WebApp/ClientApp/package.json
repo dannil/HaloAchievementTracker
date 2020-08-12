@@ -58,6 +58,6 @@
     "node-sass": "^4.12.0",
     "protractor": "~7.0.0",
     "ts-node": "~8.4.1",
-    "tslint": "~5.20.0"
+    "tslint": "~6.1.3"
   }
 }
