@@ -5,13 +5,14 @@ updates:
   schedule:
     interval: daily
     time: "04:30"
-  open-pull-requests-limit: 10
+  open-pull-requests-limit: 5
 - package-ecosystem: npm
   directory: "/HaloAchievementTracker.WebApp/ClientApp"
   schedule:
     interval: daily
     time: "04:30"
   ignore:
-    - dependency-name: "@types/node"
-      versions: [13.*, 14.*]
-  open-pull-requests-limit: 10
+  - dependency-name: "@types/node"
+    versions: [13.*, 14.*]
+  - dependency-name: "@angular/*"
+  open-pull-requests-limit: 5
