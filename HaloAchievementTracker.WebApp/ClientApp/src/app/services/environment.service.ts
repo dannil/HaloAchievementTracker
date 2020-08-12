@@ -7,8 +7,6 @@ import { environment } from '@environments/environment';
 })
 export class EnvironmentService implements IEnvironment {
 
-  constructor() { }
-
   get production(): boolean {
     return environment.production;
   }
