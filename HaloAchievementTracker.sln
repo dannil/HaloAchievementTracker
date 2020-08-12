@@ -3,9 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.30204.135
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HaloAchievementTracker", "HaloAchievementTracker\HaloAchievementTracker.csproj", "{FE482496-7792-47BF-9CA7-83DBE7BCA1DC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HaloAchievementTracker.ConsoleApp", "HaloAchievementTracker.ConsoleApp\HaloAchievementTracker.ConsoleApp.csproj", "{FE482496-7792-47BF-9CA7-83DBE7BCA1DC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaloAchievementTracker.Tests", "HaloAchievementTracker.Tests\HaloAchievementTracker.Tests.csproj", "{AC8C9572-2135-464C-996A-9C9845D4180C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HaloAchievementTracker.Common", "HaloAchievementTracker.Common\HaloAchievementTracker.Common.csproj", "{0F7CECAE-DE56-41A2-B66E-DFB0876D4D24}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HaloAchievementTracker.Common.Tests", "HaloAchievementTracker.Common.Tests\HaloAchievementTracker.Common.Tests.csproj", "{AC8C9572-2135-464C-996A-9C9845D4180C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaloAchievementTracker.WebApp", "HaloAchievementTracker.WebApp\HaloAchievementTracker.WebApp.csproj", "{E11574F0-322B-4934-9BA5-EBCEB005AB32}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +21,18 @@ Global
 		{FE482496-7792-47BF-9CA7-83DBE7BCA1DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE482496-7792-47BF-9CA7-83DBE7BCA1DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE482496-7792-47BF-9CA7-83DBE7BCA1DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F7CECAE-DE56-41A2-B66E-DFB0876D4D24}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F7CECAE-DE56-41A2-B66E-DFB0876D4D24}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F7CECAE-DE56-41A2-B66E-DFB0876D4D24}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F7CECAE-DE56-41A2-B66E-DFB0876D4D24}.Release|Any CPU.Build.0 = Release|Any CPU
 		{AC8C9572-2135-464C-996A-9C9845D4180C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{AC8C9572-2135-464C-996A-9C9845D4180C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AC8C9572-2135-464C-996A-9C9845D4180C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AC8C9572-2135-464C-996A-9C9845D4180C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E11574F0-322B-4934-9BA5-EBCEB005AB32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E11574F0-322B-4934-9BA5-EBCEB005AB32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E11574F0-322B-4934-9BA5-EBCEB005AB32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E11574F0-322B-4934-9BA5-EBCEB005AB32}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
