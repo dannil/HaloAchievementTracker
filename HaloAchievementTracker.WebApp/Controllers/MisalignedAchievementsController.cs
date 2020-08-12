@@ -38,7 +38,7 @@ namespace HaloAchievementTracker.WebApp.Controllers
 
         [HttpGet]
         public async Task<IEnumerable<MisalignedAchievement>> GetQuery([FromQuery] MisalignedAchievementQuery query)
-        { 
+        {
             var steamId64 = query.SteamId64;
             var xboxLiveGamertag = query.XboxLiveGamertag;
 

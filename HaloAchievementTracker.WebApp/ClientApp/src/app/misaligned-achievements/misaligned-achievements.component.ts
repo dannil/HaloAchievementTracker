@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, of } from 'rxjs';
+import { EnvironmentService } from '@app/services/environment.service';
 
 @Component({
   selector: 'app-misaligned-achievements-component',
@@ -17,8 +18,8 @@ export class MisalignedAchievementsComponent {
 
   private misalignedAchievements$: Observable<MisalignedAchievement[]>;
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private route: ActivatedRoute, private router: Router) {
-    const url = `${baseUrl}api/misalignedachievements`;
+  constructor(http: HttpClient, environment: EnvironmentService, private route: ActivatedRoute, private router: Router) {
+    const url = `${environment.apiUrl}/api/misalignedachievements`;
 
     const xboxLiveGamertagParam = route.snapshot.queryParamMap.get(this.XBOX_LIVE_GAMERTAG_QUERY_PARAM);
     const steamId64Param = route.snapshot.queryParamMap.get(this.STEAM_ID_QUERY_PARAM);
