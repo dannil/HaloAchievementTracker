@@ -3,7 +3,7 @@ import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 import { MisalignedAchievementsComponent } from './misaligned-achievements.component';
 
 describe('MisalignedAchievementsComponent', () => {
-  let component: MisalignedAchievementsComponent;
+  //let component: MisalignedAchievementsComponent;
   let fixture: ComponentFixture<MisalignedAchievementsComponent>;
 
   beforeEach(async(() => {
@@ -15,7 +15,7 @@ describe('MisalignedAchievementsComponent', () => {
 
   beforeEach(() => {
     fixture = TestBed.createComponent(MisalignedAchievementsComponent);
-    component = fixture.componentInstance;
+    //component = fixture.componentInstance;
     fixture.detectChanges();
   });
 

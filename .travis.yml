@@ -9,7 +9,7 @@ before_install:
   - npm install -g @angular/cli
 install:
   - dotnet build
-  - pushd HaloAchievementTracker.WebApp/ClientApp && ng build && popd
+  - pushd HaloAchievementTracker.WebApp/ClientApp && npm build && popd
 script:
   - dotnet test
-  - pushd HaloAchievementTracker.WebApp/ClientApp && ng lint && popd
+  - pushd HaloAchievementTracker.WebApp/ClientApp && npm run-script lint && popd
