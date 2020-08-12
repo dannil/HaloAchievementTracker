@@ -48,7 +48,6 @@ export class MisalignedAchievementsComponent {
   }
 
   onSubmit(): void {
-    console.log("submit");
     this.router.navigate(['/misaligned-achievements'], {
       relativeTo: this.route,
       queryParams: {
