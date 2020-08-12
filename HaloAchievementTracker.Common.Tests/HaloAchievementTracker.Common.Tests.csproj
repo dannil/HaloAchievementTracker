@@ -25,6 +25,13 @@
     <None Update="Resources\HaloWaypointData\service-record.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Update="Resources\SteamData\achievements.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Resources\SteamData\" />
   </ItemGroup>
 
 </Project>

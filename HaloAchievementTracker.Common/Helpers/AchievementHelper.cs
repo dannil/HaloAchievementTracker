@@ -33,11 +33,11 @@ namespace HaloAchievementTracker.Common.Helpers
 
         public static Game GetGameFromDescription(string description)
         {
-            //var games = new HashSet<string> { "Halo CE", "Halo: CE", "Halo 2", "Halo 2 MP", "Halo 2A MP", "Halo 3", "H3: ODST", "Halo: Reach", "Halo 4" };
+            //var games = new HashSet<string> { "Halo CE", "Halo: CE", "Halo 2", "H2A", "Halo 2 MP", "Halo 2A MP", "Halo 3", "H3: ODST", "Halo: Reach", "Halo 4" };
             //if (games.Any(g => description.StartsWith(g))) {
             //    return games.First(g => description.Contains(g));
             //}
-            Regex r = new Regex(@"^H(?:alo(?:: (?:Reach|CE)| (?:2A? MP|CE|2|[34]))|3: ODST)");
+            Regex r = new Regex(@"^H(?:alo(?:: (?:Reach|CE)| (?:2A? MP|CE|2|[34]))|3: ODST|2A)");
             Match m = r.Match(description);
             var value = m.Value;
             if (string.IsNullOrEmpty(value))
@@ -45,11 +45,6 @@ namespace HaloAchievementTracker.Common.Helpers
                 value = "Cross Game";
             }
             return GameFactory.Get(value);
-            //if (m.Success)
-            //{
-            //    return Game.GetGame(m.Value);
-            //}
-            //return Game.GetGame("Cross Game");
         }
     }
 }

@@ -1,9 +1,9 @@
 import { Component, Inject } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { FormControl, FormGroup } from '@angular/forms';
 import { MatProgressSpinner } from '@angular/material/progress-spinner'
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
 @Component({
   selector: 'app-misaligned-achievements-component',
@@ -11,32 +11,52 @@ import { Observable } from 'rxjs';
 })
 export class MisalignedAchievementsComponent {
 
+  private readonly XBOX_LIVE_GAMERTAG_QUERY_PARAM = 'xboxLiveGamertag';
+  private readonly STEAM_ID_QUERY_PARAM = 'steamId64';
+
   private misalignedAchievementsForm: FormGroup;
-  private xboxLiveGamerTagForm: FormControl;
-  private steamId64Form: FormControl;
 
   private misalignedAchievements$: Observable<MisalignedAchievement[]>;
 
-  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, route: ActivatedRoute) {
+  constructor(http: HttpClient, @Inject('BASE_URL') baseUrl: string, private route: ActivatedRoute, private router: Router) {
     const url = `${baseUrl}api/misalignedachievements`;
 
-    const xboxLiveGamerTagParam = route.snapshot.queryParamMap.get('xboxLiveGamertag');
-    const steamId64Param = route.snapshot.queryParamMap.get('steamId64');
+    const xboxLiveGamertagParam = route.snapshot.queryParamMap.get(this.XBOX_LIVE_GAMERTAG_QUERY_PARAM);
+    const steamId64Param = route.snapshot.queryParamMap.get(this.STEAM_ID_QUERY_PARAM);
 
     this.misalignedAchievementsForm = new FormGroup({
-      xboxLiveGamerTagForm: new FormControl(xboxLiveGamerTagParam),
+      xboxLiveGamertagForm: new FormControl(xboxLiveGamertagParam),
       steamId64Form: new FormControl(steamId64Param)
     });
 
-    const params = new HttpParams()
-      .set('xboxLiveGamerTag', xboxLiveGamerTagParam)
-      .set('steamId64', steamId64Param);
+    if (xboxLiveGamertagParam && steamId64Param) {
+      const params = new HttpParams()
+        .set('xboxLiveGamerTag', xboxLiveGamertagParam)
+        .set('steamId64', steamId64Param);
 
-    this.misalignedAchievements$ = http.get<MisalignedAchievement[]>(url, { params: params });
+      this.misalignedAchievements$ = http.get<MisalignedAchievement[]>(url, { params: params });
+    } else {
+      this.misalignedAchievements$ = of([]);
+    }
+  }
 
-    //http.get<MisalignedAchievement[]>(url, { params: params }).subscribe(result => {
-    //  //this.misalignedAchievements = result;
-    //}, error => console.error(error));
+  get xboxLiveGamertag(): string {
+    return this.misalignedAchievementsForm.get('xboxLiveGamertagForm').value;
+  }
+
+  get steamId64(): string {
+    return this.misalignedAchievementsForm.get('steamId64Form').value;
+  }
+
+  onSubmit(): void {
+    console.log("submit");
+    this.router.navigate(['/misaligned-achievements'], {
+      relativeTo: this.route,
+      queryParams: {
+        xboxLiveGamertag: this.xboxLiveGamertag,
+        steamId64: this.steamId64
+      }
+    });
   }
 
 }

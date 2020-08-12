@@ -40,6 +40,7 @@ namespace HaloAchievementTracker.Common.Models
             { "Halo CE", HaloCE },
             { "Halo2", Halo2 },
             { "Halo 2", Halo2 },
+            { "H2A", Halo2 },
             { "Halo 2 MP", Halo2 },
             { "Halo 2A MP", Halo2 },
             { "Halo3", Halo3 },

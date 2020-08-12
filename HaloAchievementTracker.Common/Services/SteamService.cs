@@ -60,7 +60,18 @@ namespace HaloAchievementTracker.Common.Services
 
                     steamAchievement.Name = achieveTxtNode.SelectSingleNode($".//h3").InnerText;
                     steamAchievement.Description = achieveTxtNode.SelectSingleNode($".//h5").InnerText;
-                    steamAchievement.Game = AchievementHelper.GetGameFromDescription(steamAchievement.Description);
+
+                    Game game = null;
+                    if (SteamHelper.HasMissingGameIdentifier(steamAchievement.Name))
+                    {
+                        game = SteamHelper.Get(steamAchievement.Name);
+                    }
+                    else
+                    {
+                        game = AchievementHelper.GetGameFromDescription(steamAchievement.Description);
+                    }
+
+                    steamAchievement.Game = game;
                     steamAchievement.IsUnlocked = achieveTxtNode.Descendants("div").Any(d => d.GetAttributeValue("class", string.Empty).Equals("achieveUnlockTime"));
 
                     achievements.Add(steamAchievement);

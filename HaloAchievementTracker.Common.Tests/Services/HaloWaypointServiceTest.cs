@@ -50,7 +50,8 @@ namespace HaloAchievementTracker.Common.Tests.Services
             {
                 var gameAchievements = achievements.Where(a => a.Game.Equals(Game));
                 Assert.AreEqual(AmountTotalAchievements, gameAchievements.Count());
-                Assert.AreEqual(AmountUnlockedAchievements, gameAchievements.Count(a => a.IsUnlocked));
+                var gameUnlockedAchievements = gameAchievements.Count(a => a.IsUnlocked);
+                Assert.AreEqual(AmountUnlockedAchievements, gameUnlockedAchievements);
             }
 
             Assert.AreEqual(sumAmountTotalAchievements, locked.Count() + unlocked.Count());

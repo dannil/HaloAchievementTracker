@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using System;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace HaloAchievementTracker.WebApp
 {
@@ -46,7 +48,7 @@ namespace HaloAchievementTracker.WebApp
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime, IOpenXBLService openXBLService)
         {
             if (env.IsDevelopment())
             {
@@ -87,6 +89,14 @@ namespace HaloAchievementTracker.WebApp
                     spa.UseAngularCliServer(npmScript: "start");
                 }
             });
+
+            lifetime.ApplicationStarted.Register(OnApplicationStartedAsync(openXBLService).Wait);
+        }
+
+        private async Task<Action> OnApplicationStartedAsync(IOpenXBLService openXBLService)
+        {
+            await openXBLService.FindClubs("placeholder");
+            return null;
         }
     }
 }
