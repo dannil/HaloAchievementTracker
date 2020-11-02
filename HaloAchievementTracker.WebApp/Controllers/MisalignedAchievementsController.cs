@@ -20,17 +20,18 @@ namespace HaloAchievementTracker.WebApp.Controllers
     [ApiController]
     public class MisalignedAchievementsController : ControllerBase
     {
-        private readonly ILogger<MisalignedAchievementsController> _logger;
+        private readonly IConfiguration _configuration;
         private readonly IMemoryCache _cache;
 
         private readonly ISteamService _steamService;
         private readonly IOpenXBLService _openXBLService;
 
-        private const string CACHE_KEY_PREFIX = "MisalignedAchievementsController";
+        private static readonly string CACHE_KEY_PREFIX = "MisalignedAchievementsController";
+        private static readonly string CACHE_DURATION_KEY = $"Cache:{CACHE_KEY_PREFIX}:Duration";
 
-        public MisalignedAchievementsController(ILogger<MisalignedAchievementsController> logger, IMemoryCache cache, ISteamService steamService, IOpenXBLService openXBLService)
+        public MisalignedAchievementsController(IConfiguration configuration, IMemoryCache cache, ISteamService steamService, IOpenXBLService openXBLService)
         {
-            _logger = logger;
+            _configuration = configuration;
             _cache = cache;
             _steamService = steamService;
             _openXBLService = openXBLService;
@@ -46,13 +47,16 @@ namespace HaloAchievementTracker.WebApp.Controllers
 
             return await _cache.GetOrCreateAsync(cacheKey, async cacheEntry =>
             {
-                cacheEntry.SlidingExpiration = TimeSpan.FromMinutes(5);
+                cacheEntry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(_configuration.GetValue<int>(CACHE_DURATION_KEY));
 
                 var friendsByGamertag = await _openXBLService.GetFriendsByGamertagAsync(xboxLiveGamertag);
                 var xboxLiveXuid = friendsByGamertag.ProfileUsers[0].Id;
+                var xboxLiveAchievementsRequest = _openXBLService.GetAchievementsAsync(xboxLiveXuid, Constants.HALO_MCC_XBOX_LIVE_APP_ID);
 
-                var steamAchievements = await _steamService.GetAchievementsByScrapingAsync(Constants.HALO_MCC_STEAM_APP_ID, steamId64);
-                var xboxLiveAchievements = await _openXBLService.GetAchievementsAsync(xboxLiveXuid, Constants.HALO_MCC_XBOX_LIVE_APP_ID);
+                var steamAchievementsRequest = _steamService.GetAchievementsByScrapingAsync(Constants.HALO_MCC_STEAM_APP_ID, steamId64);
+
+                var steamAchievements = await steamAchievementsRequest;
+                var xboxLiveAchievements = await xboxLiveAchievementsRequest;
 
                 return AchievementHelper.GetMisalignedAchievements(steamAchievements, xboxLiveAchievements.Achievements);
             });
