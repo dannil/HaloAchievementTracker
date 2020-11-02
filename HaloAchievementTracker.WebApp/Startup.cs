@@ -1,5 +1,7 @@
 using HaloAchievementTracker.Common;
+using HaloAchievementTracker.Common.Adapters;
 using HaloAchievementTracker.Common.Services;
+using HaloAchievementTracker.WebApp.Configuration;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -17,6 +19,8 @@ namespace HaloAchievementTracker.WebApp
     {
         public IConfiguration Configuration { get; }
 
+        public IWebAppConfiguration webAppConfiguration;
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -25,6 +29,14 @@ namespace HaloAchievementTracker.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var webAppConfigurationSection = Configuration.GetSection("WebAppConfiguration");
+            
+
+            webAppConfiguration = new WebAppConfiguration();
+            Configuration.Bind("WebAppConfiguration", webAppConfiguration);
+
+            services.AddSingleton<IWebAppConfiguration>(webAppConfiguration);
+
             services.AddCors();
             services.AddControllersWithViews();
             services.AddMemoryCache();
@@ -40,16 +52,35 @@ namespace HaloAchievementTracker.WebApp
                 client.BaseAddress = new Uri("https://steamcommunity.com/profiles/");
             });
 
-            services.AddHttpClient<IOpenXBLService, OpenXBLService>(typeof(OpenXBLService).Name, client =>
+            var openXBLImplementation = XboxLiveImplementations.OpenXBL;
+            var xAPIImplementation = XboxLiveImplementations.XAPI;
+            var actualImplementation = webAppConfiguration.Api.XboxLive.Implementation;
+            if (actualImplementation.Equals(openXBLImplementation))
             {
-                client.BaseAddress = new Uri("https://xbl.io/api/v2/");
-                client.DefaultRequestHeaders.Add("X-Authorization", Configuration[Constants.CONFIGURATION_KEY_OPENXBL_API_KEY]);
-                client.DefaultRequestHeaders.Add("Accept", "application/json");
-            });
+                services.AddHttpClient<IXboxLiveApiAdapter, OpenXBLServiceAdapter>(typeof(OpenXBLService).Name, client =>
+                {
+                    client.BaseAddress = new Uri("https://xbl.io/api/v2/");
+                    client.DefaultRequestHeaders.Add("X-Authorization", Configuration[Constants.CONFIGURATION_KEY_OPENXBL_API_KEY]);
+                    client.DefaultRequestHeaders.Add("Accept", "application/json");
+                });
+            }
+            else if (actualImplementation.Equals(xAPIImplementation))
+            {
+                services.AddHttpClient<IXboxLiveApiAdapter, XAPIServiceAdapter>(typeof(XAPIService).Name, client =>
+                {
+                    client.BaseAddress = new Uri("https://xapi.us/v2/");
+                    client.DefaultRequestHeaders.Add("X-Auth", Configuration[Constants.CONFIGURATION_KEY_OPENXBL_API_KEY]);
+                    client.DefaultRequestHeaders.Add("Accept", "application/json");
+                });
+            }
+            else
+            {
+                throw new ArgumentException();
+            }
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime, IOpenXBLService openXBLService)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IHostApplicationLifetime lifetime, IXboxLiveApiAdapter adapter)
         {
             app.UseCors(options =>
             {
@@ -96,16 +127,16 @@ namespace HaloAchievementTracker.WebApp
                 if (env.IsDevelopment())
                 {
                     //spa.UseAngularCliServer(npmScript: "start");
-                    spa.UseProxyToSpaDevelopmentServer(Configuration["ClientAppUrl"]);
+                    spa.UseProxyToSpaDevelopmentServer(webAppConfiguration.ClientAppUrl);
                 }
             });
 
-            lifetime.ApplicationStarted.Register(OnApplicationStartedAsync(openXBLService).Wait);
+            lifetime.ApplicationStarted.Register(OnApplicationStartedAsync(adapter).Wait);
         }
 
-        private async Task<Action> OnApplicationStartedAsync(IOpenXBLService openXBLService)
+        private async Task<Action> OnApplicationStartedAsync(IXboxLiveApiAdapter adapter)
         {
-            await openXBLService.FindClubs("placeholder");
+            await adapter.Warmup();
             return null;
         }
     }

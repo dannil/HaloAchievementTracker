@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace HaloAchievementTracker.Common.Services
 {
+    /// <summary>
+    /// Service for OpenXBL
+    /// </summary>
     public class OpenXBLService : IOpenXBLService
     {
         private readonly HttpClient _httpClient;
