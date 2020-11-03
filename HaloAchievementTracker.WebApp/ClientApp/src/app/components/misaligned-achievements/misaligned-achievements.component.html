@@ -1,0 +1,42 @@
+<h1>Misaligned achievements</h1>
+
+<form [formGroup]="misalignedAchievementsForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label>Xbox Live Gamertag</label>
+    <input type="text" class="form-control" formControlName="xboxLiveGamertagForm">
+  </div>
+  <div class="form-group">
+    <label>SteamID 64</label>
+    <input type="text" class="form-control" formControlName="steamId64Form">
+  </div>
+  <div class="form-group">
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </div>
+</form>
+
+<div *ngIf="misalignedAchievements$ | async as misalignedAchievements; else loading">
+  <table class="table table-striped table-hover">
+    <thead>
+      <tr>
+        <th scope="col">Name</th>
+        <th scope="col">Game</th>
+        <th scope="col">Description</th>
+        <th scope="col">Unlocked on Steam</th>
+        <th scope="col">Unlocked on Xbox Live</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let m of misalignedAchievements">
+        <td class="w-10">{{ m.name }}</td>
+        <td class="w-10">{{ m.game.name }}</td>
+        <td class="w-20">{{ m.description }}</td>
+        <td class="w-30">{{ m.isUnlockedOnSteam }}</td>
+        <td class="w-30">{{ m.isUnlockedOnXboxLive }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<ng-template #loading>
+  <mat-progress-spinner mode="indeterminate"></mat-progress-spinner>
+</ng-template>
