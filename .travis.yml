@@ -7,9 +7,16 @@ before_install:
   - dotnet restore
   - nvm install 14.15.0
   - npm install -g @angular/cli
-install:
-  - dotnet build
-  - pushd HaloAchievementTracker.WebApp/ClientApp && npm run-script build && popd
 script:
+  # Build API
+  - cd HaloAchievementTracker.WebApp.API
+  - dotnet build
   - dotnet test
-  - pushd HaloAchievementTracker.WebApp/ClientApp && npm run-script lint && popd
+  - cd ../
+  
+  # Build Client
+  - cd HaloAchievementTracker.WebApp.Client
+  - npm install
+  - npm run-script build
+  - npm run-script lint
+  - cd ../

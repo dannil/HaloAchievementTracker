@@ -29,9 +29,10 @@ namespace HaloAchievementTracker.Common.Adapters
             return response;
         }
 
-        public Task<Task> Warmup()
+        public async Task<Task> Warmup()
         {
-            throw new NotImplementedException();
+            await GetXuidByGamertagAsync("example");
+            return Task.CompletedTask;
         }
     }
 }

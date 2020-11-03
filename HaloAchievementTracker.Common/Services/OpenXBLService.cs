@@ -44,15 +44,6 @@ namespace HaloAchievementTracker.Common.Services
             string responseBody = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<OpenXBLAnotherPlayersAchievementsResponse>(responseBody/*, settings*/);
         }
-
-        public async Task<Task> FindClubs(string query)
-        {
-            var endpoint = $"clubs/find?q={query}";
-            var response = await _httpClient.GetAsync(endpoint);
-            response.EnsureSuccessStatusCode();
-
-            return Task.CompletedTask;
-        }
     }
 
     public interface IOpenXBLService
@@ -60,7 +51,5 @@ namespace HaloAchievementTracker.Common.Services
         Task<OpenXBLFriendsSearchResponse> GetFriendsByGamertagAsync(string gamertag);
 
         Task<OpenXBLAnotherPlayersAchievementsResponse> GetAnotherPlayersAchievementsAsync(string xuid, uint titleId);
-
-        Task<Task> FindClubs(string query);
     }
 }

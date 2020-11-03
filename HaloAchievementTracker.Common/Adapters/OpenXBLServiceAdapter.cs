@@ -17,21 +17,22 @@ namespace HaloAchievementTracker.Common.Adapters
             _service = new OpenXBLService(httpClient);
         }
 
-        public async Task<IEnumerable<IAchievement>> GetAchievementsAsync(string xuid, uint titleId)
-        {
-            var response = await _service.GetAnotherPlayersAchievementsAsync(xuid, titleId);
-            return response.Achievements;
-        }
-
         public async Task<string> GetXuidByGamertagAsync(string gamertag)
         {
             var response = await _service.GetFriendsByGamertagAsync(gamertag);
             return response.ProfileUsers[0].Id;
         }
 
+        public async Task<IEnumerable<IAchievement>> GetAchievementsAsync(string xuid, uint titleId)
+        {
+            var response = await _service.GetAnotherPlayersAchievementsAsync(xuid, titleId);
+            return response.Achievements;
+        }
+
         public async Task<Task> Warmup()
         {
-            return await _service.FindClubs("placeholder");
+            await GetXuidByGamertagAsync("example");
+            return Task.CompletedTask;
         }
     }
 }

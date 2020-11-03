@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HaloAchievementTracker.Comm
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HaloAchievementTracker.Common.Tests", "HaloAchievementTracker.Common.Tests\HaloAchievementTracker.Common.Tests.csproj", "{AC8C9572-2135-464C-996A-9C9845D4180C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaloAchievementTracker.WebApp", "HaloAchievementTracker.WebApp\HaloAchievementTracker.WebApp.csproj", "{E11574F0-322B-4934-9BA5-EBCEB005AB32}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HaloAchievementTracker.WebApp.API", "HaloAchievementTracker.WebApp.API\HaloAchievementTracker.WebApp.API.csproj", "{E11574F0-322B-4934-9BA5-EBCEB005AB32}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HaloAchievementTracker.WebApp.Client", "HaloAchievementTracker.WebApp.Client\HaloAchievementTracker.WebApp.Client.csproj", "{8A354B4B-B868-4D5E-8549-FF946EC08C02}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{E11574F0-322B-4934-9BA5-EBCEB005AB32}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E11574F0-322B-4934-9BA5-EBCEB005AB32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E11574F0-322B-4934-9BA5-EBCEB005AB32}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8A354B4B-B868-4D5E-8549-FF946EC08C02}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8A354B4B-B868-4D5E-8549-FF946EC08C02}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8A354B4B-B868-4D5E-8549-FF946EC08C02}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8A354B4B-B868-4D5E-8549-FF946EC08C02}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

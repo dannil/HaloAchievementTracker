@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/5a8e04f7-7275-4069-af54-1913a9177951/resourceGroups/halo-achievement-tracker-rg/providers/Microsoft.Web/sites/halo-achievement-tracker-app-client",
+    "appService.deploySubpath": "dist"
+}

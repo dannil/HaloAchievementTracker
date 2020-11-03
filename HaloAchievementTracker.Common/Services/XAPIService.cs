@@ -40,11 +40,6 @@ namespace HaloAchievementTracker.Common.Services
             string responseBody = await response.Content.ReadAsStringAsync();
             return JsonConvert.DeserializeObject<IEnumerable<XAPIAchievement>>(responseBody);
         }
-
-        public Task<Task> Warmup()
-        {
-            throw new NotImplementedException();
-        }
     }
 
     public interface IXAPIService
