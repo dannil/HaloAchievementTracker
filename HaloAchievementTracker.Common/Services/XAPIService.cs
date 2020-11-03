@@ -25,24 +25,20 @@ namespace HaloAchievementTracker.Common.Services
         {
             var endpoint = $"xuid/{gamertag}";
             var response = await _httpClient.GetAsync(endpoint);
-            if (response.IsSuccessStatusCode)
-            {
-                string responseBody = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<XAPIXuidByGamertagResponse>(responseBody);
-            }
-            throw new HttpRequestException();
+            response.EnsureSuccessStatusCode();
+
+            string responseBody = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<XAPIXuidByGamertagResponse>(responseBody);
         }
 
         public async Task<IEnumerable<IAchievement>> GetAchievementsForXuidAsync(string xuid, uint titleId)
         {
             var endpoint = $"{xuid}/achievements/{titleId}";
             var response = await _httpClient.GetAsync(endpoint);
-            if (response.IsSuccessStatusCode)
-            {
-                string responseBody = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<IEnumerable<XAPIAchievement>>(responseBody);
-            }
-            throw new HttpRequestException();
+            response.EnsureSuccessStatusCode();
+
+            string responseBody = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<IEnumerable<XAPIAchievement>>(responseBody);
         }
 
         public Task<Task> Warmup()

@@ -26,12 +26,10 @@ namespace HaloAchievementTracker.Common.Services
         {
             var endpoint = $"friends/search?gt={gamertag}";
             var response = await _httpClient.GetAsync(endpoint);
-            if (response.IsSuccessStatusCode)
-            {
-                string responseBody = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<OpenXBLFriendsSearchResponse>(responseBody);
-            }
-            throw new HttpRequestException();
+            response.EnsureSuccessStatusCode();
+
+            string responseBody = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<OpenXBLFriendsSearchResponse>(responseBody);
         }
 
         public async Task<OpenXBLAnotherPlayersAchievementsResponse> GetAnotherPlayersAchievementsAsync(string xuid, uint titleId)
@@ -41,22 +39,18 @@ namespace HaloAchievementTracker.Common.Services
 
             var endpoint = $"achievements/player/{xuid}/title/{titleId}";
             var response = await _httpClient.GetAsync(endpoint);
-            if (response.IsSuccessStatusCode)
-            {
-                string responseBody = await response.Content.ReadAsStringAsync();
-                return JsonConvert.DeserializeObject<OpenXBLAnotherPlayersAchievementsResponse>(responseBody/*, settings*/);
-            }
-            throw new HttpRequestException();
+            response.EnsureSuccessStatusCode();
+
+            string responseBody = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<OpenXBLAnotherPlayersAchievementsResponse>(responseBody/*, settings*/);
         }
 
         public async Task<Task> FindClubs(string query)
         {
             var endpoint = $"clubs/find?q={query}";
             var response = await _httpClient.GetAsync(endpoint);
-            if (response.IsSuccessStatusCode)
-            {
+            response.EnsureSuccessStatusCode();
 
-            }
             return Task.CompletedTask;
         }
     }
