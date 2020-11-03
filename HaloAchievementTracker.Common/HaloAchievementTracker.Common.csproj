@@ -14,7 +14,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Models\XAPI\" />
     <Folder Include="Properties\" />
   </ItemGroup>
 

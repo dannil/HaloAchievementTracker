@@ -19,7 +19,7 @@ namespace HaloAchievementTracker.Common.Adapters
 
         public async Task<IEnumerable<IAchievement>> GetAchievementsAsync(string xuid, uint titleId)
         {
-            var response = await _service.GetAchievementsAsync(xuid, titleId);
+            var response = await _service.GetAnotherPlayersAchievementsAsync(xuid, titleId);
             return response.Achievements;
         }
 

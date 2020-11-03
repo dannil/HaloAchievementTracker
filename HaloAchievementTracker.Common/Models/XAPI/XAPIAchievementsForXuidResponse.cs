@@ -5,14 +5,13 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HaloAchievementTracker.Common.Models.OpenXBL
+namespace HaloAchievementTracker.Common.Models.XAPI
 {
-    public class OpenXBLAnotherPlayersAchievementsResponse
+    public class XAPIAchievementsForXuidResponse
     {
-        public List<OpenXBLAchievement> Achievements { get; set; }
     }
 
-    public class OpenXBLAchievement : IAchievement
+    public class XAPIAchievement : IAchievement
     {
         public int Id { get; set; }
 
@@ -27,10 +26,9 @@ namespace HaloAchievementTracker.Common.Models.OpenXBL
         public bool IsUnlocked { get; set; }
 
         [JsonConstructor]
-        public OpenXBLAchievement(string description)
+        public XAPIAchievement(string description)
         {
             Game = AchievementHelper.GetGameFromDescription(description);
         }
     }
-
 }

@@ -34,7 +34,7 @@ namespace HaloAchievementTracker.Common.Services
             throw new HttpRequestException();
         }
 
-        public async Task<OpenXBLAnotherPlayersAchievementsResponse> GetAchievementsAsync(string xuid, uint titleId)
+        public async Task<OpenXBLAnotherPlayersAchievementsResponse> GetAnotherPlayersAchievementsAsync(string xuid, uint titleId)
         {
             //var settings = new JsonSerializerSettings();
             //settings.Converters.Add(new OpenXBLProgressStateConverter());
@@ -65,7 +65,7 @@ namespace HaloAchievementTracker.Common.Services
     {
         Task<OpenXBLFriendsSearchResponse> GetFriendsByGamertagAsync(string gamertag);
 
-        Task<OpenXBLAnotherPlayersAchievementsResponse> GetAchievementsAsync(string xuid, uint titleId);
+        Task<OpenXBLAnotherPlayersAchievementsResponse> GetAnotherPlayersAchievementsAsync(string xuid, uint titleId);
 
         Task<Task> FindClubs(string query);
     }

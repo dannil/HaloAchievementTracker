@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HaloAchievementTracker.Common.Converters
 {
-    public class OpenXBLProgressStateConverter : JsonConverter
+    public class XboxLiveAchievementProgressStateConverter : JsonConverter
     {
         public override bool CanConvert(Type objectType)
         {
@@ -14,7 +14,7 @@ namespace HaloAchievementTracker.Common.Converters
 
         public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
         {
-            switch (reader.Value.ToString().ToLower().Trim())
+            switch (reader.Value.ToString().Trim())
             {
                 case "Achieved":
                     return true;

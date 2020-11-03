@@ -1,4 +1,6 @@
 ﻿using HaloAchievementTracker.Common.Models;
+using HaloAchievementTracker.Common.Models.XAPI;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Net.Http;
@@ -19,15 +21,29 @@ namespace HaloAchievementTracker.Common.Services
             _httpClient = httpClient;
         }
 
-        //public Task<object> GetXuidByGamertagAsync(string gamertag)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public async Task<XAPIXuidByGamertagResponse> GetXuidByGamertagAsync(string gamertag)
+        {
+            var endpoint = $"xuid/{gamertag}";
+            var response = await _httpClient.GetAsync(endpoint);
+            if (response.IsSuccessStatusCode)
+            {
+                string responseBody = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<XAPIXuidByGamertagResponse>(responseBody);
+            }
+            throw new HttpRequestException();
+        }
 
-        //public Task<object> GetAchievementsAsync(string xuid, uint titleId)
-        //{
-        //    throw new NotImplementedException();
-        //}
+        public async Task<IEnumerable<IAchievement>> GetAchievementsForXuidAsync(string xuid, uint titleId)
+        {
+            var endpoint = $"{xuid}/achievements/{titleId}";
+            var response = await _httpClient.GetAsync(endpoint);
+            if (response.IsSuccessStatusCode)
+            {
+                string responseBody = await response.Content.ReadAsStringAsync();
+                return JsonConvert.DeserializeObject<IEnumerable<XAPIAchievement>>(responseBody);
+            }
+            throw new HttpRequestException();
+        }
 
         public Task<Task> Warmup()
         {
@@ -37,8 +53,8 @@ namespace HaloAchievementTracker.Common.Services
 
     public interface IXAPIService
     {
-        //Task<object> GetFriendsByGamertagAsync(string gamertag);
+        Task<XAPIXuidByGamertagResponse> GetXuidByGamertagAsync(string gamertag);
 
-        //Task<object> GetAchievementsAsync(string xuid, uint titleId);
+        Task<IEnumerable<IAchievement>> GetAchievementsForXuidAsync(string xuid, uint titleId);
     }
 }

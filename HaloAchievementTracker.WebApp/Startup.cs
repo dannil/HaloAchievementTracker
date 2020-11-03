@@ -29,13 +29,12 @@ namespace HaloAchievementTracker.WebApp
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            var webAppConfigurationSection = Configuration.GetSection("WebAppConfiguration");
-            
+            //var webAppConfigurationSection = Configuration.GetSection("WebAppConfiguration");
 
             webAppConfiguration = new WebAppConfiguration();
             Configuration.Bind("WebAppConfiguration", webAppConfiguration);
 
-            services.AddSingleton<IWebAppConfiguration>(webAppConfiguration);
+            services.AddSingleton(webAppConfiguration);
 
             services.AddCors();
             services.AddControllersWithViews();
@@ -69,7 +68,7 @@ namespace HaloAchievementTracker.WebApp
                 services.AddHttpClient<IXboxLiveApiAdapter, XAPIServiceAdapter>(typeof(XAPIService).Name, client =>
                 {
                     client.BaseAddress = new Uri("https://xapi.us/v2/");
-                    client.DefaultRequestHeaders.Add("X-Auth", Configuration[Constants.CONFIGURATION_KEY_OPENXBL_API_KEY]);
+                    client.DefaultRequestHeaders.Add("X-Auth", Configuration[Constants.CONFIGURATION_KEY_XAPI_API_KEY]);
                     client.DefaultRequestHeaders.Add("Accept", "application/json");
                 });
             }

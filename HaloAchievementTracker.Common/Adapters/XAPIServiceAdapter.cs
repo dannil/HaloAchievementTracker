@@ -17,14 +17,16 @@ namespace HaloAchievementTracker.Common.Adapters
             _service = new XAPIService(httpClient);
         }
 
-        public Task<string> GetXuidByGamertagAsync(string gamertag)
+        public async Task<string> GetXuidByGamertagAsync(string gamertag)
         {
-            throw new NotImplementedException();
+            var response = await _service.GetXuidByGamertagAsync(gamertag);
+            return response.Xuid;
         }
 
-        public Task<IEnumerable<IAchievement>> GetAchievementsAsync(string xuid, uint titleId)
+        public async Task<IEnumerable<IAchievement>> GetAchievementsAsync(string xuid, uint titleId)
         {
-            throw new NotImplementedException();
+            var response = await _service.GetAchievementsForXuidAsync(xuid, titleId);
+            return response;
         }
 
         public Task<Task> Warmup()
