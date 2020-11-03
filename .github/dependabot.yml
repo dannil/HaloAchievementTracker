@@ -13,6 +13,6 @@ updates:
     time: "04:30"
   ignore:
   - dependency-name: "@types/node"
-    versions: [13.*, 14.*]
+    versions: [15.*]
   - dependency-name: "@angular/*"
   open-pull-requests-limit: 5
