@@ -11,9 +11,9 @@ import { MisalignedAchievementsService } from '@services/misalignedachievements.
 })
 export class MisalignedAchievementsComponent {
 
-  private misalignedAchievementsForm: FormGroup;
+  misalignedAchievementsForm: FormGroup;
 
-  private misalignedAchievements$: Observable<MisalignedAchievement[]>;
+  misalignedAchievements$: Observable<MisalignedAchievement[]>;
 
   constructor(private http: HttpClient, private environment: EnvironmentService, private misalignedAchievementsService: MisalignedAchievementsService) {
     this.misalignedAchievementsForm = new FormGroup({

@@ -1,11 +1,11 @@
 {
-  "name": "haloachievementtracker.webapp",
+  "name": "halo-achievement-tracker",
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
     "build": "ng build",
-    "build:ssr": "ng run HaloAchievementTracker.WebApp:server:dev",
+    "build:ssr": "ng run halo-achievement-tracker:server:dev",
     "test": "ng test",
     "lint": "eslint -c .eslintrc.js --ext .ts ./src --color",
     "e2e": "ng e2e"
