@@ -7,7 +7,7 @@ updates:
     time: "04:30"
   open-pull-requests-limit: 5
 - package-ecosystem: npm
-  directory: "/HaloAchievementTracker.WebApp/ClientApp"
+  directory: "/HaloAchievementTracker.WebApp.Client"
   schedule:
     interval: daily
     time: "04:30"
