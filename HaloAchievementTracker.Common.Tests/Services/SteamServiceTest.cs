@@ -1,6 +1,7 @@
 ﻿using HaloAchievementTracker.Common.Adapters;
 using HaloAchievementTracker.Common.Models;
 using HaloAchievementTracker.Common.Services;
+using HaloAchievementTracker.Common.Tests.Mock;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
@@ -49,36 +50,38 @@ namespace HaloAchievementTracker.Common.Tests.Services
                 Achievements = achievements
             };
 
-            var steamWebResponseDataMock = new Mock<ISteamWebResponse<PlayerAchievementResultModel>>();
-            steamWebResponseDataMock.Setup(m => m.Data).Returns(playerAchievementResultModel);
+            //var steamWebResponseDataMock = new Mock<ISteamWebResponse<PlayerAchievementResultModel>>();
+            //steamWebResponseDataMock.Setup(m => m.Data).Returns(playerAchievementResultModel);
 
-            var steamUserStatsMock = new Mock<SteamUserStatsAdapter>();
-            steamUserStatsMock.Setup(m => m.GetPlayerAchievementsAsync(It.IsAny<uint>(), It.IsAny<ulong>(), It.IsAny<string>())).Returns(Task.FromResult(steamWebResponseDataMock.Object));
+            //var steamUserStatsMock = new Mock<SteamUserStatsAdapter>();
+            //steamUserStatsMock.Setup(m => m.GetPlayerAchievementsAsync(It.IsAny<uint>(), It.IsAny<ulong>(), It.IsAny<string>())).Returns(Task.FromResult(steamWebResponseDataMock.Object));
 
-            steamWebInterfaceFactoryMock = new Mock<ISteamWebInterfaceFactory>();
-            steamWebInterfaceFactoryMock.Setup(m => m.CreateSteamWebInterface<SteamUserStatsAdapter>(It.IsAny<HttpClient>())).Returns(steamUserStatsMock.Object);
+            //steamWebInterfaceFactoryMock = new Mock<ISteamWebInterfaceFactory>();
+            //steamWebInterfaceFactoryMock.Setup(m => m.CreateSteamWebInterface<SteamUserStatsAdapter>(It.IsAny<HttpClient>())).Returns(steamUserStatsMock.Object);
 
-            IEnumerable<SteamAchievement> steamAchievements = new HashSet<SteamAchievement>
-            {
-                new SteamAchievement()
-                {
-                    Name = "Going Bananas",
-                    Description = "Kill 100 Brutes.",
-                    IsUnlocked = false
-                },
-                new SteamAchievement()
-                {
-                    Name = "Where Am I?",
-                    Description = "Complete 10 missions or multiplayer games.",
-                    IsUnlocked = true
-                },
-                new SteamAchievement()
-                {
-                    Name = "Tempered Blade",
-                    Description = "Win 10 multiplayer games.",
-                    IsUnlocked = true
-                }
-            };
+            steamWebInterfaceFactoryMock = SteamServiceMockFactory.GetSteamWebInterfaceFactory(playerAchievementResultModel);
+
+            //IEnumerable<SteamAchievement> steamAchievements = new HashSet<SteamAchievement>
+            //{
+            //    new SteamAchievement()
+            //    {
+            //        Name = "Going Bananas",
+            //        Description = "Kill 100 Brutes.",
+            //        IsUnlocked = false
+            //    },
+            //    new SteamAchievement()
+            //    {
+            //        Name = "Where Am I?",
+            //        Description = "Complete 10 missions or multiplayer games.",
+            //        IsUnlocked = true
+            //    },
+            //    new SteamAchievement()
+            //    {
+            //        Name = "Tempered Blade",
+            //        Description = "Win 10 multiplayer games.",
+            //        IsUnlocked = true
+            //    }
+            //};
         }
 
         [Test]
