@@ -15,7 +15,7 @@ namespace HaloAchievementTracker.WebApp.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class MisalignedAchievementsController : ControllerBase
+    public class AchievementsController : ControllerBase
     {
         private readonly IWebAppConfiguration _configuration;
         private readonly IMemoryCache _cache;
@@ -23,9 +23,9 @@ namespace HaloAchievementTracker.WebApp.API.Controllers
         private readonly ISteamService _steamService;
         private readonly IXboxLiveApiAdapter _xboxLiveApiAdapter;
 
-        private static readonly string CACHE_KEY_PREFIX = typeof(MisalignedAchievementsController).Name;
+        private static readonly string CACHE_KEY_PREFIX = typeof(AchievementsController).Name;
 
-        public MisalignedAchievementsController(IWebAppConfiguration configuration, IMemoryCache cache, ISteamService steamService, IXboxLiveApiAdapter xboxLiveApiAdapter)
+        public AchievementsController(IWebAppConfiguration configuration, IMemoryCache cache, ISteamService steamService, IXboxLiveApiAdapter xboxLiveApiAdapter)
         {
             _configuration = configuration;
             _cache = cache;
@@ -33,18 +33,17 @@ namespace HaloAchievementTracker.WebApp.API.Controllers
             _xboxLiveApiAdapter = xboxLiveApiAdapter;
         }
 
+        [Route("misaligned")]
         [HttpGet]
-        public async Task<IEnumerable<MisalignedAchievement>> GetQuery([FromQuery] MisalignedAchievementsQuery query)
+        public async Task<IEnumerable<MisalignedAchievement>> GetMisaligned([FromQuery] MisalignedAchievementsQuery query)
         {
             var steamId64 = query.SteamId64;
             var xboxLiveGamertag = query.XboxLiveGamertag;
 
             var cacheKey = $"{CACHE_KEY_PREFIX}-GetQuery-{steamId64}-{xboxLiveGamertag}";
 
-            return await _cache.GetOrCreateAsync(cacheKey, async cacheEntry =>
+            async Task<IEnumerable<MisalignedAchievement>> GetMisalignedWrapper(ulong steamId64, string xboxLiveGamertag)
             {
-                cacheEntry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(_configuration.Cache.MisalignedAchievementsController.Duration);
-
                 var xboxLiveXuid = await _xboxLiveApiAdapter.GetXuidByGamertagAsync(xboxLiveGamertag);
                 var xboxLiveAchievementsRequest = _xboxLiveApiAdapter.GetAchievementsAsync(xboxLiveXuid, Constants.HALO_MCC_XBOX_LIVE_APP_ID);
 
@@ -54,6 +53,13 @@ namespace HaloAchievementTracker.WebApp.API.Controllers
                 var xboxLiveAchievements = await xboxLiveAchievementsRequest;
 
                 return AchievementHelper.GetMisalignedAchievements(steamAchievements, xboxLiveAchievements);
+            }
+
+            return await _cache.GetOrCreateAsync(cacheKey, async cacheEntry =>
+            {
+                cacheEntry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(_configuration.Cache.MisalignedAchievementsController.Duration);
+
+                return await GetMisalignedWrapper(steamId64, xboxLiveGamertag);
             });
         }
     }

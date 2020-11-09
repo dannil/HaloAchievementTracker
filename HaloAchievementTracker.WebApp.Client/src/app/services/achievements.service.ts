@@ -6,19 +6,21 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class MisalignedAchievementsService {
+export class AchievementsService {
+
+  private controllerRoute: string;
 
   constructor(private http: HttpClient, private environment: EnvironmentService) {
-    
+    this.controllerRoute = `${this.environment.apiUrl}/achievements`
   }
 
-  getQuery(xboxLiveGamertag: string, steamId64: string): Observable<MisalignedAchievement[]> {
-    const url = `${this.environment.apiUrl}/misalignedachievements`;
+  getMisaligned(xboxLiveGamertag: string, steamId64: string): Observable<MisalignedAchievement[]> {
+    const endpoint = `${this.controllerRoute}/misaligned`;
     const params = new HttpParams()
       .set('xboxLiveGamertag', xboxLiveGamertag)
       .set('steamId64', steamId64);
 
-    const response = this.http.get<MisalignedAchievement[]>(url, { params: params });
+    const response = this.http.get<MisalignedAchievement[]>(endpoint, { params: params });
     return response;
   }
 
