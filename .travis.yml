@@ -13,13 +13,11 @@ before_install:
   - nvm install ${NODE_VERSION}
   - npm install -g @angular/cli
 script:
-  # Build API
-  - cd HaloAchievementTracker.WebApp.API
+  # Build VS solution
   - dotnet build
   - dotnet test
-  - cd ../
   
-  # Build Client
+  # Build Angular client
   - cd HaloAchievementTracker.WebApp.Client
   - npm install
   - npm run-script build

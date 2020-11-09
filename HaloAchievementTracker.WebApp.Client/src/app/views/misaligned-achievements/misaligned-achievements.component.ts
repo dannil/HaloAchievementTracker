@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup } from '@angular/forms';
 import { Observable, of } from 'rxjs';
-import { MisalignedAchievementsService } from '@services/misalignedachievements.service';
+import { AchievementsService } from '@app/services/achievements.service';
 
 @Component({
   selector: 'app-misaligned-achievements-component',
@@ -13,7 +13,7 @@ export class MisalignedAchievementsComponent {
 
   misalignedAchievements$: Observable<MisalignedAchievement[]>;
 
-  constructor(private misalignedAchievementsService: MisalignedAchievementsService) {
+  constructor(private achievementsService: AchievementsService) {
     this.misalignedAchievementsForm = new FormGroup({
       xboxLiveGamertagForm: new FormControl(),
       steamId64Form: new FormControl()
@@ -30,7 +30,7 @@ export class MisalignedAchievementsComponent {
   }
 
   onSubmit(): void {
-    this.misalignedAchievements$ = this.misalignedAchievementsService.getQuery(this.xboxLiveGamertag, this.steamId64);
+    this.misalignedAchievements$ = this.achievementsService.getMisaligned(this.xboxLiveGamertag, this.steamId64);
   }
 
 }
