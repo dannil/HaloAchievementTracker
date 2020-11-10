@@ -1,9 +1,9 @@
 ﻿using HaloAchievementTracker.Common.Adapters;
 using HaloAchievementTracker.Common.Models;
 using HaloAchievementTracker.Common.Services;
-using HaloAchievementTracker.Common.Tests.Mock;
 using HaloAchievementTracker.WebApp.API.Controllers;
 using HaloAchievementTracker.WebApp.API.Models;
+using HaloAchievementTracker.WebApp.API.Tests.Mock;
 using Moq;
 using NUnit.Framework;
 using System;
@@ -12,12 +12,12 @@ using System.Text;
 
 namespace HaloAchievementTracker.WebApp.API.Tests.Controllers
 {
-    public class MisalignedAchievementsControllerTest
+    public class AchievementsControllerTest
     {
         private Mock<ISteamService> _steamServiceMock;
         private Mock<IXboxLiveApiAdapter> _xboxLiveApiAdapterMock;
 
-        private MisalignedAchievementsController _controller;
+        private AchievementsController _controller;
 
         [SetUp]
         public void Setup()
@@ -25,11 +25,11 @@ namespace HaloAchievementTracker.WebApp.API.Tests.Controllers
             _steamServiceMock = SteamServiceMockFactory.GetSteamService();
             _xboxLiveApiAdapterMock = XboxLiveMockFactory.GetXboxLiveApiAdapter();
 
-            _controller = new MisalignedAchievementsController(null, null, _steamServiceMock.Object, _xboxLiveApiAdapterMock.Object);
+            _controller = new AchievementsController(null, null, _steamServiceMock.Object, _xboxLiveApiAdapterMock.Object);
         }
 
         [Test]
-        public async void GetQuery()
+        public async void GetMisaligned()
         {
             var query = new MisalignedAchievementsQuery
             {
@@ -37,7 +37,7 @@ namespace HaloAchievementTracker.WebApp.API.Tests.Controllers
                 XboxLiveGamertag = "example"
             };
 
-            IEnumerable<MisalignedAchievement> misalignedAchievements = await _controller.GetQuery(query);
+            IEnumerable<MisalignedAchievement> misalignedAchievements = await _controller.GetMisaligned(query);
         }
     }
 }

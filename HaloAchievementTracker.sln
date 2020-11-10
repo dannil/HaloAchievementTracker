@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HaloAchievementTracker.WebA
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HaloAchievementTracker.WebApp.Client", "HaloAchievementTracker.WebApp.Client\HaloAchievementTracker.WebApp.Client.csproj", "{8A354B4B-B868-4D5E-8549-FF946EC08C02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HaloAchievementTracker.WebApp.API.Tests", "HaloAchievementTracker.WebApp.API.Tests\HaloAchievementTracker.WebApp.API.Tests.csproj", "{40A8D85D-3381-4BBF-B7FD-B88C516B6FE5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "HaloAchievementTracker.WebApp.API.Tests", "HaloAchievementTracker.WebApp.API.Tests\HaloAchievementTracker.WebApp.API.Tests.csproj", "{40A8D85D-3381-4BBF-B7FD-B88C516B6FE5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
