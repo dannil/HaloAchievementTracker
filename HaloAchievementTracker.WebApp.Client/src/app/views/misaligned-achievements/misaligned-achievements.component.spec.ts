@@ -9,8 +9,7 @@ describe('MisalignedAchievementsComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
       declarations: [MisalignedAchievementsComponent ]
-    })
-    .compileComponents();
+    }).compileComponents();
   }));
 
   beforeEach(() => {

@@ -10,16 +10,18 @@ import { HomeComponent } from '@app/views/home/home.component';
 import { MisalignedAchievementsComponent } from '@app/views/misaligned-achievements/misaligned-achievements.component';
 import { AngularMaterialModule } from '@app/angular-material.module';
 import { ROUTE_CONFIG } from '@app/route-config';
+import { AlertComponent } from '@app/components/alert/alert.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavMenuComponent,
     HomeComponent,
-    MisalignedAchievementsComponent
+    MisalignedAchievementsComponent,
+    AlertComponent
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
+    BrowserModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
