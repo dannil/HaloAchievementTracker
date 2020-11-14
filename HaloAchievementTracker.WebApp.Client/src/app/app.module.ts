@@ -12,11 +12,13 @@ import { HomeModule } from '@app/views/home/home.module';
     AppComponent
   ],
   imports: [
-    BrowserModule,
-    RouterModule.forRoot(ROUTE_CONFIG),
+    BrowserModule.withServerTransition({ appId: 'ng-cli-universal' }),
     NavMenuModule,
     HomeModule,
-    MisalignedAchievementsModule
+    MisalignedAchievementsModule,
+    RouterModule.forRoot(ROUTE_CONFIG, {
+      relativeLinkResolution: 'legacy' 
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
