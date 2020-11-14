@@ -24,7 +24,9 @@ import { ROUTE_CONFIG } from '@app/route-config';
     FormsModule,
     ReactiveFormsModule,
     AngularMaterialModule,
-    RouterModule.forRoot(ROUTE_CONFIG)
+    RouterModule.forRoot(ROUTE_CONFIG, {
+      relativeLinkResolution: 'legacy' 
+    })
   ],
   providers: [],
   bootstrap: [AppComponent]
