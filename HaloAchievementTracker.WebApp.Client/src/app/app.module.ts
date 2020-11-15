@@ -3,9 +3,9 @@ import { NgModule } from '@angular/core';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from '@app/app.component';
 import { ROUTE_CONFIG } from '@app/route-config';
-import { NavMenuModule } from '@app/components/nav-menu/nav-menu.module';
-import { MisalignedAchievementsModule } from '@app/views/misaligned-achievements/misaligned-achievements.module';
-import { HomeModule } from '@app/views/home/home.module';
+import { NavMenuModule } from '@app/components/nav-menu/nav-menu.component';
+import { MisalignedAchievementsModule } from '@app/views/misaligned-achievements/misaligned-achievements.component';
+import { HomeModule } from '@app/views/home/home.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +21,8 @@ import { HomeModule } from '@app/views/home/home.module';
     })
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [
+    AppComponent
+  ]
 })
 export class AppModule { }

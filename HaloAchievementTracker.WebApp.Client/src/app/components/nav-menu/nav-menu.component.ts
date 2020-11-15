@@ -1,4 +1,7 @@
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-nav-menu',
@@ -18,3 +21,17 @@ export class NavMenuComponent {
   }
 
 }
+
+@NgModule({
+  imports: [
+    CommonModule,
+    RouterModule
+  ],
+  declarations: [
+    NavMenuComponent
+  ],
+  exports: [
+    NavMenuComponent
+  ]
+})
+export class NavMenuModule { }
