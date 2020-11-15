@@ -6,6 +6,7 @@ import { ROUTE_CONFIG } from '@app/route-config';
 import { NavMenuModule } from '@app/components/nav-menu/nav-menu.component';
 import { MisalignedAchievementsModule } from '@app/views/misaligned-achievements/misaligned-achievements.component';
 import { HomeModule } from '@app/views/home/home.component';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [

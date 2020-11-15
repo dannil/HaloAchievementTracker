@@ -4,7 +4,6 @@ import { Observable, of } from 'rxjs';
 import { AchievementsService } from '@app/services/achievements.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { Router, RouterModule } from '@angular/router';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularMaterialModule } from '@app/angular-material.module';
 
@@ -43,7 +42,6 @@ export class MisalignedAchievementsComponent {
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
