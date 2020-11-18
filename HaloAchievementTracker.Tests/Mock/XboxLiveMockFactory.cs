@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace HaloAchievementTracker.Common.Tests.Mock
+namespace HaloAchievementTracker.Tests.Mock
 {
     public class XboxLiveMockFactory
     {

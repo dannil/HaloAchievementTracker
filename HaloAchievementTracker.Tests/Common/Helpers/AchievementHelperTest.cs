@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace HaloAchievementTracker.Common.Tests.Helpers
+namespace HaloAchievementTracker.Tests.Common.Helpers
 {
     public class AchievementHelperTest
     {

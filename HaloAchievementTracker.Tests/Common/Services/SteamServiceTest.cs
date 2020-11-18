@@ -1,7 +1,8 @@
-﻿using HaloAchievementTracker.Common.Adapters;
+﻿using HaloAchievementTracker.Common;
+using HaloAchievementTracker.Common.Adapters;
 using HaloAchievementTracker.Common.Models;
 using HaloAchievementTracker.Common.Services;
-using HaloAchievementTracker.Common.Tests.Mock;
+using HaloAchievementTracker.Tests.Mock;
 using Moq;
 using Moq.Protected;
 using NUnit.Framework;
@@ -18,7 +19,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace HaloAchievementTracker.Common.Tests.Services
+namespace HaloAchievementTracker.Tests.Common.Services
 {
     public class SteamServiceTest
     {

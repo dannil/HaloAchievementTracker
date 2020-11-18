@@ -1,9 +1,9 @@
 ﻿using HaloAchievementTracker.Common.Adapters;
 using HaloAchievementTracker.Common.Models;
 using HaloAchievementTracker.Common.Services;
+using HaloAchievementTracker.Tests.Mock;
 using HaloAchievementTracker.WebApp.API.Controllers;
 using HaloAchievementTracker.WebApp.API.Models;
-using HaloAchievementTracker.WebApp.API.Tests.Mock;
 using Moq;
 using NUnit.Framework;
 using System;

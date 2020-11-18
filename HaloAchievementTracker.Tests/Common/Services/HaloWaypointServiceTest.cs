@@ -10,7 +10,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace HaloAchievementTracker.Common.Tests.Services
+namespace HaloAchievementTracker.Tests.Common.Services
 {
     public class HaloWaypointServiceTest
     {

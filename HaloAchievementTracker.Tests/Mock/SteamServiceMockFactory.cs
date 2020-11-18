@@ -9,7 +9,7 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloAchievementTracker.WebApp.API.Tests.Mock
+namespace HaloAchievementTracker.Tests.Mock
 {
     public class SteamServiceMockFactory
     {
