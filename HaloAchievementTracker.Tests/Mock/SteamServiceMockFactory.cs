@@ -29,9 +29,7 @@ namespace HaloAchievementTracker.Tests.Mock
 
         public static Mock<ISteamService> GetSteamService()
         {
-            var httpClientMock = new Mock<HttpClient>();
-
-            var steamServiceMock = new Mock<ISteamService>(httpClientMock.Object);
+            var steamServiceMock = new Mock<ISteamService>();
 
             return steamServiceMock;
         }
