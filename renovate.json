@@ -3,7 +3,7 @@
     "config:base"
   ],
   "assignees": ["dannil"],
-  "dependencyDashboard": true,
+  "dependencyDashboard": false,
   "labels": ["dependencies"],
   "prCreation": "not-pending",
   "stabilityDays": 3
