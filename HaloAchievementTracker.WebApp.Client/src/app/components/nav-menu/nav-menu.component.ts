@@ -1,4 +1,7 @@
+import { CommonModule } from '@angular/common';
+import { NgModule } from '@angular/core';
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-nav-menu',
@@ -6,6 +9,7 @@ import { Component } from '@angular/core';
   styleUrls: ['./nav-menu.component.css']
 })
 export class NavMenuComponent {
+  
   isExpanded = false;
 
   collapse(): void {
@@ -15,4 +19,19 @@ export class NavMenuComponent {
   toggle(): void {
     this.isExpanded = !this.isExpanded;
   }
+
 }
+
+@NgModule({
+  imports: [
+    CommonModule,
+    RouterModule
+  ],
+  declarations: [
+    NavMenuComponent
+  ],
+  exports: [
+    NavMenuComponent
+  ]
+})
+export class NavMenuModule { }

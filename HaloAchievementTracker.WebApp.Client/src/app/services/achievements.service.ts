@@ -10,8 +10,8 @@ export class AchievementsService {
 
   private controllerRoute: string;
 
-  constructor(private http: HttpClient, private environment: EnvironmentService) {
-    this.controllerRoute = `${this.environment.apiUrl}/achievements`
+  constructor(private http: HttpClient, private environmentService: EnvironmentService) {
+    this.controllerRoute = `${this.environmentService.apiUrl}/achievements`
   }
 
   getMisaligned(xboxLiveGamertag: string, steamId64: string): Observable<MisalignedAchievement[]> {

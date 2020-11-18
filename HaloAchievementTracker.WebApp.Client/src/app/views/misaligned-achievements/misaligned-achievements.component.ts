@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { Observable, of } from 'rxjs';
 import { AchievementsService } from '@app/services/achievements.service';
+import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { HttpClientModule } from '@angular/common/http';
+import { AngularMaterialModule } from '@app/angular-material.module';
 
 @Component({
   selector: 'app-misaligned-achievements-component',
@@ -34,3 +38,20 @@ export class MisalignedAchievementsComponent {
   }
 
 }
+
+@NgModule({
+  imports: [
+    CommonModule,
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    AngularMaterialModule
+  ],
+  declarations: [
+    MisalignedAchievementsComponent
+  ],
+  exports: [
+    MisalignedAchievementsComponent
+  ]
+})
+export class MisalignedAchievementsModule { }
