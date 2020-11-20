@@ -1,0 +1,42 @@
+name: API and Client
+
+on:
+  push:
+    branches: [ dev ]
+  pull_request:
+    branches: [ dev ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        DOTNET_VERSION: [3.1.301]
+        NODE_VERSION: [12.x, 14.x, 15.x]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Setup .NET Core ${{ env.DOTNET_VERSION }}
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+    - name: Setup Node ${{ env.NODE_VERSION }}
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ env.NODE_VERSION }}
+    - name: Setup Angular CLI
+      run: npm install @angular/cli
+    - name: Install .NET dependencies
+      run: dotnet restore
+    - name: Build .NET
+      run: dotnet build --configuration Release --no-restore
+    - name: Test .NET
+      run: dotnet test --no-restore --verbosity normal
+    - name: Install npm dependencies
+      working-directory: ./HaloAchievementTracker.WebApp.Client
+      run: npm install
+    - name: Build Angular client
+      working-directory: ./HaloAchievementTracker.WebApp.Client
+      run: npm run-script build:prod
+    - name: Lint Angular client
+      working-directory: ./HaloAchievementTracker.WebApp.Client
+      run: npm run-script lint
