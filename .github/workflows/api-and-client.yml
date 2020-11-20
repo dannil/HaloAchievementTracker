@@ -15,22 +15,23 @@ jobs:
         NODE_VERSION: [12.x, 14.x]
     steps:
     - uses: actions/checkout@v2
-    - name: Setup .NET Core ${{ env.DOTNET_VERSION }}
+    - name: Setup .NET Core ${{ matrix.DOTNET_VERSION }}
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: ${{ env.DOTNET_VERSION }}
-    - name: Setup Node ${{ env.NODE_VERSION }}
-      uses: actions/setup-node@v1
+        dotnet-version: ${{ matrix.DOTNET_VERSION }}
+    - name: Setup Node ${{ matrix.NODE_VERSION }}
+      uses: actions/setup-node@v2-beta
       with:
-        node-version: ${{ env.NODE_VERSION }}
-    - name: Setup Angular CLI
-      run: npm install @angular/cli
+        node-version: ${{ matrix.NODE_VERSION }}
     - name: Install .NET dependencies
       run: dotnet restore
     - name: Build .NET
       run: dotnet build --configuration Release --no-restore
     - name: Test .NET
       run: dotnet test --no-restore --verbosity normal
+    - name: Install Angular CLI
+      working-directory: ./HaloAchievementTracker.WebApp.Client
+      run: npm install @angular/cli
     - name: Install npm dependencies
       working-directory: ./HaloAchievementTracker.WebApp.Client
       run: npm install
