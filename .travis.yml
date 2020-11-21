@@ -5,8 +5,8 @@ mono: none
 dotnet: 5.0.100
 env:
   matrix:
-  - NODE_VERSION=12.19.0
-  - NODE_VERSION=14.15.0
+  - NODE_VERSION=12.19.1
+  - NODE_VERSION=14.15.1
 before_install:
   - dotnet restore
   - nvm install ${NODE_VERSION}
