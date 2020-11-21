@@ -15,7 +15,7 @@ jobs:
         NODE_VERSION: [12.x, 14.x]
     steps:
     - uses: actions/checkout@v2
-    - name: Setup .NET Core ${{ matrix.DOTNET_VERSION }}
+    - name: Setup .NET ${{ matrix.DOTNET_VERSION }}
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: ${{ matrix.DOTNET_VERSION }}
