@@ -7,11 +7,10 @@ env:
   matrix:
   - NODE_VERSION=12.19.0
   - NODE_VERSION=14.15.0
-  - NODE_VERSION=15.1.0
 before_install:
   - dotnet restore
   - nvm install ${NODE_VERSION}
-  - npm install -g @angular/cli
+  - npm install @angular/cli
 script:
   # Build VS solution
   - dotnet build
@@ -20,6 +19,6 @@ script:
   # Build Angular client
   - cd HaloAchievementTracker.WebApp.Client
   - npm install
-  - npm run-script build
+  - npm run-script build:prod
   - npm run-script lint
   - cd ../
