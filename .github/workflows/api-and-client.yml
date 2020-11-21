@@ -11,11 +11,11 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        DOTNET_VERSION: [3.1.301]
+        DOTNET_VERSION: [5.0.100]
         NODE_VERSION: [12.x, 14.x]
     steps:
     - uses: actions/checkout@v2
-    - name: Setup .NET Core ${{ matrix.DOTNET_VERSION }}
+    - name: Setup .NET ${{ matrix.DOTNET_VERSION }}
       uses: actions/setup-dotnet@v1
       with:
         dotnet-version: ${{ matrix.DOTNET_VERSION }}
