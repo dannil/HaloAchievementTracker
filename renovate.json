@@ -5,7 +5,9 @@
   "assignees": ["dannil"],
   "dependencyDashboard": false,
   "labels": ["dependencies"],
+  "prConcurrentLimit": 10,
   "prCreation": "not-pending",
+  "prHourlyLimit": 10,
   "stabilityDays": 3,
   "packageRules": [
     {
