@@ -12,7 +12,14 @@
   "packageRules": [
     {
       "packagePatterns": ["^@angular/"],
-      "updateTypes": ["minor, patch"]
+      "separateMajorMinor": true,
+      "major": {
+        "enabled": false
+      }
+    },
+    {
+      "packageNames": ["typescript"],
+      "allowedVersions": "<4.1.0"
     }
   ],
   "ignoreDeps": ["zone.js"]
