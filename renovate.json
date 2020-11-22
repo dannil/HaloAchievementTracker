@@ -12,5 +12,6 @@
       "packagePatterns": ["^@angular/"],
       "updateTypes": ["minor, patch"]
     }
-  ]
+  ],
+  "ignoreDeps": ["zone.js"]
 }
