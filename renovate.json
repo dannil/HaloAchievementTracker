@@ -5,6 +5,22 @@
   "assignees": ["dannil"],
   "dependencyDashboard": false,
   "labels": ["dependencies"],
+  "prConcurrentLimit": 10,
   "prCreation": "not-pending",
-  "stabilityDays": 3
+  "prHourlyLimit": 10,
+  "stabilityDays": 3,
+  "packageRules": [
+    {
+      "packagePatterns": ["^@angular/"],
+      "separateMajorMinor": true,
+      "major": {
+        "enabled": false
+      }
+    },
+    {
+      "packageNames": ["typescript"],
+      "allowedVersions": "<4.1.0"
+    }
+  ],
+  "ignoreDeps": ["zone.js"]
 }
