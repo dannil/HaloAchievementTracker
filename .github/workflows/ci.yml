@@ -1,4 +1,4 @@
-name: API and Client
+name: CI
 
 on:
   push:
@@ -29,9 +29,6 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     - name: Test .NET
       run: dotnet test --no-restore --verbosity normal
-    - name: Install Angular CLI
-      working-directory: ./HaloAchievementTracker.WebApp.Client
-      run: npm install @angular/cli
     - name: Install npm dependencies
       working-directory: ./HaloAchievementTracker.WebApp.Client
       run: npm install
