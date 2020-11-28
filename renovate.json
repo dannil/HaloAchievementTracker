@@ -20,6 +20,10 @@
     {
       "packageNames": ["typescript"],
       "allowedVersions": "<4.1.0"
+    },
+    {
+      "sourceUrlPrefixes": ["https://github.com/angular-eslint/angular-eslint"],
+      "groupName": "angular-eslint monorepo"
     }
   ],
   "ignoreDeps": ["zone.js"]
