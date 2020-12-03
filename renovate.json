@@ -25,6 +25,10 @@
       "allowedVersions": "<4.1.0"
     },
     {
+      "packageNames": ["karma"],
+      "allowedVersions": "<5.2.0"
+    },
+    {
       "sourceUrlPrefixes": ["https://github.com/angular-eslint/angular-eslint"],
       "groupName": "angular-eslint monorepo"
     }
