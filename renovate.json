@@ -8,6 +8,10 @@
   "prCreation": "not-pending",
   "prHourlyLimit": 10,
   "stabilityDays": 7,
+  "schedule": [
+    "after 3am",
+    "before 6am"
+  ],
   "packageRules": [
     {
       "packagePatterns": ["^@angular/"],
@@ -19,6 +23,10 @@
     {
       "packageNames": ["typescript"],
       "allowedVersions": "<4.1.0"
+    },
+    {
+      "packageNames": ["karma"],
+      "allowedVersions": "<5.2.0"
     },
     {
       "sourceUrlPrefixes": ["https://github.com/angular-eslint/angular-eslint"],
