@@ -8,6 +8,10 @@
   "prCreation": "not-pending",
   "prHourlyLimit": 10,
   "stabilityDays": 7,
+  "schedule": [
+    "after 3am",
+    "before 6am"
+  ],
   "packageRules": [
     {
       "packagePatterns": ["^@angular/"],
