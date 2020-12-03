@@ -32,12 +32,12 @@ jobs:
     - name: Install npm dependencies
       working-directory: ./HaloAchievementTracker.WebApp.Client
       run: npm install
-    - name: Update Angular
-      working-directory: ./HaloAchievementTracker.WebApp.Client
-      run: npm run-script update:angular
     - name: Build Angular client
       working-directory: ./HaloAchievementTracker.WebApp.Client
       run: npm run-script build:prod
     - name: Lint Angular client
       working-directory: ./HaloAchievementTracker.WebApp.Client
       run: npm run-script lint
+    - name: Update Angular
+      working-directory: ./HaloAchievementTracker.WebApp.Client
+      run: npm run-script update:angular
