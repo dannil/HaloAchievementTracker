@@ -43,4 +43,4 @@ jobs:
       run: yarn lint
     - name: Update Angular
       working-directory: ./HaloAchievementTracker.WebApp.Client
-      run: npm run-script update:angular
+      run: yarn update:angular
