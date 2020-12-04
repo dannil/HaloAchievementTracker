@@ -9,7 +9,7 @@
   "prHourlyLimit": 10,
   "stabilityDays": 7,
   "schedule": [
-    "after 3am and before 6am"
+    "after 03:00 and before 06:00"
   ],
   "packageRules": [
     {
