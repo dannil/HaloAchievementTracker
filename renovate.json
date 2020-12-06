@@ -8,6 +8,9 @@
   "prCreation": "not-pending",
   "prHourlyLimit": 10,
   "stabilityDays": 7,
+  "schedule": [
+    "after 03:00 and before 06:00"
+  ],
   "packageRules": [
     {
       "packagePatterns": ["^@angular/"],
@@ -19,6 +22,14 @@
     {
       "packageNames": ["typescript"],
       "allowedVersions": "<4.1.0"
+    },
+    {
+      "packageNames": ["karma"],
+      "allowedVersions": "<5.2.0"
+    },
+    {
+      "sourceUrlPrefixes": ["https://github.com/angular-eslint/angular-eslint"],
+      "groupName": "angular-eslint monorepo"
     }
   ],
   "ignoreDeps": ["zone.js"]
