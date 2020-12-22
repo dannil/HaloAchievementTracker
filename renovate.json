@@ -7,7 +7,7 @@
   "prConcurrentLimit": 10,
   "prCreation": "not-pending",
   "prHourlyLimit": 10,
-  "stabilityDays": 7,
+  "stabilityDays": 5,
   "schedule": [
     "after 03:00 and before 06:00"
   ],
