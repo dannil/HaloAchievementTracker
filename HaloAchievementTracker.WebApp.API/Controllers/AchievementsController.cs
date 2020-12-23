@@ -33,6 +33,13 @@ namespace HaloAchievementTracker.WebApp.API.Controllers
             _xboxLiveApiAdapter = xboxLiveApiAdapter;
         }
 
+        [Route("list")]
+        [HttpGet]
+        public async Task<IEnumerable<IAchievement>> GetList()
+        {
+            return await _steamService.GetAchievementsByScrapingAsync(Constants.HALO_MCC_STEAM_APP_ID);
+        }
+
         [Route("misaligned")]
         [HttpGet]
         public async Task<IEnumerable<MisalignedAchievement>> GetMisaligned([FromQuery] MisalignedAchievementsQuery query)

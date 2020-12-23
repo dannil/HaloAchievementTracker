@@ -38,7 +38,7 @@ namespace HaloAchievementTracker.ConsoleApp
 
             services.AddHttpClient<ISteamService, SteamService>(typeof(SteamService).Name, client =>
             {
-                client.BaseAddress = new Uri("https://steamcommunity.com/profiles/");
+                client.BaseAddress = new Uri("https://steamcommunity.com/");
             });
 
             services.AddSingleton<IHaloWaypointService>(s =>
