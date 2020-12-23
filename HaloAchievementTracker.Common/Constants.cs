@@ -25,6 +25,7 @@ namespace HaloAchievementTracker.Common
         private const string STEAM_ACHIEVEMENTS_FILENAME = "achievements.html";
         public static readonly string STEAM_ACHIEVEMENTS_PATH = $"{STEAM_ACHIEVEMENTS_FOLDER}{Path.DirectorySeparatorChar}{STEAM_ACHIEVEMENTS_FILENAME}";
         public const string STEAM_ACHIEVE_ROW_DIV = "achieveRow";
+        public const string STEAM_ACHIEVE_TXT_HOLDER_DIV = "achieveTxtHolder";
         public const string STEAM_ACHIEVE_TXT_DIV = "achieveTxt";
     }
 }

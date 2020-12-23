@@ -100,13 +100,13 @@ namespace HaloAchievementTracker.Tests.Common.Services
 
             var gameData = new List<(Game Game, int AmountTotalAchievements, int AmountUnlockedAchievements)>
             {
-                (GameFactory.Get("Cross Game"), 80, 19),
-                (GameFactory.Get("Halo: Reach"), 100, 29),
-                (GameFactory.Get("Halo CE"), 95, 32),
-                (GameFactory.Get("Halo 2"), 157, 35),
-                (GameFactory.Get("Halo 3"), 89, 26),
-                (GameFactory.Get("Halo 3: ODST"), 98, 0),
-                (GameFactory.Get("Halo 4"), 81, 0),
+                (GameFactory.Get("Cross Game"), 80, 63),
+                (GameFactory.Get("Halo: Reach"), 100, 90),
+                (GameFactory.Get("Halo CE"), 95, 83),
+                (GameFactory.Get("Halo 2"), 157, 133),
+                (GameFactory.Get("Halo 3"), 89, 86),
+                (GameFactory.Get("Halo 3: ODST"), 98, 90),
+                (GameFactory.Get("Halo 4"), 81, 36),
             };
 
             int sumAmountTotalAchievements = gameData.Sum(g => g.AmountTotalAchievements);

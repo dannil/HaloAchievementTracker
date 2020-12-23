@@ -38,8 +38,6 @@ namespace HaloAchievementTracker.Common.Services
 
         public virtual async Task<IEnumerable<IAchievement>> GetAchievementsByScrapingAsync(uint appId, ulong steamId)
         {
-            //var url = $"https://steamcommunity.com/profiles/{steamId}/stats/appid/{appId}/achievements";
-            //var httpClient = new HttpClient();
             var endpoint = $"{steamId}/stats/appid/{appId}/achievements";
             var response = await _httpClient.GetAsync(endpoint);
             if (response.IsSuccessStatusCode)
@@ -56,7 +54,8 @@ namespace HaloAchievementTracker.Common.Services
                 {
                     SteamAchievement steamAchievement = new SteamAchievement();
 
-                    var achieveTxtNode = achieveRowsNode.SelectSingleNode($".//div[@class='{Constants.STEAM_ACHIEVE_TXT_DIV}']");
+                    var achieveTxtHolderNode = achieveRowsNode.SelectSingleNode($".//div[@class='{Constants.STEAM_ACHIEVE_TXT_HOLDER_DIV}']");
+                    var achieveTxtNode = achieveTxtHolderNode.SelectSingleNode($".//div[@class='{Constants.STEAM_ACHIEVE_TXT_DIV}']");
 
                     steamAchievement.Name = achieveTxtNode.SelectSingleNode($".//h3").InnerText;
                     steamAchievement.Description = achieveTxtNode.SelectSingleNode($".//h5").InnerText;
@@ -72,7 +71,7 @@ namespace HaloAchievementTracker.Common.Services
                     }
 
                     steamAchievement.Game = game;
-                    steamAchievement.IsUnlocked = achieveTxtNode.Descendants("div").Any(d => d.GetAttributeValue("class", string.Empty).Equals("achieveUnlockTime"));
+                    steamAchievement.IsUnlocked = achieveTxtHolderNode.Descendants("div").Any(d => d.GetAttributeValue("class", string.Empty).Equals("achieveUnlockTime"));
 
                     achievements.Add(steamAchievement);
                 }
