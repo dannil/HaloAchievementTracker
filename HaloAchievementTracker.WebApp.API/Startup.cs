@@ -63,7 +63,7 @@ namespace HaloAchievementTracker.WebApp
             }
             else
             {
-                throw new ArgumentException();
+                throw new ArgumentException($"Xbox Live implementation {actualImplementation} is not a valid configuration.");
             }
         }
 
@@ -99,7 +99,7 @@ namespace HaloAchievementTracker.WebApp
             lifetime.ApplicationStarted.Register(OnApplicationStartedAsync(xboxLiveApiAdapter).Wait);
         }
 
-        private async Task<Action> OnApplicationStartedAsync(IXboxLiveApiAdapter xboxLiveApiAdapter)
+        private static async Task<Action> OnApplicationStartedAsync(IXboxLiveApiAdapter xboxLiveApiAdapter)
         {
             await xboxLiveApiAdapter.Warmup();
             return null;
