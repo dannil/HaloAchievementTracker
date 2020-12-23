@@ -38,7 +38,7 @@ namespace HaloAchievementTracker.Common.Services
 
         public virtual async Task<IEnumerable<IAchievement>> GetAchievementsByScrapingAsync(uint appId)
         {
-            var endpoint = $"stats/appid/{appId}/achievements";
+            var endpoint = $"stats/{appId}/achievements";
             var response = await _httpClient.GetAsync(endpoint);
             if (response.IsSuccessStatusCode)
             {
@@ -47,14 +47,15 @@ namespace HaloAchievementTracker.Common.Services
                 var document = new HtmlDocument();
                 document.LoadHtml(responseBody);
 
-                HtmlNodeCollection achieveRowsNodes = document.DocumentNode.SelectNodes($"//div[@class='{Constants.STEAM_ACHIEVE_ROW_DIV}']");
+                HtmlNodeCollection achieveRowsNodes = document.DocumentNode.SelectNodes($"//div[contains(@class, '{Constants.STEAM_ACHIEVE_ROW_DIV}')]");
 
                 ISet<SteamAchievement> achievements = new HashSet<SteamAchievement>();
                 foreach (HtmlNode achieveRowsNode in achieveRowsNodes)
                 {
                     SteamAchievement steamAchievement = new SteamAchievement();
 
-                    var achieveTxtNode = achieveRowsNode.SelectSingleNode($".//div[@class='{Constants.STEAM_ACHIEVE_TXT_DIV}']");
+                    var achieveTxtHolderNode = achieveRowsNode.SelectSingleNode($".//div[@class='{Constants.STEAM_ACHIEVE_TXT_HOLDER_DIV}']");
+                    var achieveTxtNode = achieveTxtHolderNode.SelectSingleNode($".//div[@class='{Constants.STEAM_ACHIEVE_TXT_DIV}']");
 
                     steamAchievement.Name = achieveTxtNode.SelectSingleNode($".//h3").InnerText;
                     steamAchievement.Description = achieveTxtNode.SelectSingleNode($".//h5").InnerText;
