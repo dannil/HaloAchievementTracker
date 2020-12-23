@@ -9,13 +9,14 @@ using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Configuration;
 using Moq;
 using NUnit.Framework;
+using Steam.Models.SteamPlayer;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HaloAchievementTracker.WebApp.API.Tests.Controllers
+namespace HaloAchievementTracker.Tests.WebApp.API.Controllers
 {
     public class AchievementsControllerTest
     {
@@ -36,10 +37,11 @@ namespace HaloAchievementTracker.WebApp.API.Tests.Controllers
             };
 
             webAppConfiguration = new WebAppConfiguration();
-            new ConfigurationBuilder()
+
+            IConfiguration configuration = new ConfigurationBuilder()
                 .AddInMemoryCollection(configurationValues)
-                .Build()
-                .Bind("WebAppConfiguration", webAppConfiguration);
+                .Build();
+            configuration.Bind("WebAppConfiguration", webAppConfiguration);
 
             memoryCache = new MemoryCache(new MemoryCacheOptions());
 
@@ -52,6 +54,46 @@ namespace HaloAchievementTracker.WebApp.API.Tests.Controllers
         [Test]
         public async Task GetMisaligned()
         {
+            IEnumerable<IAchievement> xboxLiveAchievements = new List<IAchievement>
+            {
+                new XboxLiveAchievement()
+                {
+                    Description = "Description for achievement 1",
+                    Game = GameFactory.Get("Halo 2"),
+                    IsUnlocked = true,
+                    Name = "Achievement 1"
+                },
+                new XboxLiveAchievement()
+                {
+                    Description = "Description for achievement 2",
+                    Game = GameFactory.Get("Halo 3"),
+                    IsUnlocked = false,
+                    Name = "Achievement 2"
+                }
+            };
+
+            _xboxLiveApiAdapterMock.Setup(m => m.GetAchievementsAsync(It.IsAny<string>(), It.IsAny<uint>())).Returns(Task.FromResult(xboxLiveAchievements));
+
+            IEnumerable<IAchievement> steamAchievements = new List<IAchievement>()
+            {
+                new SteamAchievement()
+                {
+                    Description = "Description for achievement 1",
+                    Game = GameFactory.Get("Halo 2"),
+                    IsUnlocked = true,
+                    Name = "Achievement 1"
+                },
+                new SteamAchievement()
+                {
+                    Description = "Description for achievement 2",
+                    Game = GameFactory.Get("Halo 3"),
+                    IsUnlocked = true,
+                    Name = "Achievement 2"
+                }
+            };
+
+            _steamServiceMock.Setup(m => m.GetAchievementsByScrapingAsync(It.IsAny<uint>(), It.IsAny<ulong>())).Returns(Task.FromResult(steamAchievements));
+
             var query = new MisalignedAchievementsQuery
             {
                 SteamId64 = uint.MaxValue,
@@ -60,7 +102,7 @@ namespace HaloAchievementTracker.WebApp.API.Tests.Controllers
 
             IEnumerable<MisalignedAchievement> misalignedAchievements = await _controller.GetMisaligned(query);
 
-            Assert.That(misalignedAchievements, Has.Count.EqualTo(1));
+            Assert.AreEqual(1, misalignedAchievements.Count());
         }
     }
 }

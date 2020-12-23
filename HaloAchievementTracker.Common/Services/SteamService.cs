@@ -21,7 +21,7 @@ namespace HaloAchievementTracker.Common.Services
             _httpClient = httpClient;
         }
 
-        public virtual async Task<IEnumerable<SteamAchievement>> GetAchievementsByApiAsync(ISteamWebInterfaceFactory webInterfaceFactory, uint appId, ulong steamId)
+        public virtual async Task<IEnumerable<IAchievement>> GetAchievementsByApiAsync(ISteamWebInterfaceFactory webInterfaceFactory, uint appId, ulong steamId)
         {
             var steamInterface = webInterfaceFactory.CreateSteamWebInterface<SteamUserStatsAdapter>(new HttpClient());
             var stats = await steamInterface.GetPlayerAchievementsAsync(appId, steamId);
@@ -36,7 +36,7 @@ namespace HaloAchievementTracker.Common.Services
                     });
         }
 
-        public virtual async Task<IEnumerable<SteamAchievement>> GetAchievementsByScrapingAsync(uint appId, ulong steamId)
+        public virtual async Task<IEnumerable<IAchievement>> GetAchievementsByScrapingAsync(uint appId, ulong steamId)
         {
             //var url = $"https://steamcommunity.com/profiles/{steamId}/stats/appid/{appId}/achievements";
             //var httpClient = new HttpClient();
@@ -85,8 +85,8 @@ namespace HaloAchievementTracker.Common.Services
 
     public interface ISteamService
     {
-        Task<IEnumerable<SteamAchievement>> GetAchievementsByApiAsync(ISteamWebInterfaceFactory webInterfaceFactory, uint appId, ulong steamId);
+        Task<IEnumerable<IAchievement>> GetAchievementsByApiAsync(ISteamWebInterfaceFactory webInterfaceFactory, uint appId, ulong steamId);
 
-        Task<IEnumerable<SteamAchievement>> GetAchievementsByScrapingAsync(uint appId, ulong steamId);
+        Task<IEnumerable<IAchievement>> GetAchievementsByScrapingAsync(uint appId, ulong steamId);
     }
 }
