@@ -1,6 +1,13 @@
 <h1>List achievements</h1>
 
-<div *ngIf="achievements$ | async as achievements; else loading">
+<form [formGroup]="filterForm">
+  <div class="form-group">
+    <label>Filter</label>
+    <input type="text" class="form-control" formControlName="filter">
+  </div>
+</form>
+
+<div *ngIf="achievementsFiltered$ | async as achievements; else loading">
   <table class="table table-striped table-hover">
     <thead>
       <tr>
