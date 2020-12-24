@@ -37,7 +37,7 @@ namespace HaloAchievementTracker.WebApp
 
             services.AddHttpClient<ISteamService, SteamService>(typeof(SteamService).Name, client =>
             {
-                client.BaseAddress = new Uri("https://steamcommunity.com/profiles/");
+                client.BaseAddress = new Uri("https://steamcommunity.com/");
             });
 
             var openXBLImplementation = XboxLiveImplementations.OpenXBL;
