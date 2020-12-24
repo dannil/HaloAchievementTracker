@@ -69,9 +69,9 @@ namespace HaloAchievementTracker.WebApp.API.Configuration
 
     public class CacheConfiguration
     {
-        public MisalignedAchievementsControllerConfiguration MisalignedAchievementsController { get; set; }
+        public AchievementsControllerConfiguration AchievementsController { get; set; }
 
-        public class MisalignedAchievementsControllerConfiguration
+        public class AchievementsControllerConfiguration
         {
             public int Duration { get; set; }
         }

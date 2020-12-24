@@ -14,6 +14,13 @@ export class AchievementsService {
     this.controllerRoute = `${this.environmentService.apiUrl}/achievements`
   }
 
+  getList(): Observable<IAchievement[]> {
+    const endpoint = `${this.controllerRoute}/list`;
+
+    const response = this.http.get<IAchievement[]>(endpoint);
+    return response;
+  }
+
   getMisaligned(xboxLiveGamertag: string, steamId64: string): Observable<MisalignedAchievement[]> {
     const endpoint = `${this.controllerRoute}/misaligned`;
     const params = new HttpParams()

@@ -78,7 +78,7 @@ namespace HaloAchievementTracker.ConsoleApp
             return new int[] { nameLength, gameLength, descriptionLength, steamLength, haloWaypointLength };
         }
 
-        private string GetConsoleColumnsFormatting(int[] widths)
+        private static string GetConsoleColumnsFormatting(int[] widths)
         {
             StringBuilder builder = new StringBuilder();
             for (int i = 0; i < widths.Length; i++)
@@ -88,7 +88,7 @@ namespace HaloAchievementTracker.ConsoleApp
             return builder.ToString();
         }
 
-        private Dictionary<string, string> GetConfiguration(string[] args)
+        private static Dictionary<string, string> GetConfiguration(string[] args)
         {
             var configuration = new Dictionary<string, string>();
             string env = Environment.GetEnvironmentVariable("NETCORE_ENVIRONMENT");

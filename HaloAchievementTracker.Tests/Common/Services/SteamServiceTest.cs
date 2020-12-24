@@ -59,7 +59,7 @@ namespace HaloAchievementTracker.Tests.Common.Services
         {
             var httpClient = new HttpClient()
             {
-                BaseAddress = new Uri("https://steamcommunity.com/profiles/")
+                BaseAddress = new Uri("https://steamcommunity.com/")
             };
 
             var service = new SteamService(httpClient);
@@ -92,7 +92,7 @@ namespace HaloAchievementTracker.Tests.Common.Services
             // use real http client with mocked handler here
             var httpClient = new HttpClient(handlerMock.Object)
             {
-                BaseAddress = new Uri("https://steamcommunity.com/profiles/"),
+                BaseAddress = new Uri("https://steamcommunity.com/"),
             };
 
             var service = new SteamService(httpClient);

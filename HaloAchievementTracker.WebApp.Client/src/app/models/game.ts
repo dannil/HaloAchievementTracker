@@ -1,0 +1,3 @@
+interface Game {
+  name: string;
+}

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using HaloAchievementTracker.Common;
 using HaloAchievementTracker.Common.Adapters;
@@ -33,6 +34,28 @@ namespace HaloAchievementTracker.WebApp.API.Controllers
             _xboxLiveApiAdapter = xboxLiveApiAdapter;
         }
 
+        [Route("list")]
+        [HttpGet]
+        public async Task<IEnumerable<IAchievement>> GetList()
+        {
+            var cacheKey = $"{CACHE_KEY_PREFIX}-GetList";
+
+            async Task<IEnumerable<IAchievement>> GetListWrapper()
+            {
+                // As of implementing this, X API doesn't have support for fetching all achievements for a specific game without 
+                // specifying Xuid, so let's use Steam scraping technique in the meantime
+                var listTask = await _steamService.GetAchievementsByScrapingAsync(Constants.HALO_MCC_STEAM_APP_ID);
+                return listTask.OrderBy(a => a.Game.Name).ThenBy(a => a.Name);
+            }
+
+            return await _cache.GetOrCreateAsync(cacheKey, async cacheEntry =>
+            {
+                cacheEntry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(_configuration.Cache.AchievementsController.Duration);
+
+                return await GetListWrapper();
+            });
+        }
+
         [Route("misaligned")]
         [HttpGet]
         public async Task<IEnumerable<MisalignedAchievement>> GetMisaligned([FromQuery] MisalignedAchievementsQuery query)
@@ -57,7 +80,7 @@ namespace HaloAchievementTracker.WebApp.API.Controllers
 
             return await _cache.GetOrCreateAsync(cacheKey, async cacheEntry =>
             {
-                cacheEntry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(_configuration.Cache.MisalignedAchievementsController.Duration);
+                cacheEntry.AbsoluteExpirationRelativeToNow = TimeSpan.FromSeconds(_configuration.Cache.AchievementsController.Duration);
 
                 return await GetMisalignedWrapper(steamId64, xboxLiveGamertag);
             });
