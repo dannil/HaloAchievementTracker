@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace HaloAchievementTracker.Common.Services
 {
@@ -57,8 +58,8 @@ namespace HaloAchievementTracker.Common.Services
                     var achieveTxtHolderNode = achieveRowsNode.SelectSingleNode($".//div[@class='{Constants.STEAM_ACHIEVE_TXT_HOLDER_DIV}']");
                     var achieveTxtNode = achieveTxtHolderNode.SelectSingleNode($".//div[@class='{Constants.STEAM_ACHIEVE_TXT_DIV}']");
 
-                    steamAchievement.Name = achieveTxtNode.SelectSingleNode($".//h3").InnerText;
-                    steamAchievement.Description = achieveTxtNode.SelectSingleNode($".//h5").InnerText;
+                    steamAchievement.Name = HttpUtility.HtmlDecode(achieveTxtNode.SelectSingleNode($".//h3").InnerText);
+                    steamAchievement.Description = HttpUtility.HtmlDecode(achieveTxtNode.SelectSingleNode($".//h5").InnerText);
 
                     Game game = null;
                     if (SteamHelper.HasMissingGameIdentifier(steamAchievement.Name))
@@ -100,8 +101,8 @@ namespace HaloAchievementTracker.Common.Services
                     var achieveTxtHolderNode = achieveRowsNode.SelectSingleNode($".//div[@class='{Constants.STEAM_ACHIEVE_TXT_HOLDER_DIV}']");
                     var achieveTxtNode = achieveTxtHolderNode.SelectSingleNode($".//div[@class='{Constants.STEAM_ACHIEVE_TXT_DIV}']");
 
-                    steamAchievement.Name = achieveTxtNode.SelectSingleNode($".//h3").InnerText;
-                    steamAchievement.Description = achieveTxtNode.SelectSingleNode($".//h5").InnerText;
+                    steamAchievement.Name = HttpUtility.HtmlDecode(achieveTxtNode.SelectSingleNode($".//h3").InnerText);
+                    steamAchievement.Description = HttpUtility.HtmlDecode(achieveTxtNode.SelectSingleNode($".//h5").InnerText);
 
                     Game game = null;
                     if (SteamHelper.HasMissingGameIdentifier(steamAchievement.Name))
