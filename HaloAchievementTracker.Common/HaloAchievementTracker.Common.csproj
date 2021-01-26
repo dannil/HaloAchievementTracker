@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net5.0</TargetFramework>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
     <Authors>Daniel Nilsson</Authors>
     <UserSecretsId>f5d4ca4f-785f-406a-b8f4-a426bfbd1d2d</UserSecretsId>
   </PropertyGroup>
