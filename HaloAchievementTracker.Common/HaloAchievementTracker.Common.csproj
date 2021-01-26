@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <Authors>Daniel Nilsson</Authors>
     <UserSecretsId>f5d4ca4f-785f-406a-b8f4-a426bfbd1d2d</UserSecretsId>
+    <Version>2.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>

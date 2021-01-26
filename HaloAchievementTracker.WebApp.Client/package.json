@@ -1,6 +1,6 @@
 {
   "name": "halo-achievement-tracker",
-  "version": "2.0.0-vnext",
+  "version": "2.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",

@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <IsPackable>false</IsPackable>
     <UserSecretsId>2b3b2be3-ed3b-43ce-abfd-9684cd90c67b</UserSecretsId>
+    <Version>2.0.1</Version>
   </PropertyGroup>
 
   <ItemGroup>
