@@ -33,6 +33,12 @@ namespace HaloAchievementTracker.ConsoleApp
 
         public async Task Run(string[] args)
         {
+            if (!File.Exists(Constants.HALO_WAYPOINT_SERVICE_RECORD_PATH))
+            {
+                Console.WriteLine($"Couldn't find file {Constants.HALO_WAYPOINT_SERVICE_RECORD_PATH}, exiting program...");
+                return;
+            }
+
             var configuration = GetConfiguration(args);
 
             var steamId = Convert.ToUInt64(configuration[Constants.CONFIGURATION_KEY_STEAM_ID]);
