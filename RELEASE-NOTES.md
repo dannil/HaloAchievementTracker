@@ -2,6 +2,8 @@
 
 ## vNext
 
+## 2.0.1
+
 Highlights:
 
 * Verifies if MCC service record file is present.
