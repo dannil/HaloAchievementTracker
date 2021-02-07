@@ -4,6 +4,7 @@
 
 Highlights:
 
+* Verifies if MCC service record file is present.
 * Fixed MCC service record file not being found (#219).
 
 ## 2.0.0
