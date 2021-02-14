@@ -21,6 +21,13 @@ namespace HaloAchievementTracker.ConsoleApp
     {
         public static void Main(string[] args)
         {
+            // Perform validation which needs to be done before configuring services
+            if (!File.Exists(Constants.HALO_WAYPOINT_SERVICE_RECORD_PATH))
+            {
+                Console.WriteLine($"Couldn't find file {Constants.HALO_WAYPOINT_SERVICE_RECORD_PATH}, exiting program...");
+                return;
+            }
+
             // Create service collection and configure our services
             var services = ConfigureServices();
 
