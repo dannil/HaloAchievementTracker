@@ -72,7 +72,7 @@ namespace HaloAchievementTracker.WebApp
         {
             app.UseCors(options =>
             {
-                options.WithOrigins(webAppConfiguration.ClientAppUrl)
+                options.WithOrigins(webAppConfiguration.Client.Url)
                        .AllowAnyMethod();
             });
 

@@ -8,13 +8,13 @@ namespace HaloAchievementTracker.WebApp.API.Configuration
 
     public interface IWebAppConfiguration
     {
-        string ClientAppUrl { get; set; }
-
         LoggingConfiguration Logging { get; set; }
 
         ApiConfiguration Api { get; set; }
 
         CacheConfiguration Cache { get; set; }
+
+        ClientConfiguration Client { get; set; }
     }
 
     public interface IXboxLiveApiImplementationConfiguration
@@ -24,13 +24,13 @@ namespace HaloAchievementTracker.WebApp.API.Configuration
 
     public class WebAppConfiguration : IWebAppConfiguration
     {
-        public string ClientAppUrl { get; set; }
-
         public LoggingConfiguration Logging { get; set; }
 
         public ApiConfiguration Api { get; set; }
 
         public CacheConfiguration Cache { get; set; }
+
+        public ClientConfiguration Client { get; set; }
     }
 
     public class LoggingConfiguration
@@ -75,6 +75,11 @@ namespace HaloAchievementTracker.WebApp.API.Configuration
         {
             public int Duration { get; set; }
         }
+    }
+
+    public class ClientConfiguration
+    {
+        public string Url { get; set; }
     }
 
 }
