@@ -6,6 +6,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularMaterialModule } from '@app/angular-material.module';
+import { LoadingSpinnerModule } from '@app/components/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-misaligned-achievements-component',
@@ -45,7 +46,8 @@ export class MisalignedAchievementsComponent {
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    LoadingSpinnerModule
   ],
   declarations: [
     MisalignedAchievementsComponent

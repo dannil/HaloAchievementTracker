@@ -7,6 +7,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularMaterialModule } from '@app/angular-material.module';
+import { LoadingSpinnerModule } from '@app/components/loading-spinner/loading-spinner.component';
 
 @Component({
   selector: 'app-list-achievements',
@@ -54,7 +55,8 @@ export class ListAchievementsComponent {
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    LoadingSpinnerModule
   ],
   declarations: [
     ListAchievementsComponent
