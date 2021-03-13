@@ -1,5 +1,4 @@
-
- {
+{
   "root": true,
   "overrides": [
     {
@@ -33,8 +32,9 @@
       ],
       "rules": {
         "max-len": [
-          "error", { 
-            "code": 140 
+          "error",
+          {
+            "code": 140
           }
         ]
       }
