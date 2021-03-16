@@ -31,6 +31,5 @@
       "sourceUrlPrefixes": ["https://github.com/angular-eslint/angular-eslint"],
       "groupName": "angular-eslint monorepo"
     }
-  ],
-  "ignoreDeps": ["zone.js"]
+  ]
 }
