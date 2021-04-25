@@ -10,7 +10,8 @@
     "e2e": "ng e2e",
     "lint": "ng lint",
     "update:angular": "ng update @angular/cli @angular/core @angular/cdk @angular/material",
-    "update:angular-devkit": "ng update @angular-devkit/architect @angular-devkit/core"
+    "update:angular-devkit": "ng update @angular-devkit/architect @angular-devkit/core",
+    "update:angular-eslint": "ng update @angular-eslint/schematics"
   },
   "private": true,
   "dependencies": {
@@ -40,11 +41,11 @@
     "@angular-devkit/core": "11.2.9",
     "@angular-devkit/build-angular": "0.1102.9",
     "@angular-devkit/schematics": "11.2.9",
-    "@angular-eslint/builder": "2.0.2",
-    "@angular-eslint/eslint-plugin": "2.0.2",
-    "@angular-eslint/eslint-plugin-template": "2.0.2",
-    "@angular-eslint/schematics": "2.0.2",
-    "@angular-eslint/template-parser": "2.0.2",
+    "@angular-eslint/builder": "4.0.0",
+    "@angular-eslint/eslint-plugin": "4.0.0",
+    "@angular-eslint/eslint-plugin-template": "4.0.0",
+    "@angular-eslint/schematics": "4.0.0",
+    "@angular-eslint/template-parser": "4.0.0",
     "@types/jasmine": "3.6.9",
     "@types/jasminewd2": "2.0.8",
     "@types/node": "14.14.41",
