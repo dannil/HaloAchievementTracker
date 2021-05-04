@@ -12,7 +12,7 @@ jobs:
     strategy:
       matrix:
         DOTNET_VERSION: [3.1.x]
-        NODE_VERSION: [12.x, 14.x]
+        NODE_VERSION: [12.x, 14.x, 16.x]
     steps:
     - uses: actions/checkout@v2
     - name: Setup .NET ${{ matrix.DOTNET_VERSION }}
