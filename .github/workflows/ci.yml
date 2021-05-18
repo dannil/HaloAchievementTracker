@@ -16,8 +16,8 @@ jobs:
         NODE_VERSION: [12.x, 14.x, 16.x],
         experimental: false
         include:
-        - node: 3.1.x
-          os: 16.x
+        - DOTNET_VERSION: 3.1.x
+          NODE_VERSION: 16.x
           experimental: true
     steps:
     - uses: actions/checkout@v2
