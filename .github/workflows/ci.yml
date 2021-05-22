@@ -14,38 +14,38 @@ jobs:
       matrix:
         DOTNET_VERSION: [3.1.x]
         NODE_VERSION: [12.x, 14.x, 16.x]
-        experimental: false
+        experimental: [false]
         include:
-        - DOTNET_VERSION: 3.1.x
-          NODE_VERSION: 16.x
-          experimental: true
+          - DOTNET_VERSION: 3.1.x
+            NODE_VERSION: 16.x
+            experimental: true
     steps:
-    - uses: actions/checkout@v2
-    - name: Setup .NET ${{ matrix.DOTNET_VERSION }}
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: ${{ matrix.DOTNET_VERSION }}
-    - name: Setup Node ${{ matrix.NODE_VERSION }}
-      uses: actions/setup-node@v2-beta
-      with:
-        node-version: ${{ matrix.NODE_VERSION }}
-    - name: Install .NET dependencies
-      run: dotnet restore
-    - name: Build .NET
-      run: dotnet build --configuration Release --no-restore
-    - name: Test .NET
-      run: dotnet test --no-restore --verbosity normal
-    - name: Install Yarn
-      working-directory: ./HaloAchievementTracker.WebApp.Client
-      run: npm install -g yarn
-    - name: Install Node.js dependencies
-      working-directory: ./HaloAchievementTracker.WebApp.Client
-      run: yarn install
-      continue-on-error: ${{ matrix.experimental }}
-    - name: Build Angular client
-      working-directory: ./HaloAchievementTracker.WebApp.Client
-      run: yarn build:prod
-      continue-on-error: ${{ matrix.experimental }}
-    - name: Lint Angular client
-      working-directory: ./HaloAchievementTracker.WebApp.Client
-      run: yarn lint
+      - uses: actions/checkout@v2
+      - name: Setup .NET ${{ matrix.DOTNET_VERSION }}
+        uses: actions/setup-dotnet@v1
+        with:
+          dotnet-version: ${{ matrix.DOTNET_VERSION }}
+      - name: Setup Node ${{ matrix.NODE_VERSION }}
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: ${{ matrix.NODE_VERSION }}
+      - name: Install .NET dependencies
+        run: dotnet restore
+      - name: Build .NET
+        run: dotnet build --configuration Release --no-restore
+      - name: Test .NET
+        run: dotnet test --no-restore --verbosity normal
+      - name: Install Yarn
+        working-directory: ./HaloAchievementTracker.WebApp.Client
+        run: npm install -g yarn
+      - name: Install Node.js dependencies
+        working-directory: ./HaloAchievementTracker.WebApp.Client
+        run: yarn install
+        continue-on-error: ${{ matrix.experimental }}
+      - name: Build Angular client
+        working-directory: ./HaloAchievementTracker.WebApp.Client
+        run: yarn build:prod
+        continue-on-error: ${{ matrix.experimental }}
+      - name: Lint Angular client
+        working-directory: ./HaloAchievementTracker.WebApp.Client
+        run: yarn lint
