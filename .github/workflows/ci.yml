@@ -9,6 +9,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    continue-on-error: ${{ matrix.experimental }}
     strategy:
       fail-fast: false
       matrix:
@@ -41,11 +42,9 @@ jobs:
       - name: Install Node.js dependencies
         working-directory: ./HaloAchievementTracker.WebApp.Client
         run: yarn install
-        continue-on-error: ${{ matrix.experimental }}
       - name: Build Angular client
         working-directory: ./HaloAchievementTracker.WebApp.Client
         run: yarn build:prod
-        continue-on-error: ${{ matrix.experimental }}
       - name: Lint Angular client
         working-directory: ./HaloAchievementTracker.WebApp.Client
         run: yarn lint
