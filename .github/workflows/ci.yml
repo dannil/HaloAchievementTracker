@@ -13,7 +13,7 @@ jobs:
       fail-fast: false
       matrix:
         DOTNET_VERSION: [3.1.x]
-        NODE_VERSION: [12.x, 14.x, 16.x],
+        NODE_VERSION: [12.x, 14.x, 16.x]
         experimental: false
         include:
         - DOTNET_VERSION: 3.1.x
