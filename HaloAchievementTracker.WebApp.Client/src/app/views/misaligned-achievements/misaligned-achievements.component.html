@@ -5,15 +5,15 @@
 
     <div>
       <form [formGroup]="misalignedAchievementsForm" (ngSubmit)="onSubmit()">
-        <div class="form-group">
+        <div class="form-group pb-2">
           <label>Xbox Live Gamertag</label>
           <input type="text" class="form-control" formControlName="xboxLiveGamertagForm">
         </div>
-        <div class="form-group">
+        <div class="form-group pb-2">
           <label>SteamID 64</label>
           <input type="text" class="form-control" formControlName="steamId64Form">
         </div>
-        <div class="form-group">
+        <div class="form-group pb-2">
           <button type="submit" class="btn btn-primary">Submit</button>
         </div>
       </form>
