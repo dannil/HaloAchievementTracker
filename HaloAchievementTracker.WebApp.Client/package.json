@@ -11,7 +11,8 @@
     "lint": "ng lint",
     "update:angular": "ng update @angular/cli @angular/core @angular/cdk @angular/material",
     "update:angular-devkit": "ng update @angular-devkit/architect @angular-devkit/core",
-    "update:angular-eslint": "ng update @angular-eslint/builder @angular-eslint/schematics"
+    "update:angular-eslint": "ng update @angular-eslint/builder @angular-eslint/schematics",
+    "update:yarn": "yarn set version latest"
   },
   "private": true,
   "dependencies": {
